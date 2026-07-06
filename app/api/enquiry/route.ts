@@ -56,17 +56,32 @@ export async function POST(req: Request) {
     message: (body.message || "").slice(0, 5000),
   };
 
+  // File storage works locally / on a VPS; on serverless hosts (Vercel etc.)
+  // the filesystem is read-only, so storage becomes best-effort and the email
+  // notification carries the lead. Swap saveEnquiry for a hosted DB in prod.
+  let stored = false;
   try {
     await saveEnquiry(enquiry);
+    stored = true;
   } catch (err) {
-    console.error("Failed to store enquiry:", err);
-    return NextResponse.json({ error: "Could not save your enquiry. Please try again." }, { status: 500 });
+    console.error("Could not write enquiry to file storage:", err);
   }
 
-  await sendEmails(enquiry).catch((err) => {
-    // Email failure must not lose the lead — it's already stored.
-    console.error("Email sending failed (enquiry is saved):", err);
-  });
+  let emailed = false;
+  try {
+    emailed = await sendEmails(enquiry);
+  } catch (err) {
+    console.error("Email sending failed:", err);
+  }
+
+  if (!stored && !emailed) {
+    // Nowhere to put the lead — surface the failure honestly.
+    console.error("Enquiry lost — no storage and no email channel:", enquiry);
+    return NextResponse.json(
+      { error: "Could not submit your enquiry right now. Please WhatsApp or call us instead." },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -85,11 +100,11 @@ async function saveEnquiry(enquiry: Record<string, string>) {
   await fs.writeFile(file, JSON.stringify(all, null, 2), "utf8");
 }
 
-async function sendEmails(enquiry: Record<string, string>) {
+async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.log(`[enquiry] RESEND_API_KEY not set — skipping emails. Enquiry ${enquiry.id} from ${enquiry.email} stored in data/enquiries.json`);
-    return;
+    console.log(`[enquiry] RESEND_API_KEY not set — skipping emails. Enquiry ${enquiry.id} from ${enquiry.email}`);
+    return false;
   }
 
   const { Resend } = await import("resend");
@@ -136,6 +151,8 @@ async function sendEmails(enquiry: Record<string, string>) {
         </table>
       </div>`,
   });
+
+  return true;
 }
 
 function row(label: string, value: string) {
