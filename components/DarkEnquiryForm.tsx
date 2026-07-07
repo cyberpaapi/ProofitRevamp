@@ -94,14 +94,14 @@ export default function DarkEnquiryForm() {
         </p>
       )}
 
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
         <p className="max-w-sm text-xs leading-relaxed text-white/45">
           By proceeding, you are authorizing our representatives to get in touch with you through calls, SMS, or e-mail.
         </p>
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex h-11 shrink-0 cursor-pointer items-center rounded-full bg-brand text-white transition-all hover:-translate-y-0.5 hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60"
+          className="group inline-flex h-11 shrink-0 cursor-pointer items-center self-center rounded-full bg-brand text-white transition-all hover:-translate-y-0.5 hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 sm:self-auto"
         >
           <span className="pl-5 font-display text-sm font-semibold">{status === "sending" ? "Sending…" : "Enquire Now"}</span>
           <span className="mx-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white text-brand-deep transition-transform duration-300 group-hover:translate-x-0.5">
