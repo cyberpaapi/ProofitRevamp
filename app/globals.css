@@ -16,6 +16,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* iOS ignores overflow clipping set only on body — required on both to stop
+     horizontal panning exposing off-canvas reveal animations. */
+  overflow-x: clip;
 }
 
 body {
@@ -74,8 +77,14 @@ h1, h2, h3, h4, .font-display {
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
-.reveal.reveal-left { transform: translateX(-32px); }
-.reveal.reveal-right { transform: translateX(32px); }
+/* Slide distance kept inside the viewport on phones (off-canvas transforms
+   caused horizontal panning on iOS); full distance from sm up. */
+.reveal.reveal-left { transform: translateX(-16px); }
+.reveal.reveal-right { transform: translateX(16px); }
+@media (min-width: 640px) {
+  .reveal.reveal-left { transform: translateX(-32px); }
+  .reveal.reveal-right { transform: translateX(32px); }
+}
 .reveal.reveal-scale { transform: scale(0.94); }
 .reveal.in-view {
   opacity: 1;
