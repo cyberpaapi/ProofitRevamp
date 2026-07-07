@@ -16,32 +16,36 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
 
   return (
     <div>
-      {/* stacked card look */}
-      <div className="relative">
-        <div className="absolute inset-x-3 -top-2 h-full rounded-2xl border border-brand/35 bg-white" aria-hidden />
-        <div className="absolute inset-x-6 -top-4 h-full rounded-2xl border border-brand/20 bg-white" aria-hidden />
-        <div className="relative grid overflow-hidden rounded-2xl border border-brand/60 bg-white md:grid-cols-[minmax(260px,380px)_1fr]">
-          <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[360px]">
-            <Image
-              key={step.image}
-              src={step.image}
-              alt={step.title}
-              fill
-              sizes="(min-width: 768px) 380px, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="p-7 md:p-10">
-            <p className="font-display text-sm font-medium text-ink-soft/70">Step {String(index + 1).padStart(2, "0")}</p>
-            <h3 className="mt-1 font-display text-2xl font-semibold uppercase tracking-wide md:text-3xl">{step.title}</h3>
-            {step.intro && <p className="mt-2 text-ink-soft/75">{step.intro}</p>}
-            <ul className="mt-5 space-y-3">
-              {step.points.map((p) => (
-                <li key={p} className="rounded-xl bg-cream px-5 py-3.5 text-sm font-medium text-ink">
-                  {p}
-                </li>
-              ))}
-            </ul>
+      {/* stacked card deck — two outlines peeking above the live card */}
+      <div className="relative mt-8">
+        <div className="absolute -top-7 left-1/2 h-16 w-[calc(100%-6rem)] -translate-x-1/2 rounded-t-2xl border border-brand/30 bg-white" aria-hidden />
+        <div className="absolute -top-3.5 left-1/2 h-16 w-[calc(100%-3rem)] -translate-x-1/2 rounded-t-2xl border border-brand/50 bg-white" aria-hidden />
+        <div className="relative overflow-hidden rounded-2xl border border-brand bg-white p-5 md:p-7">
+          <div className="grid gap-8 md:grid-cols-[minmax(260px,420px)_1fr] md:gap-12">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl md:aspect-[5/6] md:max-h-[440px]">
+              <Image
+                key={step.image}
+                src={step.image}
+                alt={step.title}
+                fill
+                sizes="(min-width: 768px) 420px, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="pb-2 md:py-4 md:pr-4">
+              <p className="text-ink-soft/80">Step {String(index + 1).padStart(2, "0")}</p>
+              <h3 className="mt-1 font-display text-2xl font-bold uppercase tracking-tight text-ink md:text-[1.75rem]">
+                {step.title}
+              </h3>
+              {step.intro && <p className="mt-2 text-ink-soft/80">{step.intro}</p>}
+              <ul className="mt-6 space-y-4">
+                {step.points.map((p) => (
+                  <li key={p} className="rounded-lg bg-cream px-5 py-4 text-[15px] font-semibold text-ink">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

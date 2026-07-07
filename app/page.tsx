@@ -242,9 +242,6 @@ export default function HomePage() {
                 className="object-cover"
               />
             </div>
-            <span className="absolute -right-5 top-1/2 flex h-14 w-14 items-center justify-center rounded-full bg-brand font-display text-lg font-semibold text-white shadow-lg" aria-label="More than 11 years of combined field experience">
-              +11
-            </span>
           </Reveal>
           <div>
             <Reveal delay={200} className="max-w-xl leading-relaxed text-ink-soft/85">
@@ -298,7 +295,7 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- SERVICES CAROUSEL ------------------------ */}
-      <section className="border-t-4 border-[#3b6fd4]">
+      <section>
         <ServicesCarousel slides={serviceSlides} />
       </section>
 
@@ -454,8 +451,14 @@ export default function HomePage() {
                   handovers, and stronger buyer confidence
                 </p>
                 <div className="mt-7 flex items-center gap-4 border-t border-white/15 pt-6">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/20 font-display font-semibold text-brand" aria-hidden>
-                    PD
+                  <span className="relative h-12 w-12 overflow-hidden rounded-full">
+                    <Image
+                      src="/images/director.webp"
+                      alt="Project Director of a residential development firm"
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
                   </span>
                   <div>
                     <p className="font-display text-lg font-semibold">Project Director</p>

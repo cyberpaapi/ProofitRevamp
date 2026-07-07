@@ -53,8 +53,8 @@ export default function Header() {
           scrolled ? "bg-ink/95 shadow-[0_2px_24px_rgba(0,0,0,0.35)] backdrop-blur" : "bg-gradient-to-b from-ink/70 to-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-4 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit — home" className="shrink-0">
               <Image
                 src="/images/logo.svg"
@@ -62,14 +62,14 @@ export default function Header() {
                 width={128}
                 height={43}
                 priority
-                className="h-auto w-[110px] rounded-md bg-white/95 px-2 py-1 md:w-[128px]"
+                className="h-auto w-[96px] rounded-md bg-white/95 px-2 py-1 md:w-[120px]"
               />
             </Link>
 
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex cursor-pointer items-center gap-2 font-display text-sm font-semibold transition-colors hover:text-brand"
+              className="flex shrink-0 cursor-pointer items-center gap-2 font-display text-sm font-semibold transition-colors hover:text-brand"
               aria-label="Open menu"
               aria-expanded={open}
             >
@@ -80,7 +80,7 @@ export default function Header() {
             </button>
 
             {/* Services dropdown (desktop) */}
-            <div className="group relative hidden md:block">
+            <div className="group relative hidden lg:block">
               <Link
                 href="/services"
                 className="flex items-center gap-1.5 font-display text-sm font-semibold transition-colors hover:text-brand"
@@ -106,7 +106,7 @@ export default function Header() {
 
           <Link
             href="/contact"
-            className="group inline-flex h-10 items-center rounded-full bg-white text-ink shadow-[0_4px_18px_rgba(17,17,18,0.25)] transition-all hover:-translate-y-0.5"
+            className="group inline-flex h-10 shrink-0 items-center rounded-full bg-white text-ink shadow-[0_4px_18px_rgba(17,17,18,0.25)] transition-all hover:-translate-y-0.5"
           >
             <span className="whitespace-nowrap pl-4 font-display text-sm font-semibold">Enquire Now</span>
             <span className="mx-1 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:translate-x-0.5">
