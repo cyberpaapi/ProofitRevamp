@@ -29,7 +29,7 @@ export default function ThermalHero({ children }: { children: React.ReactNode })
 
     const measure = () => {
       const w = frame.clientWidth;
-      size = Math.max(120, Math.min(220, w * 0.16));
+      size = Math.max(144, Math.min(264, w * 0.192));
       lens.style.width = `${size}px`;
       lens.style.height = `${size}px`;
       // the thermal layer inside the lens must be exactly frame-sized so the

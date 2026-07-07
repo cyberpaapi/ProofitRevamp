@@ -146,6 +146,30 @@ h1, h2, h3, h4, .font-display {
 .thermal-lens .tick-bl { left: 6px; bottom: 6px; border-left-width: 2px; border-bottom-width: 2px; }
 .thermal-lens .tick-br { right: 6px; bottom: 6px; border-right-width: 2px; border-bottom-width: 2px; }
 
+/* ---------- Card deck cycle (How PROOFIT Works) ---------- */
+@keyframes deck-leave {
+  to {
+    transform: translateX(56px) rotate(2.5deg) scale(0.96);
+    opacity: 0;
+  }
+}
+.deck-leave {
+  animation: deck-leave 0.3s ease-in forwards;
+}
+@keyframes deck-enter {
+  from {
+    transform: translateY(-14px) scale(0.965);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.deck-enter {
+  animation: deck-enter 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* ---------- Checkmark draw ---------- */
 @keyframes draw-check {
   to { stroke-dashoffset: 0; }
@@ -178,6 +202,11 @@ h1, h2, h3, h4, .font-display {
   }
   .draw-check path {
     animation: none !important;
+  }
+  .deck-leave, .deck-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
   .thermal-lens { display: none; }
 }

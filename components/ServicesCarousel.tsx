@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ArrowBtn from "./ArrowBtn";
 
 export type ServiceSlide = {
@@ -19,8 +18,24 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
   const slide = slides[index];
   const go = (dir: 1 | -1) => setIndex((i) => (i + dir + slides.length) % slides.length);
 
+  // swipe: left = next, right = previous
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) > 48) go(dx < 0 ? 1 : -1);
+  };
+
   return (
-    <div className="grid overflow-hidden bg-ink text-white lg:grid-cols-2">
+    <div
+      className="grid touch-pan-y overflow-hidden bg-ink text-white lg:grid-cols-2"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Media */}
       <div className="relative aspect-[16/11] lg:aspect-auto lg:min-h-[560px]">
         {slide.media.type === "video" ? (

@@ -232,13 +232,13 @@ export default function HomePage() {
           <Reveal>
             <h2 className="font-display text-4xl font-semibold md:text-5xl">About Us</h2>
           </Reveal>
-          <Reveal delay={120} className="relative mx-auto w-56 md:w-64">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+          <Reveal delay={120} className="relative -mx-4 sm:mx-0 md:w-72 lg:w-80">
+            <div className="relative aspect-[16/10] overflow-hidden sm:rounded-2xl md:aspect-[3/4]">
               <Image
                 src="/images/svc-possession-tablet.webp"
                 alt="Proofit inspector reading a thermal heat map on a tablet"
                 fill
-                sizes="256px"
+                sizes="(min-width: 768px) 320px, 100vw"
                 className="object-cover"
               />
             </div>
