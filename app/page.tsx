@@ -5,7 +5,6 @@ import Counter from "@/components/Counter";
 import SectionHeading from "@/components/SectionHeading";
 import CtaBand from "@/components/CtaBand";
 import { services, caseStudies, testimonials, posts, stats } from "@/lib/content";
-import { site } from "@/lib/site";
 
 const homeProcess = [
   {
@@ -56,61 +55,49 @@ export default function HomePage() {
   return (
     <>
       {/* ------------------------------- HERO ------------------------------- */}
-      <section className="pt-28 md:pt-36">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <span
-              className="hero-rise inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-bold text-brand-deep"
-              style={{ ["--rise-delay" as string]: "0ms" }}
-            >
-              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-brand" aria-hidden />
-              Residential inspection experts · {site.city}
-            </span>
-            <h1
-              className="hero-rise mt-5 text-4xl font-bold leading-[1.02] sm:text-6xl xl:text-7xl"
-              style={{ ["--rise-delay" as string]: "120ms" }}
-            >
-              Your home has secrets.
-              <br />
-              <span className="text-brand">We find them first.</span>
-            </h1>
-          </div>
-
-          {/* Bento hero grid */}
-          <div className="mt-10 grid gap-4 md:mt-14 lg:grid-cols-3 lg:grid-rows-2">
-            {/* Video tile */}
-            <div
-              className="hero-rise relative aspect-video overflow-hidden rounded-3xl bg-ink lg:col-span-2 lg:row-span-2 lg:aspect-auto"
-              style={{ ["--rise-delay" as string]: "240ms" }}
-            >
-              <video
-                className="h-full w-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/videos/hero-poster.jpg"
-                aria-label="A smooth glide through a bright, sunlit apartment as a thermal heat-map briefly reveals hidden warmth inside a wall"
+      <section className="relative">
+        <div className="relative h-[92svh] min-h-[560px] w-full overflow-hidden">
+          <video
+            className="h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/videos/hero-poster.jpg"
+            aria-label="A smooth glide through a bright, sunlit apartment as a thermal heat-map briefly reveals hidden warmth inside a wall"
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+          </video>
+          <div className="scanline" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/10" aria-hidden />
+          <div className="absolute inset-x-0 bottom-0 pb-36 md:pb-40">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h1
+                className="hero-rise max-w-4xl text-4xl font-bold leading-[1.02] text-white sm:text-6xl xl:text-7xl"
+                style={{ ["--rise-delay" as string]: "80ms" }}
               >
-                <source src="/videos/hero.mp4" type="video/mp4" />
-              </video>
-              <div className="scanline" aria-hidden />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 via-ink/30 to-transparent p-6 pt-20">
-                <p className="flex items-center gap-2 font-display text-sm font-bold uppercase tracking-wider text-brand">
-                  <Check size={14} /> Thermal vision
-                </p>
-                <p className="mt-1 max-w-md text-white/90">
-                  Moisture shows up on our screens months before it shows up on your ceiling.
-                </p>
-              </div>
+                Your home has secrets.
+                <br />
+                <span className="text-brand">We find them first.</span>
+              </h1>
+              <p
+                className="hero-rise mt-5 flex max-w-xl items-center gap-2 text-lg text-white/85"
+                style={{ ["--rise-delay" as string]: "200ms" }}
+              >
+                <Check size={16} /> Moisture shows up on our screens months before it shows up on your ceiling.
+              </p>
             </div>
+          </div>
+        </div>
 
-            {/* Book tile */}
+        {/* Overlapping bento tile row */}
+        <div className="relative z-10 mx-auto -mt-24 max-w-7xl px-4 sm:px-6 md:-mt-28 lg:px-8">
+          <div className="grid gap-4 md:grid-cols-3">
             <Link
               href="/contact"
               className="hero-rise tile-orange tile-hover group relative flex min-h-44 flex-col justify-between overflow-hidden p-7"
-              style={{ ["--rise-delay" as string]: "340ms" }}
+              style={{ ["--rise-delay" as string]: "320ms" }}
             >
               <svg className="check-watermark -bottom-10 -right-10 h-44 w-44" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M4 12.5 9.5 18 20 6.5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -125,19 +112,15 @@ export default function HomePage() {
                 </svg>
               </span>
             </Link>
-
-            {/* Stat + trust tiles */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="hero-rise tile-black flex flex-col justify-between p-6" style={{ ["--rise-delay" as string]: "420ms" }}>
-                <p className="font-display text-4xl font-bold text-brand md:text-5xl">48hr</p>
-                <p className="mt-2 text-sm text-white/80">Report turnaround, photo &amp; thermal backed</p>
-              </div>
-              <div className="hero-rise tile flex flex-col justify-between p-6" style={{ ["--rise-delay" as string]: "480ms" }}>
-                <Check size={36} stroke="#F7941D" />
-                <p className="mt-2 text-sm font-semibold text-ink-soft">
-                  100% non-destructive — no broken tiles, no guesswork
-                </p>
-              </div>
+            <div className="hero-rise tile-black flex flex-col justify-between p-7" style={{ ["--rise-delay" as string]: "400ms" }}>
+              <p className="font-display text-5xl font-bold text-brand">48hr</p>
+              <p className="mt-3 text-white/80">Report turnaround — every finding photographed and thermally documented</p>
+            </div>
+            <div className="hero-rise tile flex flex-col justify-between p-7" style={{ ["--rise-delay" as string]: "480ms" }}>
+              <Check size={40} stroke="#F7941D" />
+              <p className="mt-3 font-semibold text-ink-soft">
+                100% non-destructive — no broken tiles, no guesswork
+              </p>
             </div>
           </div>
         </div>
