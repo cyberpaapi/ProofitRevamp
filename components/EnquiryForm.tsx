@@ -43,7 +43,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-line bg-white p-10 text-center" role="status">
+      <div className="tile p-10 text-center" role="status">
         <svg className="draw-check mx-auto mb-5" width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden>
           <circle cx="36" cy="36" r="34" stroke="#F7941D" strokeWidth="3" />
           <path d="M22 37 L32 47 L52 26" stroke="#F7941D" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -58,7 +58,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-5 rounded-2xl border border-line bg-white p-6 shadow-sm sm:p-8" noValidate>
+    <form onSubmit={onSubmit} className="grid gap-5 tile p-6 shadow-sm sm:p-8" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-semibold">

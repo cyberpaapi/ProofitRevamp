@@ -12,35 +12,41 @@ export default function CtaBand({
   lede = "Book an inspection or send us your questions — we respond the same day.",
 }: Props) {
   return (
-    <section className="relative overflow-hidden bg-brand">
-      <div
-        aria-hidden
-        className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-white/10"
-      />
-      <div
-        aria-hidden
-        className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-ink/10"
-      />
-      <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center md:justify-between md:py-20 lg:px-8">
+    <section className="py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <h2 className="max-w-xl text-3xl font-bold leading-tight text-white md:text-4xl">{title}</h2>
-          <p className="mt-3 max-w-xl text-white/90">{lede}</p>
-        </Reveal>
-        <Reveal delay={150} className="flex shrink-0 flex-wrap gap-4">
-          <Link
-            href="/contact"
-            className="rounded-full bg-ink px-7 py-3.5 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-xl"
-          >
-            Book an Inspection
-          </Link>
-          <a
-            href={site.whatsapp}
-            target="_blank"
-            rel="noopener"
-            className="rounded-full border-2 border-white/80 px-7 py-3.5 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-white hover:text-brand-deep"
-          >
-            WhatsApp Us
-          </a>
+          <div className="tile-orange relative overflow-hidden rounded-3xl px-8 py-14 md:px-14 md:py-20">
+            <svg
+              className="check-watermark -right-16 -top-24 h-[420px] w-[420px] md:h-[560px] md:w-[560px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
+              <path d="M4 12.5 9.5 18 20 6.5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <div className="relative flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="max-w-xl text-3xl font-bold leading-[1.08] text-white md:text-5xl">{title}</h2>
+                <p className="mt-4 max-w-xl text-lg text-white/90">{lede}</p>
+              </div>
+              <div className="flex shrink-0 flex-wrap gap-4">
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-ink px-8 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-2xl"
+                >
+                  Book an Inspection
+                </Link>
+                <a
+                  href={site.whatsapp}
+                  target="_blank"
+                  rel="noopener"
+                  className="rounded-full bg-white px-8 py-4 font-bold text-brand-deep transition-all hover:-translate-y-0.5 hover:shadow-2xl"
+                >
+                  WhatsApp Us
+                </a>
+              </div>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>

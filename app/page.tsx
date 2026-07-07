@@ -44,107 +44,138 @@ const marqueeItems = [
   "Independent & third-party",
 ];
 
+const Check = ({ className = "", stroke = "#F7941D", size = 16 }: { className?: string; stroke?: string; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path d="M4 12.5 9.5 18 20 6.5" stroke={stroke} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 export default function HomePage() {
   const featured = caseStudies[1];
 
   return (
     <>
       {/* ------------------------------- HERO ------------------------------- */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pb-24 lg:pt-40">
-          <div>
-            <p className="hero-rise mb-5 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-1.5 text-sm font-semibold text-brand" style={{ ["--rise-delay" as string]: "0ms" }}>
+      <section className="pt-28 md:pt-36">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <span
+              className="hero-rise inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-bold text-brand-deep"
+              style={{ ["--rise-delay" as string]: "0ms" }}
+            >
               <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-brand" aria-hidden />
               Residential inspection experts · {site.city}
-            </p>
-            <h1 className="hero-rise text-4xl font-bold leading-[1.08] sm:text-5xl xl:text-6xl" style={{ ["--rise-delay" as string]: "120ms" }}>
+            </span>
+            <h1
+              className="hero-rise mt-5 text-4xl font-bold leading-[1.02] sm:text-6xl xl:text-7xl"
+              style={{ ["--rise-delay" as string]: "120ms" }}
+            >
               Your home has secrets.
               <br />
-              <span className="text-brand">We find them</span> before they cost you.
+              <span className="text-brand">We find them first.</span>
             </h1>
-            <p className="hero-rise mt-6 max-w-xl text-lg leading-relaxed text-white/80" style={{ ["--rise-delay" as string]: "240ms" }}>
-              Independent, evidence-backed inspections of flats, homes and villas — powered by AI-enabled thermal
-              imaging and international standards, adapted to how India actually builds.
-            </p>
-            <div className="hero-rise mt-9 flex flex-wrap gap-4" style={{ ["--rise-delay" as string]: "360ms" }}>
-              <Link
-                href="/contact"
-                className="rounded-full bg-brand px-8 py-4 font-bold text-white shadow-[0_10px_30px_-8px_rgba(247,148,29,0.7)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep"
-              >
-                Book an Inspection
-              </Link>
-              <Link
-                href="/process"
-                className="rounded-full border-2 border-white/25 px-8 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:border-brand hover:text-brand"
-              >
-                See How It Works
-              </Link>
-            </div>
           </div>
 
-          <div className="hero-rise relative" style={{ ["--rise-delay" as string]: "300ms" }}>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-              <Image
-                src="/images/thermal-technician.webp"
-                alt="Proofit technician scanning an interior wall with a thermal imaging camera"
-                fill
-                priority
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="kenburns object-cover"
-              />
+          {/* Bento hero grid */}
+          <div className="mt-10 grid gap-4 md:mt-14 lg:grid-cols-3 lg:grid-rows-2">
+            {/* Video tile */}
+            <div
+              className="hero-rise relative aspect-video overflow-hidden rounded-3xl bg-ink lg:col-span-2 lg:row-span-2 lg:aspect-auto"
+              style={{ ["--rise-delay" as string]: "240ms" }}
+            >
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/videos/hero-poster.jpg"
+                aria-label="A smooth glide through a bright, sunlit apartment as a thermal heat-map briefly reveals hidden warmth inside a wall"
+              >
+                <source src="/videos/hero.mp4" type="video/mp4" />
+              </video>
               <div className="scanline" aria-hidden />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-5 pt-16">
-                <p className="text-sm font-semibold text-brand">Thermal imaging in action</p>
-                <p className="text-sm text-white/80">Moisture shows up here months before it shows up on your ceiling.</p>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 via-ink/30 to-transparent p-6 pt-20">
+                <p className="flex items-center gap-2 font-display text-sm font-bold uppercase tracking-wider text-brand">
+                  <Check size={14} /> Thermal vision
+                </p>
+                <p className="mt-1 max-w-md text-white/90">
+                  Moisture shows up on our screens months before it shows up on your ceiling.
+                </p>
               </div>
             </div>
-            {/* floating check card */}
-            <div className="absolute -left-4 -top-5 hidden rounded-xl bg-white px-4 py-3 text-ink shadow-xl sm:block">
-              <p className="flex items-center gap-2 text-sm font-bold">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Non-destructive
-              </p>
-              <p className="text-xs text-ink-soft/70">No broken tiles. No guesswork.</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Stats strip */}
-        <div className="border-t border-white/10 bg-ink-soft/60">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-8 px-4 py-10 sm:px-6 lg:grid-cols-4 lg:px-8">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 100} className="text-center">
-                <p className="font-display text-3xl font-bold text-brand md:text-4xl">
-                  <Counter value={s.value} suffix={s.suffix} />
+            {/* Book tile */}
+            <Link
+              href="/contact"
+              className="hero-rise tile-orange tile-hover group relative flex min-h-44 flex-col justify-between overflow-hidden p-7"
+              style={{ ["--rise-delay" as string]: "340ms" }}
+            >
+              <svg className="check-watermark -bottom-10 -right-10 h-44 w-44" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M4 12.5 9.5 18 20 6.5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <div className="relative">
+                <h2 className="text-3xl font-bold leading-tight">Book an Inspection</h2>
+                <p className="mt-2 text-white/90">Fast. Thorough. Evidence-backed.</p>
+              </div>
+              <span className="relative mt-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand-deep transition-transform duration-300 group-hover:translate-x-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </Link>
+
+            {/* Stat + trust tiles */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="hero-rise tile-black flex flex-col justify-between p-6" style={{ ["--rise-delay" as string]: "420ms" }}>
+                <p className="font-display text-4xl font-bold text-brand md:text-5xl">48hr</p>
+                <p className="mt-2 text-sm text-white/80">Report turnaround, photo &amp; thermal backed</p>
+              </div>
+              <div className="hero-rise tile flex flex-col justify-between p-6" style={{ ["--rise-delay" as string]: "480ms" }}>
+                <Check size={36} stroke="#F7941D" />
+                <p className="mt-2 text-sm font-semibold text-ink-soft">
+                  100% non-destructive — no broken tiles, no guesswork
                 </p>
-                <p className="mt-1 text-sm text-white/70">{s.label}</p>
-              </Reveal>
-            ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ------------------------------ MARQUEE ----------------------------- */}
-      <div className="overflow-hidden border-b border-line bg-white py-4" aria-hidden>
+      <div className="mt-16 overflow-hidden bg-ink py-5 md:mt-20" aria-hidden>
         <div className="marquee-track gap-10">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <span key={i} className="flex shrink-0 items-center gap-10 text-sm font-semibold uppercase tracking-wider text-ink-soft/60">
+            <span key={i} className="flex shrink-0 items-center gap-10 font-display text-sm font-bold uppercase tracking-wider text-white/80">
               {item}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Check size={14} />
             </span>
           ))}
         </div>
       </div>
 
+      {/* ------------------------------- STATS ------------------------------ */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 90}>
+              <div className={`${i % 2 ? "tile" : i === 0 ? "tile-orange" : "tile-black"} flex h-full flex-col justify-between p-7`}>
+                <p className={`font-display text-4xl font-bold md:text-5xl ${i % 2 ? "text-brand" : i === 0 ? "text-white" : "text-brand"}`}>
+                  <Counter value={s.value} suffix={s.suffix} />
+                </p>
+                <p className={`mt-3 text-sm font-medium ${i % 2 ? "text-ink-soft/80" : "text-white/85"}`}>{s.label}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* ------------------------------- INTRO ------------------------------ */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="pb-16 md:pb-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <Reveal from="left" className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
               <Image
                 src="/images/report-review-couple.webp"
                 alt="A Proofit inspector walking a young couple through their snag report"
@@ -153,8 +184,8 @@ export default function HomePage() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-xl bg-brand px-5 py-4 text-white shadow-xl sm:-right-6">
-              <p className="font-display text-2xl font-bold">48 hrs</p>
+            <div className="tile-orange absolute -bottom-5 -right-3 px-6 py-4 shadow-xl sm:-right-5">
+              <p className="font-display text-3xl font-bold">48 hrs</p>
               <p className="text-sm text-white/90">to your full report</p>
             </div>
           </Reveal>
@@ -173,10 +204,17 @@ export default function HomePage() {
               <p>
                 We go beyond surface-level checks: expert on-site evaluation combined with AI-enabled thermal imaging
                 uncovers defects invisible to the naked eye — hidden dampness, faulty wiring, failed waterproofing.
-                Every inspection ends in a detailed, photo- and thermal-backed report you can act on.
               </p>
             </Reveal>
-            <Reveal delay={200} className="mt-8">
+            <Reveal delay={200} className="mt-7 grid grid-cols-2 gap-3">
+              {["Independent & third-party", "Thermal + instrument led", "Reports builders act on", "Founded on Canadian training"].map((x) => (
+                <p key={x} className="flex items-start gap-2 text-sm font-semibold">
+                  <Check className="mt-0.5 shrink-0" />
+                  {x}
+                </p>
+              ))}
+            </Reveal>
+            <Reveal delay={280} className="mt-8">
               <Link href="/about" className="link-underline font-bold text-brand-deep">
                 Meet the founders →
               </Link>
@@ -186,90 +224,92 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- SERVICES ----------------------------- */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            eyebrow="What we do"
-            title="Three ways we protect"
-            accent="your biggest asset."
-            center
-          />
-          <div className="grid gap-6 md:grid-cols-3">
-            {services.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 120} as="div">
-                <Link
-                  href={`/services/${s.slug}`}
-                  className="card-lift group block h-full overflow-hidden rounded-2xl border border-line bg-paper"
-                >
-                  <div className="relative aspect-[3/2] overflow-hidden">
-                    <Image
-                      src={s.image}
-                      alt={s.name}
-                      fill
-                      sizes="(min-width: 768px) 33vw, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="mb-2 text-xl font-bold transition-colors group-hover:text-brand-deep">{s.name}</h3>
-                    <p className="text-sm leading-relaxed text-ink-soft/75">{s.short}</p>
-                    <p className="mt-4 text-sm font-bold text-brand">
-                      Explore <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+          <SectionHeading eyebrow="What we do" title="Three ways we protect" accent="your biggest asset." center />
+          <div className="grid gap-4 md:grid-cols-3">
+            {services.map((s, i) => {
+              const flavors = [
+                { tile: "tile-orange", num: "text-white/40", text: "text-white/90", title: "text-white" },
+                { tile: "tile-black", num: "text-brand", text: "text-white/80", title: "text-white" },
+                { tile: "tile", num: "text-brand", text: "text-ink-soft/80", title: "text-ink" },
+              ][i];
+              return (
+                <Reveal key={s.slug} delay={i * 110} className="h-full">
+                  <Link href={`/services/${s.slug}`} className={`${flavors.tile} tile-hover group flex h-full flex-col overflow-hidden`}>
+                    <div className="flex items-start justify-between p-7 pb-0">
+                      <span className={`font-display text-6xl font-bold ${flavors.num}`}>{String(i + 1).padStart(2, "0")}</span>
+                      <span className="mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-brand-deep shadow transition-transform duration-300 group-hover:translate-x-1.5">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                          <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                    </div>
+                    <div className="p-7 pt-4">
+                      <h3 className={`text-2xl font-bold ${flavors.title}`}>{s.name}</h3>
+                      <p className={`mt-2 text-sm leading-relaxed ${flavors.text}`}>{s.short}</p>
+                    </div>
+                    <div className="relative mt-auto aspect-[16/9] overflow-hidden">
+                      <Image
+                        src={s.image}
+                        alt={s.name}
+                        fill
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* --------------------------- WHAT WE FIND --------------------------- */}
-      <section className="relative overflow-hidden bg-ink py-20 text-white md:py-28">
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(80% 60% at 70% 10%, rgba(247,148,29,0.12), transparent 60%), radial-gradient(60% 50% at 10% 90%, rgba(247,148,29,0.07), transparent 60%)" }}
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            eyebrow="What we find"
-            title="Small signals."
-            accent="Big consequences."
-            lede="These are the early warnings most people paint over. Our instruments read them for what they are — active problems getting more expensive by the month."
-            dark
-          />
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              { img: "/images/defect-damp-patch.webp", title: "Rising damp", desc: "Moisture climbing inside a wall — visible to thermal long before the stain spreads." },
-              { img: "/images/defect-paint-blister.webp", title: "Blistering paint", desc: "Trapped moisture pushing paint off the wall. The source is still active behind it." },
-              { img: "/images/defect-ceiling-stain.webp", title: "Ceiling rings", desc: "A slow leak from above — often two floors away from where it starts." },
-            ].map((d, i) => (
-              <Reveal key={d.title} delay={i * 120} from="scale" className="group relative aspect-[3/4] overflow-hidden rounded-2xl">
-                <Image
-                  src={d.img}
-                  alt={d.title}
-                  fill
-                  sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" aria-hidden />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <h3 className="text-lg font-bold text-brand">{d.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-white/80">{d.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="tile-black overflow-hidden p-7 md:p-12">
+              <SectionHeading
+                eyebrow="What we find"
+                title="Small signals."
+                accent="Big consequences."
+                lede="These are the early warnings most people paint over. Our instruments read them for what they are — active problems getting more expensive by the month."
+                dark
+              />
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[
+                  { img: "/images/defect-damp-patch.webp", title: "Rising damp", desc: "Moisture climbing inside a wall — visible to thermal long before the stain spreads." },
+                  { img: "/images/defect-paint-blister.webp", title: "Blistering paint", desc: "Trapped moisture pushing paint off the wall. The source is still active behind it." },
+                  { img: "/images/defect-ceiling-stain.webp", title: "Ceiling rings", desc: "A slow leak from above — often two floors away from where it starts." },
+                ].map((d, i) => (
+                  <Reveal key={d.title} delay={i * 110} from="scale" className="group relative aspect-[3/4] overflow-hidden rounded-2xl">
+                    <Image
+                      src={d.img}
+                      alt={d.title}
+                      fill
+                      sizes="(min-width: 640px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" aria-hidden />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <h3 className="text-lg font-bold text-brand">{d.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-white/80">{d.desc}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ------------------------------ PROCESS ----------------------------- */}
-      <section className="py-20 md:py-28">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="Our process" title="Booked to briefed" accent="in five steps." center />
-          <ol className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {homeProcess.map((step, i) => (
               <Reveal
                 key={step.title}
@@ -277,7 +317,7 @@ export default function HomePage() {
                 as="li"
                 className={`group h-full ${i === 4 ? "sm:col-span-2 lg:col-span-1 sm:mx-auto sm:w-1/2 lg:mx-0 lg:w-auto" : ""}`}
               >
-                <div className="card-lift flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
+                <div className="tile tile-hover flex h-full flex-col overflow-hidden">
                   <div className="relative aspect-square overflow-hidden">
                     <Image
                       src={step.image}
@@ -286,23 +326,9 @@ export default function HomePage() {
                       sizes="(min-width: 1280px) 20vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink/60 to-transparent" aria-hidden />
-                    <span
-                      className="absolute bottom-3 left-4 font-display text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
-                      aria-hidden
-                    >
-                      <span className="text-brand">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="absolute bottom-3 left-3 rounded-xl bg-brand px-2.5 py-1 font-display text-xl font-bold text-white" aria-hidden>
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    {i < 4 && (
-                      <span
-                        className="absolute right-3 top-3 hidden h-8 w-8 items-center justify-center rounded-full bg-white/90 text-brand-deep shadow xl:flex"
-                        aria-hidden
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                          <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
-                    )}
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="mb-1.5 font-bold leading-snug">{step.title}</h3>
@@ -321,59 +347,70 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------- CASE STUDY ---------------------------- */}
-      <section className="bg-white py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div className="order-2 lg:order-1">
-            <SectionHeading
-              eyebrow="Case study"
-              title={featured.title}
-            />
-            <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
-              <p>{featured.problem}</p>
-              <p>{featured.approach}</p>
-            </Reveal>
-            <Reveal delay={200} className="mt-8 flex flex-wrap gap-8">
-              {featured.stats.map((s) => (
-                <div key={s.label}>
-                  <p className="font-display text-3xl font-bold text-brand">{s.value}</p>
-                  <p className="text-sm text-ink-soft/70">{s.label}</p>
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal from="left">
+              <div className="tile-orange relative flex h-full flex-col justify-between overflow-hidden p-8 md:p-12">
+                <svg className="check-watermark -bottom-16 -right-16 h-72 w-72" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M4 12.5 9.5 18 20 6.5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div className="relative">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold text-white">
+                    Case study · {featured.location}
+                  </span>
+                  <h2 className="mt-5 text-3xl font-bold leading-[1.08] text-white md:text-4xl">{featured.title}</h2>
+                  <p className="mt-4 leading-relaxed text-white/90">{featured.problem}</p>
                 </div>
-              ))}
+                <div className="relative mt-8 flex flex-wrap gap-4">
+                  {featured.stats.map((s) => (
+                    <div key={s.label} className="rounded-2xl bg-ink/25 px-5 py-3">
+                      <p className="font-display text-3xl font-bold text-white">{s.value}</p>
+                      <p className="text-sm text-white/85">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </Reveal>
-            <Reveal delay={300} className="mt-8">
-              <Link href="/case-studies" className="link-underline font-bold text-brand-deep">
-                Read all case studies →
-              </Link>
-            </Reveal>
-          </div>
-          <Reveal from="right" className="order-1 lg:order-2">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
-              <Image
-                src={featured.image}
-                alt={featured.title}
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
+            <div className="grid gap-4">
+              <Reveal from="right" className="relative aspect-[16/9] overflow-hidden rounded-3xl">
+                <Image src={featured.image} alt={featured.title} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+              </Reveal>
+              <Reveal delay={120}>
+                <div className="tile flex items-center justify-between gap-6 p-7">
+                  <p className="leading-relaxed text-ink-soft/85">{featured.approach}</p>
+                  <Link
+                    href="/case-studies"
+                    className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-white transition-transform hover:translate-x-1.5"
+                    aria-label="Read all case studies"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
       {/* --------------------------- TESTIMONIALS --------------------------- */}
-      <section className="py-20 md:py-28">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="What clients say" title="Reports that end" accent="arguments." center />
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 120} className="flex h-full flex-col rounded-2xl border border-line bg-white p-7">
-                <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="mb-4" aria-hidden>
-                  <path d="M0 24V14.4C0 6.4 4.8 1.6 12.8 0l1.6 4c-4.8 1.6-7.2 4.27-7.2 8h6.4v12H0Zm18.4 0V14.4c0-8 4.8-12.8 12.8-14.4l1.6 4c-4.8 1.6-7.2 4.27-7.2 8H32v12H18.4Z" fill="#F7941D" fillOpacity="0.35" />
-                </svg>
-                <p className="flex-1 leading-relaxed text-ink-soft/90">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-6 border-t border-line pt-4">
-                  <p className="font-bold">{t.name}</p>
-                  <p className="text-sm text-ink-soft/60">{t.context}</p>
+              <Reveal key={t.name} delay={i * 110} className="h-full">
+                <div className="tile tile-hover flex h-full flex-col p-7">
+                  <svg width="34" height="26" viewBox="0 0 32 24" fill="none" className="mb-4" aria-hidden>
+                    <path d="M0 24V14.4C0 6.4 4.8 1.6 12.8 0l1.6 4c-4.8 1.6-7.2 4.27-7.2 8h6.4v12H0Zm18.4 0V14.4c0-8 4.8-12.8 12.8-14.4l1.6 4c-4.8 1.6-7.2 4.27-7.2 8H32v12H18.4Z" fill="#F7941D" fillOpacity="0.4" />
+                  </svg>
+                  <p className="flex-1 leading-relaxed text-ink-soft/90">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="mt-6 border-t border-line pt-4">
+                    <p className="font-bold">{t.name}</p>
+                    <p className="text-sm text-ink-soft/60">{t.context}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -382,47 +419,47 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------ CARE+ ------------------------------- */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 md:py-24">
-          <div>
-            <SectionHeading
-              eyebrow="Proofit Care+"
-              title="One monsoon-proof plan."
-              accent="Every year, handled."
-              lede="Annual scheduled inspections, thermal re-scans of known trouble spots, priority emergency visits and a running condition history of your home."
-              dark
-            />
-            <Reveal delay={150} className="-mt-4">
-              <Link
-                href="/services/proofit-care-plus"
-                className="inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-[0_10px_30px_-8px_rgba(247,148,29,0.7)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep"
-              >
-                Explore Care+
-              </Link>
-            </Reveal>
-          </div>
-          <Reveal from="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/images/careplus-rooftop.webp"
-                alt="Technician applying waterproof sealant on a rooftop terrace during an annual maintenance visit"
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="tile-black grid items-center gap-8 overflow-hidden lg:grid-cols-2">
+              <div className="p-8 md:p-12">
+                <SectionHeading
+                  eyebrow="Proofit Care+"
+                  title="One monsoon-proof plan."
+                  accent="Every year, handled."
+                  lede="Annual scheduled inspections, thermal re-scans of known trouble spots, priority emergency visits and a running condition history of your home."
+                  dark
+                />
+                <Link
+                  href="/services/proofit-care-plus"
+                  className="-mt-2 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-deep"
+                >
+                  Explore Care+
+                </Link>
+              </div>
+              <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[380px]">
+                <Image
+                  src="/images/careplus-rooftop.webp"
+                  alt="Technician applying waterproof sealant on a rooftop terrace during an annual maintenance visit"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ------------------------------- BLOG ------------------------------- */}
-      <section className="py-20 md:py-28">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="From the blog" title="Know your home" accent="better." center />
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {posts.slice(0, 3).map((p, i) => (
-              <Reveal key={p.slug} delay={i * 120}>
-                <Link href={`/blog/${p.slug}`} className="card-lift group block h-full overflow-hidden rounded-2xl border border-line bg-white">
+              <Reveal key={p.slug} delay={i * 110} className="h-full">
+                <Link href={`/blog/${p.slug}`} className="tile tile-hover group flex h-full flex-col overflow-hidden">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={p.image}

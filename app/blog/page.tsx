@@ -30,7 +30,7 @@ export default function BlogPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Featured post */}
           <Reveal className="mb-12">
-            <Link href={`/blog/${lead.slug}`} className="card-lift group grid overflow-hidden rounded-3xl border border-line bg-white lg:grid-cols-2">
+            <Link href={`/blog/${lead.slug}`} className="tile tile-hover group grid overflow-hidden lg:grid-cols-2">
               <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[360px]">
                 <Image
                   src={lead.image}
@@ -60,7 +60,7 @@ export default function BlogPage() {
           <div className="grid gap-6 md:grid-cols-3">
             {rest.map((p, i) => (
               <Reveal key={p.slug} delay={i * 100}>
-                <Link href={`/blog/${p.slug}`} className="card-lift group block h-full overflow-hidden rounded-2xl border border-line bg-white">
+                <Link href={`/blog/${p.slug}`} className="tile tile-hover group block h-full overflow-hidden">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={p.image}

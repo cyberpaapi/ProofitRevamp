@@ -56,7 +56,7 @@ export default async function ServicePage({ params }: Params) {
               {service.intro.map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
-              <div className="rounded-2xl border border-line bg-white p-6">
+              <div className="tile p-6">
                 <h3 className="mb-3 font-bold text-ink">Ideal for</h3>
                 <ul className="space-y-2.5">
                   {service.idealFor.map((x) => (
@@ -77,7 +77,7 @@ export default async function ServicePage({ params }: Params) {
               </Reveal>
               <div className="grid gap-5 sm:grid-cols-2">
                 {service.includes.map((inc, i) => (
-                  <Reveal key={inc.title} delay={i * 90} className="card-lift rounded-2xl border border-line bg-white p-6">
+                  <Reveal key={inc.title} delay={i * 90} className="tile tile-hover p-6">
                     <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-soft" aria-hidden>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -94,7 +94,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {/* Enquiry */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <SectionHeading
@@ -131,7 +131,7 @@ export default async function ServicePage({ params }: Params) {
           <div className="grid gap-6 md:grid-cols-2">
             {others.map((o, i) => (
               <Reveal key={o.slug} delay={i * 100}>
-                <Link href={`/services/${o.slug}`} className="card-lift group flex items-center gap-5 rounded-2xl border border-line bg-white p-5">
+                <Link href={`/services/${o.slug}`} className="tile tile-hover group flex items-center gap-5 p-5">
                   <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl">
                     <Image src={o.image} alt={o.name} fill sizes="112px" className="object-cover" />
                   </div>

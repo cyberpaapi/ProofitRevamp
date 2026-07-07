@@ -66,12 +66,12 @@ export default function CareersPage() {
       </section>
 
       {/* Openings */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="Open roles" title="Current" accent="openings." center />
           <div className="space-y-5">
             {openings.map((o, i) => (
-              <Reveal key={o.title} delay={i * 100} className="card-lift rounded-2xl border border-line bg-paper p-7 md:p-8">
+              <Reveal key={o.title} delay={i * 100} className="tile tile-hover p-7 md:p-8">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                   <h3 className="text-xl font-bold">{o.title}</h3>
                   <span className="rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-deep">{o.type}</span>

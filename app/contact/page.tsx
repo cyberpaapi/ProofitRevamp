@@ -66,7 +66,7 @@ export default function ContactPage() {
                   <a
                     href={c.href}
                     {...(c.external ? { target: "_blank", rel: "noopener" } : {})}
-                    className="card-lift flex items-center gap-4 rounded-2xl border border-line bg-white p-5"
+                    className="tile tile-hover flex items-center gap-4 p-5"
                   >
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand-deep">
                       {c.icon}
@@ -79,7 +79,7 @@ export default function ContactPage() {
                 </Reveal>
               ))}
             </div>
-            <Reveal delay={300} className="mt-8 rounded-2xl bg-ink p-7 text-white">
+            <Reveal delay={300} className="mt-8 tile-black p-7">
               <h3 className="mb-2 font-bold text-brand">Service area</h3>
               <p className="text-white/80">
                 {site.serviceArea}. Outside this area? Write to us — we take up select assignments.

@@ -61,15 +61,21 @@ export default function AboutPage() {
       </section>
 
       {/* Vision / Mission */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
-          <Reveal className="rounded-2xl border-l-4 border-brand bg-paper p-8 md:p-10">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand">Vision</p>
-            <p className="text-xl font-medium leading-relaxed text-ink">{vision}</p>
+          <Reveal className="tile-orange relative overflow-hidden p-8 md:p-10">
+            <svg className="check-watermark -bottom-10 -right-10 h-48 w-48" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M4 12.5 9.5 18 20 6.5" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <p className="relative mb-3 font-display text-sm font-bold uppercase tracking-[0.2em] text-white/80">Vision</p>
+            <p className="relative text-xl font-medium leading-relaxed text-white">{vision}</p>
           </Reveal>
-          <Reveal delay={120} className="rounded-2xl border-l-4 border-ink bg-paper p-8 md:p-10">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand">Mission</p>
-            <p className="text-xl font-medium leading-relaxed text-ink">{mission}</p>
+          <Reveal delay={120} className="tile-black relative overflow-hidden p-8 md:p-10">
+            <svg className="check-watermark -bottom-10 -right-10 h-48 w-48" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <p className="relative mb-3 font-display text-sm font-bold uppercase tracking-[0.2em] text-brand">Mission</p>
+            <p className="relative text-xl font-medium leading-relaxed text-white">{mission}</p>
           </Reveal>
         </div>
       </section>
@@ -85,7 +91,7 @@ export default function AboutPage() {
           />
           <div className="grid items-stretch gap-8 lg:grid-cols-2">
             {founders.map((f, i) => (
-              <Reveal key={f.name} delay={i * 150} className="flex h-full flex-col rounded-2xl border border-line bg-white p-8 md:p-10">
+              <Reveal key={f.name} delay={i * 150} className="flex h-full flex-col tile p-8 md:p-10">
                 <div className="mb-6 flex min-h-16 items-center gap-5">
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand font-display text-2xl font-bold text-white" aria-hidden>
                     {f.name.split(" ").map((n) => n[0]).join("")}
@@ -117,21 +123,30 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="bg-ink py-20 text-white md:py-24">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="How we work" title="Three things we" accent="refuse to compromise." dark center />
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              { title: "Independence", desc: "We don't sell repairs, materials or contracting. Our only product is the truth about your property — which is why our reports carry weight with builders and societies." },
-              { title: "Evidence", desc: "Every finding is photographed, thermally documented where relevant, and severity-graded. If we can't show it, we don't report it." },
-              { title: "Clarity", desc: "Reports written for homeowners, structured for site teams. You understand what's wrong; your contractor knows exactly what to fix." },
-            ].map((v, i) => (
-              <Reveal key={v.title} delay={i * 120} className="rounded-2xl border border-white/10 bg-white/5 p-8">
-                <h3 className="mb-3 text-xl font-bold text-brand">{v.title}</h3>
-                <p className="leading-relaxed text-white/80">{v.desc}</p>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <div className="tile-black p-7 md:p-12">
+              <SectionHeading eyebrow="How we work" title="Three things we" accent="refuse to compromise." dark center />
+              <div className="grid gap-4 md:grid-cols-3">
+                {[
+                  { title: "Independence", desc: "We don't sell repairs, materials or contracting. Our only product is the truth about your property — which is why our reports carry weight with builders and societies." },
+                  { title: "Evidence", desc: "Every finding is photographed, thermally documented where relevant, and severity-graded. If we can't show it, we don't report it." },
+                  { title: "Clarity", desc: "Reports written for homeowners, structured for site teams. You understand what's wrong; your contractor knows exactly what to fix." },
+                ].map((v, i) => (
+                  <Reveal key={v.title} delay={i * 120} className="rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h3 className="mb-3 flex items-center gap-2.5 text-xl font-bold text-brand">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                        <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {v.title}
+                    </h3>
+                    <p className="leading-relaxed text-white/80">{v.desc}</p>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

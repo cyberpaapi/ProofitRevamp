@@ -93,12 +93,12 @@ export default async function PostPage({ params }: Params) {
         </div>
       </article>
 
-      <section className="border-t border-line bg-white py-16">
+      <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-8 text-2xl font-bold">Keep reading</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {others.map((p) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="card-lift group flex items-center gap-5 rounded-2xl border border-line bg-paper p-5">
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="tile tile-hover group flex items-center gap-5 p-5">
                 <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl">
                   <Image src={p.image} alt={p.title} fill sizes="112px" className="object-cover" />
                 </div>

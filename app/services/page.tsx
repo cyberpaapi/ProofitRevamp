@@ -30,7 +30,7 @@ export default function ServicesPage() {
             <Reveal key={s.slug} delay={80}>
               <Link
                 href={`/services/${s.slug}`}
-                className={`card-lift group grid overflow-hidden rounded-3xl border border-line bg-white lg:grid-cols-2 ${
+                className={`tile tile-hover group grid overflow-hidden lg:grid-cols-2 ${
                   i % 2 ? "lg:[&>*:first-child]:order-2" : ""
                 }`}
               >
@@ -44,7 +44,7 @@ export default function ServicesPage() {
                   />
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-12">
-                  <p className="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-brand">
+                  <p className="mb-2 font-display text-6xl font-bold text-brand/25 md:text-7xl" aria-hidden>
                     {String(i + 1).padStart(2, "0")}
                   </p>
                   <h2 className="mb-3 text-2xl font-bold transition-colors group-hover:text-brand-deep md:text-3xl">

@@ -35,7 +35,7 @@ export default function FaqsPage() {
           <div className="space-y-4">
             {faqs.map((f, i) => (
               <Reveal key={f.q} delay={Math.min(i, 4) * 60}>
-                <details className="group rounded-2xl border border-line bg-white open:border-brand/50 open:shadow-md">
+                <details className="group tile open:border-brand/50 open:shadow-md">
                   <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-bold marker:content-none [&::-webkit-details-marker]:hidden">
                     {f.q}
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-lg font-bold text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden>

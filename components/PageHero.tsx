@@ -9,34 +9,41 @@ type Props = {
   imageAlt?: string;
 };
 
-/** Standard interior-page hero: dark band, orange eyebrow, optional background image. */
+/** Interior-page hero: light editorial header with an optional wide banner tile. */
 export default function PageHero({ eyebrow, title, accent, lede, image, imageAlt = "" }: Props) {
   return (
-    <section className="relative overflow-hidden bg-ink pb-20 pt-36 text-white md:pb-28 md:pt-44">
-      {image && (
-        <>
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" aria-hidden />
-        </>
-      )}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="hero-rise mb-4 text-sm font-bold uppercase tracking-[0.2em] text-brand" style={{ ["--rise-delay" as string]: "0ms" }}>
+    <section className="pt-32 md:pt-40">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <span
+          className="hero-rise inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-bold text-brand-deep"
+          style={{ ["--rise-delay" as string]: "0ms" }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
           {eyebrow}
-        </p>
-        <h1 className="hero-rise max-w-3xl text-4xl font-bold leading-[1.1] md:text-6xl" style={{ ["--rise-delay" as string]: "120ms" }}>
+        </span>
+        <h1
+          className="hero-rise mt-5 max-w-4xl text-4xl font-bold leading-[1.05] md:text-6xl"
+          style={{ ["--rise-delay" as string]: "120ms" }}
+        >
           {title} {accent && <span className="text-brand">{accent}</span>}
         </h1>
         {lede && (
-          <p className="hero-rise mt-6 max-w-2xl text-lg leading-relaxed text-white/80" style={{ ["--rise-delay" as string]: "240ms" }}>
+          <p
+            className="hero-rise mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft/80"
+            style={{ ["--rise-delay" as string]: "240ms" }}
+          >
             {lede}
           </p>
+        )}
+        {image && (
+          <div
+            className="hero-rise relative mt-10 aspect-[21/9] overflow-hidden rounded-3xl md:mt-14"
+            style={{ ["--rise-delay" as string]: "320ms" }}
+          >
+            <Image src={image} alt={imageAlt} fill priority sizes="(min-width: 1280px) 1216px, 100vw" className="object-cover" />
+          </div>
         )}
       </div>
     </section>

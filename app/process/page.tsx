@@ -43,7 +43,7 @@ export default function ProcessPage() {
                 >
                   {i + 1}
                 </span>
-                <div className="grid items-center gap-6 overflow-hidden rounded-2xl border border-line bg-white sm:grid-cols-[240px_1fr]">
+                <div className="grid items-center gap-6 overflow-hidden tile sm:grid-cols-[240px_1fr]">
                   <div className="relative aspect-[4/3] sm:aspect-square">
                     <Image
                       src={`/images/process-${i + 1}.webp`}
@@ -65,7 +65,7 @@ export default function ProcessPage() {
       </section>
 
       {/* Toolkit */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <Reveal from="left">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">

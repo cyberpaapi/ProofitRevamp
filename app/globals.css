@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* Proofit brand — from logo: orange check, black wordmark, white ground */
+  /* Proofit brand — light bento system from the logo: orange check, black wordmark, warm white ground */
   --color-brand: #f7941d;
   --color-brand-deep: #e07e0c;
-  --color-brand-soft: #fef3e2;
-  --color-ink: #17181a;
+  --color-brand-soft: #fdeedc;
+  --color-ink: #141518;
   --color-ink-soft: #26282c;
-  --color-paper: #faf8f4;
-  --color-line: #e9e4da;
+  --color-paper: #faf7f2;
+  --color-line: #e9e2d6;
 
-  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -28,12 +28,40 @@ body {
 
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 ::selection {
   background: var(--color-brand);
   color: #fff;
+}
+
+/* ---------- Bento tiles ---------- */
+.tile {
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.tile-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px -20px rgba(20, 21, 24, 0.22);
+}
+.tile-orange {
+  border-radius: 1.5rem;
+  background: var(--color-brand);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.tile-orange.tile-hover:hover {
+  background: var(--color-brand-deep);
+  box-shadow: 0 24px 48px -18px rgba(247, 148, 29, 0.55);
+}
+.tile-black {
+  border-radius: 1.5rem;
+  background: var(--color-ink);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ---------- Scroll reveal (driven by <Reveal/>) ---------- */
@@ -64,15 +92,7 @@ h1, h2, h3, h4, .font-display {
   animation-delay: var(--rise-delay, 0ms);
 }
 
-@keyframes kenburns {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
-}
-.kenburns {
-  animation: kenburns 18s ease-out both alternate infinite;
-}
-
-/* Thermal scan line sweeping over hero imagery */
+/* Thermal scan line sweeping over hero video */
 @keyframes scanline {
   0% { top: -12%; opacity: 0; }
   8% { opacity: 1; }
@@ -86,7 +106,7 @@ h1, h2, h3, h4, .font-display {
   height: 3px;
   background: linear-gradient(90deg, transparent, #f7941d 25%, #ffd9a3 50%, #f7941d 75%, transparent);
   box-shadow: 0 0 24px 6px rgba(247, 148, 29, 0.45);
-  animation: scanline 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  animation: scanline 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   pointer-events: none;
 }
 
@@ -111,6 +131,13 @@ h1, h2, h3, h4, .font-display {
   animation: draw-check 0.9s ease-out 0.4s forwards;
 }
 
+/* Giant watermark checkmark for bands */
+.check-watermark {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.14;
+}
+
 /* ---------- Underline link hover ---------- */
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
@@ -123,15 +150,6 @@ h1, h2, h3, h4, .font-display {
   background-size: 100% 2px;
 }
 
-/* ---------- Card lift ---------- */
-.card-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.card-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -18px rgba(23, 24, 26, 0.25);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .hero-rise {
@@ -140,7 +158,7 @@ h1, h2, h3, h4, .font-display {
     animation: none !important;
     transition: none !important;
   }
-  .kenburns, .scanline, .marquee-track, .draw-check path {
+  .scanline, .marquee-track, .draw-check path {
     animation: none !important;
   }
   .scanline { display: none; }
