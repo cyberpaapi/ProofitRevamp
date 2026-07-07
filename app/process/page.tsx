@@ -76,7 +76,7 @@ export default function ProcessPage() {
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
               />
-              <div className="scanline" aria-hidden />
+              
             </div>
           </Reveal>
           <div>

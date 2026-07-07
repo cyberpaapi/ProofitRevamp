@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Proofit brand — light bento system from the logo: orange check, black wordmark, warm white ground */
+  /* Proofit ref theme — charcoal + white + brand orange, gold-orange CTAs */
   --color-brand: #f7941d;
   --color-brand-deep: #e07e0c;
-  --color-brand-soft: #fdeedc;
-  --color-ink: #141518;
-  --color-ink-soft: #26282c;
-  --color-paper: #faf7f2;
-  --color-line: #e9e2d6;
+  --color-brand-soft: #fdf3e3;
+  --color-ink: #111112;
+  --color-ink-soft: #2a2a2c;
+  --color-paper: #ffffff;
+  --color-cream: #fdf6ea;
+  --color-line: #e8e2d6;
 
-  --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -31,7 +32,7 @@ body {
 
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 
 ::selection {
@@ -39,32 +40,37 @@ h1, h2, h3, h4, .font-display {
   color: #fff;
 }
 
-/* ---------- Bento tiles ---------- */
+/* ---------- Cards ---------- */
 .tile {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   border: 1px solid var(--color-line);
   background: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .tile-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 24px 48px -20px rgba(20, 21, 24, 0.22);
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px -22px rgba(17, 17, 18, 0.28);
 }
 .tile-orange {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: var(--color-brand);
   color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 .tile-orange.tile-hover:hover {
   background: var(--color-brand-deep);
-  box-shadow: 0 24px 48px -18px rgba(247, 148, 29, 0.55);
 }
 .tile-black {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: var(--color-ink);
   color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* Outlined ref-style card with cream inner panels */
+.card-outline {
+  border-radius: 1rem;
+  border: 1px solid var(--color-brand);
+  background: #fff;
 }
 
 /* ---------- Scroll reveal (driven by <Reveal/>) ---------- */
@@ -77,15 +83,13 @@ h1, h2, h3, h4, .font-display {
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
-/* Slide distance kept inside the viewport on phones (off-canvas transforms
-   caused horizontal panning on iOS); full distance from sm up. */
 .reveal.reveal-left { transform: translateX(-16px); }
 .reveal.reveal-right { transform: translateX(16px); }
+.reveal.reveal-scale { transform: scale(0.95); }
 @media (min-width: 640px) {
   .reveal.reveal-left { transform: translateX(-32px); }
   .reveal.reveal-right { transform: translateX(32px); }
 }
-.reveal.reveal-scale { transform: scale(0.94); }
 .reveal.in-view {
   opacity: 1;
   transform: none;
@@ -101,36 +105,47 @@ h1, h2, h3, h4, .font-display {
   animation-delay: var(--rise-delay, 0ms);
 }
 
-/* Thermal scan line sweeping over hero video */
-@keyframes scanline {
-  0% { top: -12%; opacity: 0; }
-  8% { opacity: 1; }
-  92% { opacity: 1; }
-  100% { top: 108%; opacity: 0; }
+/* ---------- Thermal lens (bouncing square on hero) ---------- */
+.thermal-lens {
+  position: absolute;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(17, 17, 18, 0.25),
+    0 0 34px 6px rgba(247, 148, 29, 0.35),
+    inset 0 0 18px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform;
 }
-.scanline {
+.thermal-lens::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.thermal-lens .lens-img {
   position: absolute;
   left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #f7941d 25%, #ffd9a3 50%, #f7941d 75%, transparent);
-  box-shadow: 0 0 24px 6px rgba(247, 148, 29, 0.45);
-  animation: scanline 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  pointer-events: none;
+  top: 0;
+  will-change: transform;
 }
+/* corner ticks like a camera reticle */
+.thermal-lens .tick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0;
+}
+.thermal-lens .tick-tl { left: 6px; top: 6px; border-left-width: 2px; border-top-width: 2px; }
+.thermal-lens .tick-tr { right: 6px; top: 6px; border-right-width: 2px; border-top-width: 2px; }
+.thermal-lens .tick-bl { left: 6px; bottom: 6px; border-left-width: 2px; border-bottom-width: 2px; }
+.thermal-lens .tick-br { right: 6px; bottom: 6px; border-right-width: 2px; border-bottom-width: 2px; }
 
-/* ---------- Marquee ---------- */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 30s linear infinite;
-}
-
-/* ---------- Checkmark draw (brand motif) ---------- */
+/* ---------- Checkmark draw ---------- */
 @keyframes draw-check {
   to { stroke-dashoffset: 0; }
 }
@@ -138,13 +153,6 @@ h1, h2, h3, h4, .font-display {
   stroke-dasharray: 120;
   stroke-dashoffset: 120;
   animation: draw-check 0.9s ease-out 0.4s forwards;
-}
-
-/* Giant watermark checkmark for bands */
-.check-watermark {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0.14;
 }
 
 /* ---------- Underline link hover ---------- */
@@ -167,8 +175,8 @@ h1, h2, h3, h4, .font-display {
     animation: none !important;
     transition: none !important;
   }
-  .scanline, .marquee-track, .draw-check path {
+  .draw-check path {
     animation: none !important;
   }
-  .scanline { display: none; }
+  .thermal-lens { display: none; }
 }
