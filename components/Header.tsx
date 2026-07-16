@@ -10,6 +10,7 @@ const menuLinks = [
   { href: "/about", label: "About Us" },
   { href: "/process", label: "Our Process" },
   { href: "/services", label: "Services" },
+  { href: "/care-plus", label: "Proofit Care+" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/blog", label: "Blog" },
   { href: "/faqs", label: "FAQs" },
@@ -20,7 +21,7 @@ const menuLinks = [
 const serviceLinks = [
   { href: "/services/water-inspection", label: "Water Inspection" },
   { href: "/services/home-inspection", label: "Home Inspection" },
-  { href: "/services/proofit-care-plus", label: "Proofit Care+" },
+  { href: "/care-plus", label: "Proofit Care+" },
 ];
 
 export default function Header() {

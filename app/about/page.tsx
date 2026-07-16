@@ -85,13 +85,17 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Leadership"
-            title="The founders"
-            lede="Two professionals who learned the discipline of inspection in Canada — and came home to build it for India."
+            title="The team behind Proofit"
+            lede="Founders who learned the discipline of inspection in Canada, and the partner who has built the business on the ground in India."
             center
           />
           <div className="grid items-stretch gap-8 lg:grid-cols-2">
             {founders.map((f, i) => (
-              <Reveal key={f.name} delay={i * 150} className="flex h-full flex-col tile p-8 md:p-10">
+              <Reveal
+                key={f.name}
+                delay={i * 150}
+                className={`flex h-full flex-col tile p-8 md:p-10 ${i === 2 ? "lg:col-span-2 lg:mx-auto lg:max-w-2xl" : ""}`}
+              >
                 <div className="mb-6 flex min-h-16 items-center gap-5">
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand font-display text-2xl font-bold text-white" aria-hidden>
                     {f.name.split(" ").map((n) => n[0]).join("")}

@@ -3,7 +3,7 @@ import { posts, services } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["", "/about", "/process", "/services", "/faqs", "/blog", "/careers", "/case-studies", "/contact"];
+  const staticPages = ["", "/about", "/process", "/services", "/care-plus", "/faqs", "/blog", "/careers", "/case-studies", "/contact"];
 
   return [
     ...staticPages.map((p) => ({

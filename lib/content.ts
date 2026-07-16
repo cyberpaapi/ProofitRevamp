@@ -35,6 +35,20 @@ export const founders = [
       "Owns inspection workflows, reporting & QA at Proofit",
     ],
   },
+  {
+    name: "Nupur Mahipal",
+    role: "Partner · Chief Marketing Officer (CMO)",
+    bio: [
+      "Nupur serves as Partner and Chief Marketing Officer, bringing over seven years of experience in the property inspection industry. Throughout her career, she has successfully managed every stage of the business — from on-ground execution and operations to marketing, client relationship management, and business development.",
+      "With a strong understanding of the industry and a hands-on approach, Nupur has played a key role in driving business growth through strategic networking, brand development, and customer-focused marketing initiatives. Her ability to combine operational expertise with marketing insight has helped strengthen the company's market presence and build lasting client relationships.",
+      "As a leader, Nupur believes in empowering her team to innovate, adapt, and work collaboratively to achieve Proofit's goals. She is committed to fostering a culture of continuous improvement, accountability, and excellence while delivering exceptional value to clients and supporting the company's long-term vision.",
+    ],
+    highlights: [
+      "7+ years in the property inspection industry",
+      "Operations, marketing, CRM & business development",
+      "Leads brand development & strategic networking at Proofit",
+    ],
+  },
 ];
 
 export const vision =

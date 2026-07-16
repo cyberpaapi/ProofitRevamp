@@ -299,6 +299,32 @@ export default function HomePage() {
         <ServicesCarousel slides={serviceSlides} />
       </section>
 
+      {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
+      <section className="pt-20 md:pt-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="flex flex-col items-start gap-8 rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:p-12">
+              <div>
+                <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Proofit Care+</p>
+                <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold leading-[1.15] md:text-4xl">
+                  From Inspection to Execution
+                </h2>
+                <p className="mt-4 max-w-xl leading-relaxed text-ink-soft/80">
+                  Waterproofing, civil repair, facility management, HVAC, pest control and more — one professional
+                  partner from problem identification to final execution and long-term maintenance. Inspect. Verify.
+                  Trust. Repair.
+                </p>
+              </div>
+              <div className="shrink-0">
+                <ArrowBtn href="/care-plus" variant="dark">
+                  Know More
+                </ArrowBtn>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* --------------------------- WHEN TO INSPECT -------------------------- */}
       <section className="py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(260px,380px)_1fr] lg:gap-20 lg:px-8">

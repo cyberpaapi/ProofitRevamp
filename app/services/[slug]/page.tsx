@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
@@ -33,6 +33,8 @@ const formDefault: Record<string, string> = {
 
 export default async function ServicePage({ params }: Params) {
   const { slug } = await params;
+  // Care+ has grown into a full standalone offering with its own page
+  if (slug === "proofit-care-plus") redirect("/care-plus");
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
