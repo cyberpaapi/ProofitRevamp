@@ -100,6 +100,25 @@ function BubblePanel({ title }: { title: string }) {
       }
     };
 
+    const constrainBody = (body: Body, width: number, height: number) => {
+      if (body.x < 0) {
+        body.x = 0;
+        body.vx = Math.abs(body.vx) * 0.08;
+      } else if (body.x + body.width > width) {
+        body.x = Math.max(0, width - body.width);
+        body.vx = -Math.abs(body.vx) * 0.08;
+      }
+
+      if (body.y < 0) {
+        body.y = 0;
+        body.vy = Math.abs(body.vy) * 0.05;
+      } else if (body.y + body.height > height) {
+        body.y = Math.max(0, height - body.height);
+        body.vy = Math.abs(body.vy) > 45 ? -Math.abs(body.vy) * 0.04 : 0;
+        body.vx *= 0.8;
+      }
+    };
+
     const tick = (time: number) => {
       const frameTime = Math.min(0.032, Math.max(0.001, (time - previousTime) / 1000));
       previousTime = time;
@@ -117,30 +136,16 @@ function BubblePanel({ title }: { title: string }) {
           body.x += body.vx * dt;
           body.y += body.vy * dt;
 
-          if (body.x < 0) {
-            body.x = 0;
-            body.vx = Math.abs(body.vx) * 0.12;
-          } else if (body.x + body.width > width) {
-            body.x = width - body.width;
-            body.vx = -Math.abs(body.vx) * 0.12;
-          }
-
-          if (body.y + body.height > height) {
-            body.y = height - body.height;
-            body.vy = Math.abs(body.vy) > 45 ? -Math.abs(body.vy) * 0.06 : 0;
-            body.vx *= 0.82;
-          } else if (body.y < 0) {
-            body.y = 0;
-            body.vy = Math.abs(body.vy) * 0.08;
-          }
+          constrainBody(body, width, height);
         }
 
-        for (let iteration = 0; iteration < 4; iteration += 1) {
+        for (let iteration = 0; iteration < 12; iteration += 1) {
           for (let first = 0; first < bodies.length; first += 1) {
             for (let second = first + 1; second < bodies.length; second += 1) {
               resolveCollision(bodies[first], bodies[second]);
             }
           }
+          bodies.forEach((body) => constrainBody(body, width, height));
         }
       }
 
@@ -257,7 +262,7 @@ function BubblePanel({ title }: { title: string }) {
             onPointerUp={stopDrag}
             onPointerCancel={stopDrag}
             className={`absolute z-10 touch-none select-none rounded-full px-4 py-4 text-center font-display text-sm font-semibold leading-tight shadow-sm active:cursor-grabbing sm:px-5 sm:text-lg ${bubble.width} ${toneClasses[bubble.tone]} cursor-grab`}
-            style={{ left: `${bubble.x}%`, top: `${bubble.y}%`, rotate: `${bubble.rotate}deg` }}
+            style={{ left: `${bubble.x}%`, top: `${bubble.y}%` }}
             aria-label={`${bubble.text}. Drag to move.`}
           >
             {bubble.text}

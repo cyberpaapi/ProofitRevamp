@@ -254,7 +254,7 @@ export default function HomePage() {
       <InspectionBubbles />
 
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
-      <section className="pb-20 md:pb-28">
+      <section className="pb-20 pt-24 md:pb-28 md:pt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 grid gap-6 md:grid-cols-2 md:items-end">
             <Reveal>

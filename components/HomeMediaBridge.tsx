@@ -116,7 +116,7 @@ export default function HomeMediaBridge() {
       aria-hidden
     >
       <video className="h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
-        <source src="/videos/S1.mp4" type="video/mp4" />
+        <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
       </video>
     </div>
   );

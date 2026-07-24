@@ -137,7 +137,7 @@ export default function HomeAboutSequence() {
                 preload="auto"
                 aria-label="Proofit inspector using a tablet during a property assessment"
               >
-                <source src="/videos/S1.mp4" type="video/mp4" />
+                <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
               </video>
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function HomeAboutSequence() {
             preload="auto"
             aria-label="Proofit inspector using a tablet during a property assessment"
           >
-            <source src="/videos/S1.mp4" type="video/mp4" />
+            <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
           </video>
         </div>
         <div className="mt-8">
