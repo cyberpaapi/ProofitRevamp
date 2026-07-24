@@ -7,6 +7,7 @@ import HowItWorks from "@/components/HowItWorks";
 import DarkEnquiryForm from "@/components/DarkEnquiryForm";
 import HomeAboutSequence from "@/components/HomeAboutSequence";
 import HomeMediaBridge from "@/components/HomeMediaBridge";
+import InspectionBubbles from "@/components/InspectionBubbles";
 import { site } from "@/lib/site";
 
 /* ------------------------------ Content (per client refs) ------------------------------ */
@@ -90,15 +91,6 @@ const serviceSlides: ServiceSlide[] = [
     href: "/services/home-inspection",
     mediaAlt: "Inspector in a hard hat auditing new construction",
   },
-];
-
-const whenToInspect = [
-  "On possession day",
-  "When your EMIs begin",
-  "Before finalising renovation work",
-  "After the first heavy monsoon",
-  "Before your builder warranty ends",
-  "Before buying a resale home",
 ];
 
 const howSteps = [
@@ -258,37 +250,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --------------------------- WHEN TO INSPECT -------------------------- */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(260px,380px)_1fr] lg:gap-20 lg:px-8">
-          <Reveal>
-            <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
-              You Bought
-              <br />
-              the Home.
-            </h2>
-            <p className="mt-1 font-display text-xl font-semibold">Now Verify It</p>
-            <p className="mt-8 font-display font-semibold">
-              When Should You Get
-              <br />a Home Inspection
-            </p>
-            <p className="mt-4 font-display font-semibold text-ink-soft/45">
-              Why Home Inspection
-              <br />
-              Shouldn&apos;t be Optional
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
-            {whenToInspect.map((w, i) => (
-              <Reveal key={w} delay={i * 80}>
-                <p className="font-display text-2xl font-semibold">{String(i + 1).padStart(2, "0")}</p>
-                <div className="mt-3 h-px w-full bg-line" aria-hidden />
-                <p className="mt-3 font-medium text-ink-soft">{w}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <InspectionBubbles />
 
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
       <section className="pb-20 md:pb-28">

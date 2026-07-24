@@ -229,6 +229,33 @@ h1, h2, h3, h4, .font-display {
   will-change: transform;
 }
 
+/* ---------- Scroll-driven services ---------- */
+@keyframes service-card-enter {
+  from {
+    opacity: 0.2;
+    transform: translateY(38px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.service-card-enter {
+  animation: service-card-enter 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------- Draggable inspection bubbles ---------- */
+@keyframes bubble-float {
+  0%, 100% { transform: translate3d(0, -2px, 0); }
+  50% { transform: translate3d(0, 4px, 0); }
+}
+.bubble-float {
+  animation: bubble-float 3.8s ease-in-out infinite;
+}
+.bubble-float:active {
+  animation-play-state: paused;
+}
+
 /* ---------- Card deck cycle (How PROOFIT Works) ---------- */
 @keyframes deck-leave {
   to {
@@ -286,7 +313,7 @@ h1, h2, h3, h4, .font-display {
   .draw-check path {
     animation: none !important;
   }
-  .deck-leave, .deck-enter {
+  .deck-leave, .deck-enter, .service-card-enter, .bubble-float {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

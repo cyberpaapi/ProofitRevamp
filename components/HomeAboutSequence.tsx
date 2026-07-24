@@ -144,7 +144,7 @@ export default function HomeAboutSequence() {
         </div>
 
         <div>
-          <div className="flex min-h-[calc(100vh-72px)] items-start pt-[9vh]">
+          <div className="flex min-h-[52vh] items-start pt-[9vh]">
             <div className="w-full">
               <AboutCopy />
             </div>
@@ -185,13 +185,10 @@ export default function HomeAboutSequence() {
         <div className="mt-8">
           <AboutCopy />
         </div>
+        <div className="mt-12">
+          <Distinction />
+        </div>
         <div className="mt-14">
-          <Distinction />
-        </div>
-        <div className="mt-20">
-          <Distinction />
-        </div>
-        <div className="mt-20">
           <h2 className="font-display text-3xl font-semibold leading-[1.15] sm:text-4xl">
             Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
           </h2>

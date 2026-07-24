@@ -31,7 +31,7 @@ export default function HomeMediaBridge() {
     const render = () => {
       raf = 0;
 
-      if (window.innerWidth < 1024 || target.dataset.activeServiceIndex !== "0") {
+      if (target.dataset.activeServiceIndex !== "0") {
         source.style.opacity = "";
         startBox = null;
         hideBridge();
@@ -39,6 +39,23 @@ export default function HomeMediaBridge() {
       }
 
       const targetBox = target.getBoundingClientRect();
+
+      if (window.innerWidth < 1024) {
+        source.style.opacity = "";
+        startBox = null;
+        if (targetBox.bottom <= 64 || targetBox.top >= window.innerHeight) {
+          hideBridge();
+          return;
+        }
+        bridge.style.display = "block";
+        bridge.style.left = `${targetBox.left}px`;
+        bridge.style.top = `${targetBox.top}px`;
+        bridge.style.width = `${targetBox.width}px`;
+        bridge.style.height = `${targetBox.height}px`;
+        bridge.style.borderRadius = "0";
+        return;
+      }
+
       const transitionStart = window.innerHeight * 0.94;
       const transitionEnd = Math.max(72, window.innerHeight * 0.12);
       const progress = clamp((transitionStart - targetBox.top) / (transitionStart - transitionEnd));
