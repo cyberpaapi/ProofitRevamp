@@ -43,16 +43,7 @@ export default function HomeMediaBridge() {
       if (window.innerWidth < 1024) {
         source.style.opacity = "";
         startBox = null;
-        if (targetBox.bottom <= 64 || targetBox.top >= window.innerHeight) {
-          hideBridge();
-          return;
-        }
-        bridge.style.display = "block";
-        bridge.style.left = `${targetBox.left}px`;
-        bridge.style.top = `${targetBox.top}px`;
-        bridge.style.width = `${targetBox.width}px`;
-        bridge.style.height = `${targetBox.height}px`;
-        bridge.style.borderRadius = "0";
+        hideBridge();
         return;
       }
 

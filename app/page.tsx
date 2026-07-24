@@ -226,7 +226,7 @@ export default function HomePage() {
       <HomeMediaBridge />
 
       {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
-      <section className="pt-20 md:pt-28">
+      <section className="pb-20 pt-20 md:pb-28 md:pt-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="flex flex-col items-start gap-8 rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:p-12">

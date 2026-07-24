@@ -53,7 +53,8 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
     const render = () => {
       raf = 0;
       const bounds = stage.getBoundingClientRect();
-      const revealDistance = Math.max(1, stage.offsetHeight - window.innerHeight);
+      // Use the entire visible journey so the reveal finishes as the sticky stage releases.
+      const revealDistance = Math.max(1, stage.offsetHeight);
       const progress = Math.min(1, Math.max(0, (window.innerHeight - bounds.top) / revealDistance));
       const eased = progress < 0.5
         ? 2 * progress * progress
@@ -76,7 +77,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
   }, []);
 
   return (
-    <section ref={stageRef} className="relative mb-24 hidden h-[165vh] lg:block">
+    <section ref={stageRef} className="relative mb-24 hidden h-[150vh] lg:block">
       <div className="sticky top-[72px] mx-auto grid h-[calc(100vh-72px)] max-w-7xl grid-cols-[minmax(260px,340px)_1fr] gap-16 px-8 py-10">
         <div>
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">

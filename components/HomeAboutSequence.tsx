@@ -144,13 +144,13 @@ export default function HomeAboutSequence() {
         </div>
 
         <div>
-          <div className="flex min-h-[52vh] items-start pt-[9vh]">
+          <div className="flex items-start pb-12 pt-[9vh]">
             <div className="w-full">
               <AboutCopy />
             </div>
           </div>
 
-          <div className="flex min-h-[calc(100vh-72px)] translate-x-5 flex-col justify-center py-16">
+          <div className="flex min-h-[calc(100vh-72px)] translate-x-5 flex-col justify-start pb-16 pt-4">
             <div>
               <Distinction />
             </div>
@@ -185,7 +185,7 @@ export default function HomeAboutSequence() {
         <div className="mt-8">
           <AboutCopy />
         </div>
-        <div className="mt-12">
+        <div className="mt-8">
           <Distinction />
         </div>
         <div className="mt-14">

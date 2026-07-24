@@ -18,48 +18,19 @@ export type ServiceSlide = {
 
 export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] }) {
   const [index, setIndex] = useState(0);
-  const stageRef = useRef<HTMLElement>(null);
   const slide = slides[index];
 
   useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-
-    let raf = 0;
-    const render = () => {
-      raf = 0;
-      const bounds = stage.getBoundingClientRect();
-      const travel = Math.max(1, stage.offsetHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -bounds.top / travel));
-      const nextIndex = Math.min(slides.length - 1, Math.floor(progress * slides.length));
-      setIndex((current) => current === nextIndex ? current : nextIndex);
-    };
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(render);
-    };
-
-    render();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [slides.length]);
+    if (slides.length <= 1) return;
+    const timer = window.setTimeout(() => {
+      setIndex((current) => (current + 1) % slides.length);
+    }, 7000);
+    return () => window.clearTimeout(timer);
+  }, [index, slides.length]);
 
   const selectIndex = (nextIndex: number) => {
     const normalized = (nextIndex + slides.length) % slides.length;
     setIndex(normalized);
-    const stage = stageRef.current;
-    if (!stage) return;
-    const bounds = stage.getBoundingClientRect();
-    const stageTop = window.scrollY + bounds.top;
-    const travel = Math.max(1, stage.offsetHeight - window.innerHeight);
-    window.scrollTo({
-      top: stageTop + (normalized / Math.max(1, slides.length - 1)) * travel,
-      behavior: "smooth",
-    });
   };
   const go = (dir: 1 | -1) => selectIndex(index + dir);
 
@@ -76,13 +47,9 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
   };
 
   return (
-    <section
-      ref={stageRef}
-      className="relative bg-ink"
-      style={{ height: `calc(100svh + ${(slides.length - 1) * 65}svh)` }}
-    >
+    <section className="relative bg-ink">
       <div
-        className="sticky top-16 grid h-[calc(100svh-4rem)] touch-pan-y grid-rows-[24svh_1fr] overflow-hidden bg-ink text-white sm:grid-rows-[28svh_1fr] lg:top-[72px] lg:h-[calc(100svh-72px)] lg:grid-cols-2 lg:grid-rows-1"
+        className="grid min-h-[calc(100svh-4rem)] touch-pan-y gap-3 bg-ink text-white sm:gap-4 lg:min-h-[calc(100svh-72px)] lg:grid-cols-2 lg:gap-0"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -90,7 +57,7 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
         <div
           id="service-one-media-target"
           data-active-service-index={index}
-          className="relative h-full bg-black"
+          className="relative h-[26svh] min-h-[180px] max-h-[280px] bg-black sm:h-[30svh] lg:h-auto lg:max-h-none"
         >
           {slide.media.type === "video" ? (
             <video
@@ -115,11 +82,23 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="service-card-enter object-cover"
             />
-          ) : null}
+          ) : (
+            <video
+              className="service-card-enter absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={slide.mediaAlt}
+            >
+              <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
+            </video>
+          )}
         </div>
 
         {/* Panel */}
-        <div key={`service-panel-${index}`} className="service-card-enter relative flex min-h-0 flex-col justify-center overflow-hidden p-5 sm:p-7 md:p-10 lg:p-16">
+        <div key={`service-panel-${index}`} className="service-card-enter relative flex min-h-0 flex-col justify-center px-5 pb-8 pt-8 sm:px-7 sm:pb-10 sm:pt-9 md:p-10 lg:overflow-hidden lg:p-16">
           <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-brand sm:text-sm">Our Services</p>
           <p className="mt-2 font-display text-base text-white/60 lg:mt-8 lg:text-lg">
             {String(index + 1).padStart(2, "0")}

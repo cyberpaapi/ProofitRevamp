@@ -7,6 +7,9 @@ type Body = {
   y: number;
   vx: number;
   vy: number;
+  angle: number;
+  angularVelocity: number;
+  restAngle: number;
   width: number;
   height: number;
   dragging: boolean;
@@ -59,6 +62,9 @@ function BubblePanel({ title }: { title: string }) {
           y: Math.min((bubble.y / 100) * height, Math.max(0, height - bodyHeight)),
           vx: 0,
           vy: 0,
+          angle: bubble.rotate,
+          angularVelocity: 0,
+          restAngle: 0,
           width: bodyWidth,
           height: bodyHeight,
           dragging: false,
@@ -66,13 +72,26 @@ function BubblePanel({ title }: { title: string }) {
       });
     };
 
+    const clampAngle = (angle: number) => Math.min(10, Math.max(-10, angle));
+    const rotatedSize = (body: Body) => {
+      const radians = (body.angle * Math.PI) / 180;
+      const cosine = Math.abs(Math.cos(radians));
+      const sine = Math.abs(Math.sin(radians));
+      return {
+        width: body.width * cosine + body.height * sine,
+        height: body.width * sine + body.height * cosine,
+      };
+    };
+
     const resolveCollision = (first: Body, second: Body) => {
       const firstCenterX = first.x + first.width / 2;
       const firstCenterY = first.y + first.height / 2;
       const secondCenterX = second.x + second.width / 2;
       const secondCenterY = second.y + second.height / 2;
-      const overlapX = (first.width + second.width) / 2 - Math.abs(firstCenterX - secondCenterX);
-      const overlapY = (first.height + second.height) / 2 - Math.abs(firstCenterY - secondCenterY);
+      const firstBounds = rotatedSize(first);
+      const secondBounds = rotatedSize(second);
+      const overlapX = (firstBounds.width + secondBounds.width) / 2 - Math.abs(firstCenterX - secondCenterX);
+      const overlapY = (firstBounds.height + secondBounds.height) / 2 - Math.abs(firstCenterY - secondCenterY);
       if (overlapX <= 0 || overlapY <= 0 || (first.dragging && second.dragging)) return;
 
       const firstWeight = first.dragging ? 0 : second.dragging ? 1 : 0.5;
@@ -80,8 +99,18 @@ function BubblePanel({ title }: { title: string }) {
 
       if (overlapY <= overlapX) {
         const direction = firstCenterY < secondCenterY ? -1 : 1;
+        const upperBody = direction < 0 ? first : second;
+        const lowerBody = direction < 0 ? second : first;
+        const upperCenterX = upperBody.x + upperBody.width / 2;
+        const lowerCenterX = lowerBody.x + lowerBody.width / 2;
+        const supportOffset = (upperCenterX - lowerCenterX) / Math.max(upperBody.width, lowerBody.width);
+        const impact = Math.min(10, Math.abs(upperBody.vy - lowerBody.vy) * 0.012);
+
         first.y += direction * overlapY * firstWeight;
         second.y -= direction * overlapY * secondWeight;
+        upperBody.restAngle = clampAngle(supportOffset * 13);
+        if (!upperBody.dragging) upperBody.angularVelocity += supportOffset * impact;
+
         if (!first.dragging && !second.dragging) {
           const sharedVelocity = Math.min(first.vy, second.vy) * 0.12;
           first.vy = sharedVelocity;
@@ -95,27 +124,46 @@ function BubblePanel({ title }: { title: string }) {
         const direction = firstCenterX < secondCenterX ? -1 : 1;
         first.x += direction * overlapX * firstWeight;
         second.x -= direction * overlapX * secondWeight;
-        if (!first.dragging) first.vx *= -0.08;
-        if (!second.dragging) second.vx *= -0.08;
+        if (!first.dragging) {
+          first.angularVelocity += (first.vx - second.vx) * 0.012;
+          first.vx *= -0.08;
+        }
+        if (!second.dragging) {
+          second.angularVelocity += (second.vx - first.vx) * 0.012;
+          second.vx *= -0.08;
+        }
       }
     };
 
     const constrainBody = (body: Body, width: number, height: number) => {
-      if (body.x < 0) {
-        body.x = 0;
+      const bounds = rotatedSize(body);
+      const centerX = body.x + body.width / 2;
+      const centerY = body.y + body.height / 2;
+      const left = centerX - bounds.width / 2;
+      const right = centerX + bounds.width / 2;
+      const top = centerY - bounds.height / 2;
+      const bottom = centerY + bounds.height / 2;
+
+      if (left < 0) {
+        body.x -= left;
         body.vx = Math.abs(body.vx) * 0.08;
-      } else if (body.x + body.width > width) {
-        body.x = Math.max(0, width - body.width);
+        body.angularVelocity *= 0.72;
+      } else if (right > width) {
+        body.x -= right - width;
         body.vx = -Math.abs(body.vx) * 0.08;
+        body.angularVelocity *= 0.72;
       }
 
-      if (body.y < 0) {
-        body.y = 0;
+      if (top < 0) {
+        body.y -= top;
         body.vy = Math.abs(body.vy) * 0.05;
-      } else if (body.y + body.height > height) {
-        body.y = Math.max(0, height - body.height);
+        body.angularVelocity *= 0.72;
+      } else if (bottom > height) {
+        body.y -= bottom - height;
         body.vy = Math.abs(body.vy) > 45 ? -Math.abs(body.vy) * 0.04 : 0;
         body.vx *= 0.8;
+        body.restAngle = 0;
+        body.angularVelocity *= 0.82;
       }
     };
 
@@ -131,6 +179,7 @@ function BubblePanel({ title }: { title: string }) {
       for (let step = 0; step < substeps; step += 1) {
         for (const body of bodies) {
           if (body.dragging) continue;
+          body.restAngle = 0;
           body.vy += 1900 * dt;
           body.vx *= 0.995;
           body.x += body.vx * dt;
@@ -147,6 +196,14 @@ function BubblePanel({ title }: { title: string }) {
           }
           bodies.forEach((body) => constrainBody(body, width, height));
         }
+
+        for (const body of bodies) {
+          if (body.dragging) continue;
+          body.angularVelocity += (body.restAngle - body.angle) * 18 * dt;
+          body.angularVelocity *= 1 - Math.min(0.08, 5 * dt);
+          body.angle = clampAngle(body.angle + body.angularVelocity * dt);
+          constrainBody(body, width, height);
+        }
       }
 
       bodies.forEach((body, index) => {
@@ -154,6 +211,7 @@ function BubblePanel({ title }: { title: string }) {
         if (!element) return;
         element.style.left = `${body.x}px`;
         element.style.top = `${body.y}px`;
+        element.style.transform = `rotate(${body.angle}deg)`;
       });
       raf = requestAnimationFrame(tick);
     };
@@ -189,6 +247,7 @@ function BubblePanel({ title }: { title: string }) {
     body.dragging = true;
     body.vx = 0;
     body.vy = 0;
+    body.angularVelocity = 0;
     dragRef.current = {
       index,
       offsetX: event.clientX - panelBounds.left - body.x,
@@ -219,6 +278,8 @@ function BubblePanel({ title }: { title: string }) {
     const elapsed = Math.max(16, now - drag.lastTime) / 1000;
     body.vx = (nextX - drag.lastX) / elapsed;
     body.vy = (nextY - drag.lastY) / elapsed;
+    body.angularVelocity = Math.min(45, Math.max(-45, body.vx * 0.035));
+    body.angle = Math.min(10, Math.max(-10, body.angle + body.angularVelocity * elapsed));
     body.x = nextX;
     body.y = nextY;
     drag.lastX = nextX;
@@ -234,6 +295,7 @@ function BubblePanel({ title }: { title: string }) {
         body.dragging = false;
         body.vx *= 0.35;
         body.vy *= 0.35;
+        body.angularVelocity *= 0.5;
       }
     }
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
@@ -261,8 +323,8 @@ function BubblePanel({ title }: { title: string }) {
             onPointerMove={moveDrag}
             onPointerUp={stopDrag}
             onPointerCancel={stopDrag}
-            className={`absolute z-10 touch-none select-none rounded-full px-4 py-4 text-center font-display text-sm font-semibold leading-tight shadow-sm active:cursor-grabbing sm:px-5 sm:text-lg ${bubble.width} ${toneClasses[bubble.tone]} cursor-grab`}
-            style={{ left: `${bubble.x}%`, top: `${bubble.y}%` }}
+            className={`absolute z-10 touch-none select-none rounded-full px-4 py-4 text-center font-display text-sm font-semibold leading-tight shadow-sm will-change-transform active:cursor-grabbing sm:px-5 sm:text-lg ${bubble.width} ${toneClasses[bubble.tone]} cursor-grab`}
+            style={{ left: `${bubble.x}%`, top: `${bubble.y}%`, transform: `rotate(${bubble.rotate}deg)` }}
             aria-label={`${bubble.text}. Drag to move.`}
           >
             {bubble.text}
