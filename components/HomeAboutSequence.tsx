@@ -86,14 +86,15 @@ export default function HomeAboutSequence() {
       const stageTop = stage.getBoundingClientRect().top;
       const scrollable = Math.max(1, stage.offsetHeight - window.innerHeight);
       const progress = reducedMotion ? 1 : clamp(-stageTop / scrollable);
-      const morph = clamp((progress - 0.12) / 0.72);
+      const morphProgress = clamp((progress - 0.03) / 0.92);
+      const morph = morphProgress * morphProgress * (3 - 2 * morphProgress);
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
 
-      image.style.left = `${lerp(width * 0.12, 0, morph)}px`;
+      image.style.left = `${lerp(width * 0.34, 0, morph)}px`;
       image.style.top = `${lerp(height * 0.2, height * 0.14, morph)}px`;
-      image.style.width = `${lerp(width * 0.62, width, morph)}px`;
-      image.style.height = `${lerp(height * 0.58, height * 0.72, morph)}px`;
+      image.style.width = `${lerp(width * 0.63, width, morph)}px`;
+      image.style.height = `${lerp(height * 0.54, height * 0.72, morph)}px`;
       title.style.transform = `translate3d(0, ${-110 * morph}px, 0)`;
     };
 
@@ -126,7 +127,7 @@ export default function HomeAboutSequence() {
               id="about-service-media-source"
               ref={imageRef}
               className="absolute z-[2] overflow-hidden rounded-2xl will-change-[left,top,width,height]"
-              style={{ left: "12%", top: "20%", width: "62%", height: "58%" }}
+              style={{ left: "34%", top: "20%", width: "63%", height: "54%" }}
             >
               <video
                 className="h-full w-full object-cover"

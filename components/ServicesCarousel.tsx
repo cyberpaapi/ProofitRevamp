@@ -18,15 +18,28 @@ export type ServiceSlide = {
 
 export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] }) {
   const [index, setIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const stageRef = useRef<HTMLElement>(null);
   const slide = slides[index];
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "-25% 0px -25% 0px" },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || slides.length <= 1) return;
     const timer = window.setTimeout(() => {
       setIndex((current) => (current + 1) % slides.length);
     }, 7000);
     return () => window.clearTimeout(timer);
-  }, [index, slides.length]);
+  }, [index, isVisible, slides.length]);
 
   const selectIndex = (nextIndex: number) => {
     const normalized = (nextIndex + slides.length) % slides.length;
@@ -47,7 +60,7 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
   };
 
   return (
-    <section className="relative bg-ink">
+    <section ref={stageRef} className="relative bg-ink">
       <div
         className="grid min-h-[calc(100svh-4rem)] touch-pan-y gap-3 bg-ink text-white sm:gap-4 lg:min-h-[calc(100svh-72px)] lg:grid-cols-2 lg:gap-0"
         onTouchStart={onTouchStart}
