@@ -8,7 +8,10 @@ export type ServiceSlide = {
   title: string;
   desc: string;
   benefits: string[];
-  media: { type: "video"; src: string; poster: string } | { type: "image"; src: string };
+  media:
+    | { type: "video"; src: string; poster: string }
+    | { type: "image"; src: string }
+    | { type: "placeholder" };
   href: string;
   mediaAlt: string;
 };
@@ -37,7 +40,11 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
       onTouchEnd={onTouchEnd}
     >
       {/* Media */}
-      <div className="relative aspect-[16/11] lg:aspect-auto lg:min-h-[560px]">
+      <div
+        id="service-one-media-target"
+        data-active-service-index={index}
+        className="relative aspect-[16/11] bg-black lg:aspect-auto lg:min-h-[560px]"
+      >
         {slide.media.type === "video" ? (
           <video
             key={slide.media.src}
@@ -52,7 +59,7 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
           >
             <source src={slide.media.src} type="video/mp4" />
           </video>
-        ) : (
+        ) : slide.media.type === "image" ? (
           <Image
             key={slide.media.src}
             src={slide.media.src}
@@ -61,7 +68,7 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
-        )}
+        ) : null}
       </div>
 
       {/* Panel */}

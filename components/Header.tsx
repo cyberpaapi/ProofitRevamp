@@ -26,18 +26,27 @@ const serviceLinks = [
 
 export default function Header() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const [heroMode, setHeroMode] = useState(pathname === "/");
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const heroBoundary = Math.max(560, window.innerHeight * 0.92);
+      setHeroMode(pathname === "/" && window.scrollY < heroBoundary);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     setOpen(false);
+    setServicesOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -50,8 +59,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 text-white transition-all duration-300 ${
-          scrolled ? "bg-ink/95 shadow-[0_2px_24px_rgba(0,0,0,0.35)] backdrop-blur" : "bg-gradient-to-b from-ink/70 to-transparent"
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+          heroMode
+            ? "bg-gradient-to-b from-ink/70 to-transparent text-white"
+            : "bg-paper/95 text-ink shadow-[0_1px_0_rgba(17,17,18,0.06)] backdrop-blur-md"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
@@ -63,14 +74,16 @@ export default function Header() {
                 width={128}
                 height={43}
                 priority
-                className="h-auto w-[96px] rounded-md bg-white/95 px-2 py-1 md:w-[120px]"
+                className={`h-auto w-[108px] transition-[filter] duration-300 md:w-[128px] ${
+                  heroMode ? "brightness-0 invert" : ""
+                }`}
               />
             </Link>
 
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex shrink-0 cursor-pointer items-center gap-2 font-display text-sm font-semibold transition-colors hover:text-brand"
+              className="flex shrink-0 cursor-pointer items-center gap-2 font-display text-sm font-semibold transition-colors hover:text-brand md:hidden"
               aria-label="Open menu"
               aria-expanded={open}
             >
@@ -80,37 +93,82 @@ export default function Header() {
               </svg>
             </button>
 
-            {/* Services dropdown (desktop) */}
-            <div className="group relative hidden lg:block">
+            <nav aria-label="Primary" className="hidden items-center gap-6 md:flex lg:gap-8">
               <Link
-                href="/services"
-                className="flex items-center gap-1.5 font-display text-sm font-semibold transition-colors hover:text-brand"
+                href="/about"
+                className="font-display text-sm font-semibold transition-colors hover:text-brand"
               >
-                Services
-                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden className="transition-transform duration-200 group-hover:rotate-180">
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                </svg>
+                About
               </Link>
-              <div className="invisible absolute left-0 top-full w-56 translate-y-2 rounded-xl border border-white/10 bg-ink p-2 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                {serviceLinks.map((s) => (
-                  <Link
-                    key={s.href}
-                    href={s.href}
-                    className="block rounded-lg px-3 py-2.5 text-sm font-medium text-white/85 transition-colors hover:bg-white/10 hover:text-brand"
+
+              <div className="group relative">
+                <button
+                  type="button"
+                  onClick={() => setServicesOpen((value) => !value)}
+                  className="flex cursor-pointer items-center gap-1.5 font-display text-sm font-semibold transition-colors hover:text-brand"
+                  aria-haspopup="true"
+                  aria-expanded={servicesOpen}
+                >
+                  Services
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden
+                    className={`transition-transform duration-200 ${
+                      servicesOpen ? "rotate-180" : "group-hover:rotate-180"
+                    }`}
                   >
-                    {s.label}
+                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                  </svg>
+                </button>
+                <div
+                  className={`absolute left-0 top-full w-56 rounded-xl border p-2 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-2 group-focus-within:opacity-100 ${
+                    servicesOpen ? "visible translate-y-2 opacity-100" : "invisible translate-y-3 opacity-0"
+                  } ${heroMode ? "border-white/10 bg-ink" : "border-line bg-white"}`}
+                >
+                  <Link
+                    href="/services"
+                    className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:text-brand ${
+                      heroMode ? "text-white/85 hover:bg-white/10" : "text-ink/80 hover:bg-cream"
+                    }`}
+                  >
+                    All Services
                   </Link>
-                ))}
+                  {serviceLinks.map((service) => (
+                    <Link
+                      key={service.href}
+                      href={service.href}
+                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:text-brand ${
+                        heroMode ? "text-white/85 hover:bg-white/10" : "text-ink/80 hover:bg-cream"
+                      }`}
+                    >
+                      {service.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+
+              <Link
+                href="/care-plus"
+                className="whitespace-nowrap font-display text-sm font-semibold transition-colors hover:text-brand"
+              >
+                Proofit Care+
+              </Link>
+            </nav>
           </div>
 
           <Link
             href="/contact"
-            className="group inline-flex h-10 shrink-0 items-center rounded-full bg-white text-ink shadow-[0_4px_18px_rgba(17,17,18,0.25)] transition-all hover:-translate-y-0.5"
+            className={`group inline-flex h-10 shrink-0 items-center rounded-full shadow-[0_4px_18px_rgba(17,17,18,0.18)] transition-all hover:-translate-y-0.5 ${
+              heroMode ? "bg-white text-ink" : "bg-ink text-white"
+            }`}
           >
             <span className="whitespace-nowrap pl-4 font-display text-sm font-semibold">Enquire Now</span>
-            <span className="mx-1 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:translate-x-0.5">
+            <span className={`mx-1 flex h-7 w-7 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:translate-x-0.5 ${
+              heroMode ? "text-white" : "text-ink"
+            }`}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

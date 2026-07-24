@@ -105,15 +105,100 @@ h1, h2, h3, h4, .font-display {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+.hero-actions > a {
+  height: 3.5rem;
+  transform: none;
+  transition:
+    background-color 260ms ease,
+    color 260ms ease,
+    border-color 260ms ease;
+}
+.hero-actions > a > span:first-child {
+  padding-left: 1.65rem;
+  font-size: 1rem;
+}
+.hero-actions > a > span:last-child {
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: none;
+  transition:
+    background-color 260ms ease,
+    color 260ms ease;
+}
+.hero-action-primary {
+  min-width: 15rem;
+  justify-content: space-between;
+  background: var(--color-brand);
+  color: #fff;
+}
+.hero-action-primary > span:last-child {
+  background: #fff;
+  color: var(--color-brand);
+}
+.hero-action-secondary {
+  min-width: 12.25rem;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+}
+.hero-action-secondary > span:last-child {
+  color: #fff;
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .hero-actions > a:hover {
+    transform: none;
+  }
+  .hero-actions > a:hover > span:last-child {
+    transform: none;
+  }
+  .hero-action-primary:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .hero-action-primary:hover > span:last-child {
+    background: transparent;
+    color: var(--color-brand);
+  }
+  .hero-action-secondary:hover {
+    border-color: #fff;
+    background: #fff;
+    color: var(--color-ink);
+  }
+  .hero-action-secondary:hover > span:last-child {
+    background: transparent;
+    color: var(--color-brand);
+  }
+}
+@media (max-width: 639px) {
+  .hero-actions > a {
+    height: 3rem;
+  }
+  .hero-actions > a > span:first-child {
+    padding-left: 1rem;
+    font-size: 0.8125rem;
+  }
+  .hero-actions > a > span:last-child {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .hero-action-primary {
+    min-width: 12.25rem;
+  }
+  .hero-action-secondary {
+    min-width: 10rem;
+  }
+}
+
 /* ---------- Thermal lens (bouncing square on hero) ---------- */
 .thermal-lens {
+  --lens-size: clamp(144px, 19.2vw, 264px);
+  --lens-start-x: max(16px, 6.4vw);
+  --lens-start-y: max(24px, 9vh);
   position: absolute;
-  border-radius: 14px;
-  border: 2px solid rgba(255, 111, 87, 0.9);
-  box-shadow:
-    0 0 0 1px rgba(255, 111, 87, 0.35),
-    0 0 34px 6px rgba(255, 111, 87, 0.5),
-    inset 0 0 18px rgba(255, 111, 87, 0.22);
+  width: var(--lens-size);
+  height: var(--lens-size);
+  border: 0;
+  border-radius: 0;
+  transform: translate3d(var(--lens-start-x), var(--lens-start-y), 0);
   overflow: hidden;
   pointer-events: none;
   will-change: transform;
@@ -122,29 +207,27 @@ h1, h2, h3, h4, .font-display {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 12px;
-  box-shadow: inset 0 0 0 1px rgba(255, 130, 110, 0.35);
-  background: rgba(255, 111, 87, 0.12);
+  background: linear-gradient(
+    135deg,
+    rgba(189, 0, 48, 0.22),
+    rgba(255, 0, 127, 0.16) 46%,
+    rgba(255, 137, 0, 0.2) 76%,
+    rgba(255, 221, 0, 0.13)
+  );
 }
 .thermal-lens .lens-img {
   position: absolute;
   left: 0;
   top: 0;
+  width: 100vw;
+  height: 100svh;
+  transform: translate3d(
+    calc(0px - var(--lens-start-x)),
+    calc(0px - var(--lens-start-y)),
+    0
+  );
   will-change: transform;
 }
-/* corner ticks like a camera reticle */
-.thermal-lens .tick {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: #ff6f57;
-  border-style: solid;
-  border-width: 0;
-}
-.thermal-lens .tick-tl { left: 6px; top: 6px; border-left-width: 2px; border-top-width: 2px; }
-.thermal-lens .tick-tr { right: 6px; top: 6px; border-right-width: 2px; border-top-width: 2px; }
-.thermal-lens .tick-bl { left: 6px; bottom: 6px; border-left-width: 2px; border-bottom-width: 2px; }
-.thermal-lens .tick-br { right: 6px; bottom: 6px; border-right-width: 2px; border-bottom-width: 2px; }
 
 /* ---------- Card deck cycle (How PROOFIT Works) ---------- */
 @keyframes deck-leave {

@@ -5,20 +5,15 @@ import ThermalHero from "@/components/ThermalHero";
 import ServicesCarousel, { type ServiceSlide } from "@/components/ServicesCarousel";
 import HowItWorks from "@/components/HowItWorks";
 import DarkEnquiryForm from "@/components/DarkEnquiryForm";
+import HomeAboutSequence from "@/components/HomeAboutSequence";
+import HomeMediaBridge from "@/components/HomeMediaBridge";
 import { site } from "@/lib/site";
 
 /* ------------------------------ Content (per client refs) ------------------------------ */
 
-const distinction = [
-  "Affordable Pricing",
-  "Highly Trained Expert Care",
-  "Tailored Packages",
-  "Interactive Reporting",
-];
-
 const serviceSlides: ServiceSlide[] = [
   {
-    title: "New Flat Possession Inspection",
+    title: "Pre Possession Inspection",
     desc: "A detailed inspection before you take possession of your new flat to identify construction defects, incomplete work, finishing issues, and quality concerns so they can be rectified by the builder.",
     benefits: [
       "Ensure promised specifications are delivered",
@@ -26,7 +21,7 @@ const serviceSlides: ServiceSlide[] = [
       "Rectification by the builder, at zero cost to you",
       "Understand the true condition of the property",
     ],
-    media: { type: "video", src: "/videos/service-tablet.mp4", poster: "/images/svc-possession-tablet.webp" },
+    media: { type: "placeholder" },
     href: "/services/home-inspection",
     mediaAlt: "Inspector scanning a room with a tablet showing live thermal imagery",
   },
@@ -71,11 +66,11 @@ const serviceSlides: ServiceSlide[] = [
   },
   {
     title: "Pre / Post Renovation Inspection",
-    desc: "Verify contractor workmanship before final payments — finishes, waterproofing, electrical and plumbing checked against what was promised.",
+    desc: "Verify contractor workmanship before final payments — finishes, civil work, electrical and plumbing checked against what was promised.",
     benefits: [
       "Hold contractors to specification",
       "Catch defects before final payment",
-      "Waterproofing integrity checks",
+      "Civil work integrity checks",
       "Documented quality benchmarks",
     ],
     media: { type: "image", src: "/images/svc-renovation.webp" },
@@ -183,121 +178,59 @@ const b2c = {
   outcome: "Clarity before payment. Confidence before possession. Protection before monsoon.",
 };
 
-const Check = ({ size = 16, stroke = "#F7941D" }: { size?: number; stroke?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M4 12.5 9.5 18 20 6.5" stroke={stroke} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export default function HomePage() {
   return (
     <>
-      {/* ------------------------------- HERO ------------------------------- */}
-      <ThermalHero>
-        <div className="absolute inset-x-0 top-0 pt-28 md:pt-32">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h1
-              className="hero-rise max-w-2xl font-display text-4xl font-semibold leading-[1.15] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] md:text-5xl xl:text-[3.4rem]"
-              style={{ ["--rise-delay" as string]: "80ms" }}
-            >
-              India&apos;s First and Most Trusted AI Led Home Health Assessment
-            </h1>
-          </div>
-        </div>
-        <div className="absolute inset-x-0 bottom-0 pb-10 md:pb-14">
-          <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 sm:px-6 md:items-end lg:px-8">
-            <p
-              className="hero-rise max-w-md font-display text-sm font-semibold leading-relaxed text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] md:text-right"
-              style={{ ["--rise-delay" as string]: "220ms" }}
-            >
-              For homeowners who value informed long-term decisions, PROOFIT delivers structured, technology-backed
-              inspections. We uncover hidden issues before they become costly repairs. Protect your home with
-              clarity, not assumptions.
-            </p>
-            <div className="hero-rise flex flex-wrap gap-4" style={{ ["--rise-delay" as string]: "340ms" }}>
-              <ArrowBtn href="/contact" variant="white">
-                Book an Inspection
-              </ArrowBtn>
-              <ArrowBtn href={site.whatsapp} external variant="ghost">
-                Get in Touch
-              </ArrowBtn>
+      <div className="relative">
+        {/* ------------------------------- HERO ------------------------------- */}
+        <ThermalHero>
+          <div className="absolute inset-x-0 top-0 z-10 pt-28 sm:pt-32 lg:pt-[9.5rem]">
+            <div className="mx-auto max-w-[1200px] px-5 sm:px-8 lg:px-0">
+              <h1
+                className="hero-rise max-w-[620px] font-display text-[2.45rem] font-semibold leading-[1.08] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-[3.4rem]"
+                style={{ ["--rise-delay" as string]: "80ms" }}
+              >
+                <span className="lg:hidden">India&apos;s First and Most Trusted AI Led Home Health Assessment</span>
+                <span className="hidden lg:inline">
+                  India&apos;s First and Most
+                  <br />
+                  Trusted AI Led Home
+                  <br />
+                  Health Assessment
+                </span>
+              </h1>
             </div>
           </div>
-        </div>
-      </ThermalHero>
-
-      {/* ------------------------------ ABOUT US ----------------------------- */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 sm:px-6 md:grid-cols-[1fr_auto_1.2fr] lg:gap-16 lg:px-8">
-          <Reveal>
-            <h2 className="font-display text-4xl font-semibold md:text-5xl">About Us</h2>
-          </Reveal>
-          <Reveal delay={120} className="relative -mx-4 sm:mx-0 md:w-72 lg:w-80">
-            <div className="relative aspect-[16/10] overflow-hidden sm:rounded-2xl md:aspect-[3/4]">
-              <Image
-                src="/images/svc-possession-tablet.webp"
-                alt="Proofit inspector reading a thermal heat map on a tablet"
-                fill
-                sizes="(min-width: 768px) 320px, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
-          <div>
-            <Reveal delay={200} className="max-w-xl leading-relaxed text-ink-soft/85">
-              <p>
-                With decades of combined engineering and on-site building experience, the PROOFIT team understands
-                how homes are built and where they commonly fail. We combine hands-on expertise with AI-powered
-                thermal imaging to detect issues that traditional visual inspections often miss.
+          <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12 lg:pb-32">
+            <div className="mx-auto flex max-w-[1200px] flex-col items-start gap-6 px-5 sm:px-8 md:items-end lg:px-0">
+              <p
+                className="hero-rise max-w-[500px] font-display text-sm font-semibold leading-[1.45] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-base md:text-left"
+                style={{ ["--rise-delay" as string]: "220ms" }}
+              >
+                For homeowners who value informed long-term decisions, PROOFIT delivers structured,
+                technology-backed inspections. We uncover hidden issues before they become costly repairs. Protect
+                your home with clarity, not assumptions.
               </p>
-            </Reveal>
-            <Reveal delay={300} className="mt-7">
-              <ArrowBtn href="/about" variant="dark">
-                About Us
-              </ArrowBtn>
-            </Reveal>
-
-            {/* The PROOFIT Distinction */}
-            <Reveal delay={380} className="mt-14">
-              <h3 className="font-display text-2xl font-semibold md:text-3xl">
-                The PROOFIT
-                <br />
-                Distinction
-              </h3>
-              <div className="mt-6 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
-                {distinction.map((d) => (
-                  <div key={d} className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-ink" aria-hidden>
-                      <Check size={16} />
-                    </span>
-                    <p className="text-sm font-semibold leading-snug">{d}</p>
-                  </div>
-                ))}
+              <div className="hero-actions hero-rise flex w-full max-w-[500px] flex-wrap items-center justify-start gap-3 sm:gap-5" style={{ ["--rise-delay" as string]: "340ms" }}>
+                <ArrowBtn href="/contact" variant="orange" className="hero-action-primary">
+                  Book an Inspection
+                </ArrowBtn>
+                <ArrowBtn href={site.whatsapp} external variant="ghost" className="hero-action-secondary">
+                  Get in Touch
+                </ArrowBtn>
               </div>
-            </Reveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </ThermalHero>
 
-      {/* --------------------------- SAVINGS HEADING -------------------------- */}
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="md:ml-auto md:max-w-2xl">
-            <h2 className="font-display text-3xl font-semibold leading-[1.15] md:text-5xl">
-              Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
-            </h2>
-            <p className="mt-5 max-w-xl text-ink-soft/75">
-              A wide array of pre-emptive and problem-solving inspection services designed to protect your property,
-              your investment, and your peace of mind.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+        <HomeAboutSequence />
+      </div>
 
       {/* --------------------------- SERVICES CAROUSEL ------------------------ */}
       <section>
         <ServicesCarousel slides={serviceSlides} />
       </section>
+      <HomeMediaBridge />
 
       {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
       <section className="pt-20 md:pt-28">
