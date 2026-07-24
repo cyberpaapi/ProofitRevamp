@@ -1,16 +1,24 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-type Point = { x: number; y: number };
+type Body = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  width: number;
+  height: number;
+  dragging: boolean;
+};
 
 const bubbles = [
-  { text: "After the first heavy monsoon", x: 18, y: 17, rotate: 7, tone: "outline", width: "w-[72%]" },
-  { text: "Before possession day", x: 11, y: 39, rotate: 4, tone: "dark", width: "w-[50%]" },
-  { text: "When your EMIs begin", x: 51, y: 46, rotate: -2, tone: "orange", width: "w-[47%]" },
-  { text: "Before finalising renovation work", x: 7, y: 57, rotate: 7, tone: "outline", width: "w-[76%]" },
-  { text: "When you notice slight dampness", x: 6, y: 77, rotate: 5, tone: "outline", width: "w-[47%]" },
-  { text: "Before buying a resale home", x: 56, y: 76, rotate: -6, tone: "dark", width: "w-[40%]" },
+  { text: "After the first heavy monsoon", x: 12, y: 3, rotate: 7, tone: "outline", width: "w-[72%]" },
+  { text: "Before possession day", x: 6, y: 21, rotate: 4, tone: "dark", width: "w-[50%]" },
+  { text: "When your EMIs begin", x: 50, y: 26, rotate: -2, tone: "orange", width: "w-[47%]" },
+  { text: "Before finalising renovation work", x: 5, y: 42, rotate: 7, tone: "outline", width: "w-[76%]" },
+  { text: "When you notice slight dampness", x: 5, y: 61, rotate: 5, tone: "outline", width: "w-[47%]" },
+  { text: "Before buying a resale home", x: 55, y: 59, rotate: -6, tone: "dark", width: "w-[40%]" },
 ] as const;
 
 const toneClasses = {
@@ -21,45 +29,213 @@ const toneClasses = {
 
 function BubblePanel({ title }: { title: string }) {
   const panelRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<{ index: number; offsetX: number; offsetY: number } | null>(null);
-  const [positions, setPositions] = useState<Array<Point | null>>(() => bubbles.map(() => null));
-  const [active, setActive] = useState<number | null>(null);
+  const bubbleRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const bodiesRef = useRef<Body[]>([]);
+  const dragRef = useRef<{
+    index: number;
+    offsetX: number;
+    offsetY: number;
+    lastX: number;
+    lastY: number;
+    lastTime: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    let raf = 0;
+    let previousTime = performance.now();
+
+    const initialize = () => {
+      const width = panel.clientWidth;
+      const height = panel.clientHeight;
+      bodiesRef.current = bubbles.map((bubble, index) => {
+        const element = bubbleRefs.current[index];
+        const bodyWidth = element?.offsetWidth ?? 160;
+        const bodyHeight = element?.offsetHeight ?? 64;
+        return {
+          x: Math.min((bubble.x / 100) * width, Math.max(0, width - bodyWidth)),
+          y: Math.min((bubble.y / 100) * height, Math.max(0, height - bodyHeight)),
+          vx: 0,
+          vy: 0,
+          width: bodyWidth,
+          height: bodyHeight,
+          dragging: false,
+        };
+      });
+    };
+
+    const resolveCollision = (first: Body, second: Body) => {
+      const firstCenterX = first.x + first.width / 2;
+      const firstCenterY = first.y + first.height / 2;
+      const secondCenterX = second.x + second.width / 2;
+      const secondCenterY = second.y + second.height / 2;
+      const overlapX = (first.width + second.width) / 2 - Math.abs(firstCenterX - secondCenterX);
+      const overlapY = (first.height + second.height) / 2 - Math.abs(firstCenterY - secondCenterY);
+      if (overlapX <= 0 || overlapY <= 0 || (first.dragging && second.dragging)) return;
+
+      const firstWeight = first.dragging ? 0 : second.dragging ? 1 : 0.5;
+      const secondWeight = second.dragging ? 0 : first.dragging ? 1 : 0.5;
+
+      if (overlapY <= overlapX) {
+        const direction = firstCenterY < secondCenterY ? -1 : 1;
+        first.y += direction * overlapY * firstWeight;
+        second.y -= direction * overlapY * secondWeight;
+        if (!first.dragging && !second.dragging) {
+          const sharedVelocity = Math.min(first.vy, second.vy) * 0.12;
+          first.vy = sharedVelocity;
+          second.vy = sharedVelocity;
+        } else if (!first.dragging) {
+          first.vy = 0;
+        } else if (!second.dragging) {
+          second.vy = 0;
+        }
+      } else {
+        const direction = firstCenterX < secondCenterX ? -1 : 1;
+        first.x += direction * overlapX * firstWeight;
+        second.x -= direction * overlapX * secondWeight;
+        if (!first.dragging) first.vx *= -0.08;
+        if (!second.dragging) second.vx *= -0.08;
+      }
+    };
+
+    const tick = (time: number) => {
+      const frameTime = Math.min(0.032, Math.max(0.001, (time - previousTime) / 1000));
+      previousTime = time;
+      const width = panel.clientWidth;
+      const height = panel.clientHeight;
+      const bodies = bodiesRef.current;
+      const substeps = 3;
+      const dt = frameTime / substeps;
+
+      for (let step = 0; step < substeps; step += 1) {
+        for (const body of bodies) {
+          if (body.dragging) continue;
+          body.vy += 1900 * dt;
+          body.vx *= 0.995;
+          body.x += body.vx * dt;
+          body.y += body.vy * dt;
+
+          if (body.x < 0) {
+            body.x = 0;
+            body.vx = Math.abs(body.vx) * 0.12;
+          } else if (body.x + body.width > width) {
+            body.x = width - body.width;
+            body.vx = -Math.abs(body.vx) * 0.12;
+          }
+
+          if (body.y + body.height > height) {
+            body.y = height - body.height;
+            body.vy = Math.abs(body.vy) > 45 ? -Math.abs(body.vy) * 0.06 : 0;
+            body.vx *= 0.82;
+          } else if (body.y < 0) {
+            body.y = 0;
+            body.vy = Math.abs(body.vy) * 0.08;
+          }
+        }
+
+        for (let iteration = 0; iteration < 4; iteration += 1) {
+          for (let first = 0; first < bodies.length; first += 1) {
+            for (let second = first + 1; second < bodies.length; second += 1) {
+              resolveCollision(bodies[first], bodies[second]);
+            }
+          }
+        }
+      }
+
+      bodies.forEach((body, index) => {
+        const element = bubbleRefs.current[index];
+        if (!element) return;
+        element.style.left = `${body.x}px`;
+        element.style.top = `${body.y}px`;
+      });
+      raf = requestAnimationFrame(tick);
+    };
+
+    initialize();
+    raf = requestAnimationFrame(tick);
+    const resizeObserver = new ResizeObserver(() => {
+      const width = panel.clientWidth;
+      const height = panel.clientHeight;
+      bodiesRef.current.forEach((body, index) => {
+        const element = bubbleRefs.current[index];
+        if (element) {
+          body.width = element.offsetWidth;
+          body.height = element.offsetHeight;
+        }
+        body.x = Math.min(Math.max(0, body.x), Math.max(0, width - body.width));
+        body.y = Math.min(Math.max(0, body.y), Math.max(0, height - body.height));
+      });
+    });
+    resizeObserver.observe(panel);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   const startDrag = (event: React.PointerEvent<HTMLButtonElement>, index: number) => {
-    const bubble = event.currentTarget.getBoundingClientRect();
+    const panel = panelRef.current;
+    const body = bodiesRef.current[index];
+    if (!panel || !body) return;
+    const panelBounds = panel.getBoundingClientRect();
+    body.dragging = true;
+    body.vx = 0;
+    body.vy = 0;
     dragRef.current = {
       index,
-      offsetX: event.clientX - bubble.left,
-      offsetY: event.clientY - bubble.top,
+      offsetX: event.clientX - panelBounds.left - body.x,
+      offsetY: event.clientY - panelBounds.top - body.y,
+      lastX: body.x,
+      lastY: body.y,
+      lastTime: performance.now(),
     };
-    setActive(index);
+    event.currentTarget.style.zIndex = "30";
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const moveDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
-    const drag = dragRef.current;
     const panel = panelRef.current;
-    if (!drag || !panel || drag.index !== Number(event.currentTarget.dataset.index)) return;
-
+    const drag = dragRef.current;
+    if (!panel || !drag || drag.index !== Number(event.currentTarget.dataset.index)) return;
+    const body = bodiesRef.current[drag.index];
     const bounds = panel.getBoundingClientRect();
-    const x = Math.min(
+    const nextX = Math.min(
       Math.max(0, event.clientX - bounds.left - drag.offsetX),
-      Math.max(0, bounds.width - event.currentTarget.offsetWidth),
+      Math.max(0, bounds.width - body.width),
     );
-    const y = Math.min(
+    const nextY = Math.min(
       Math.max(0, event.clientY - bounds.top - drag.offsetY),
-      Math.max(0, bounds.height - event.currentTarget.offsetHeight),
+      Math.max(0, bounds.height - body.height),
     );
-
-    setPositions((current) => current.map((position, index) => index === drag.index ? { x, y } : position));
+    const now = performance.now();
+    const elapsed = Math.max(16, now - drag.lastTime) / 1000;
+    body.vx = (nextX - drag.lastX) / elapsed;
+    body.vy = (nextY - drag.lastY) / elapsed;
+    body.x = nextX;
+    body.y = nextY;
+    drag.lastX = nextX;
+    drag.lastY = nextY;
+    drag.lastTime = now;
   };
 
   const stopDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = dragRef.current;
+    if (drag) {
+      const body = bodiesRef.current[drag.index];
+      if (body) {
+        body.dragging = false;
+        body.vx *= 0.35;
+        body.vy *= 0.35;
+      }
+    }
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+    event.currentTarget.style.zIndex = "";
     dragRef.current = null;
-    setActive(null);
   };
 
   return (
@@ -68,33 +244,25 @@ function BubblePanel({ title }: { title: string }) {
         {title}
       </h3>
       <div ref={panelRef} className="relative h-[430px] overflow-hidden sm:h-[500px]">
-        {bubbles.map((bubble, index) => {
-          const position = positions[index];
-          return (
-            <button
-              key={bubble.text}
-              type="button"
-              data-index={index}
-              onPointerDown={(event) => startDrag(event, index)}
-              onPointerMove={moveDrag}
-              onPointerUp={stopDrag}
-              onPointerCancel={stopDrag}
-              className={`bubble-float absolute touch-none select-none rounded-full px-4 py-4 text-center font-display text-sm font-semibold leading-tight shadow-sm transition-shadow active:cursor-grabbing sm:px-5 sm:text-lg ${bubble.width} ${toneClasses[bubble.tone]} ${
-                active === index ? "z-20 cursor-grabbing shadow-xl" : "z-10 cursor-grab"
-              }`}
-              style={{
-                left: position ? `${position.x}px` : `${bubble.x}%`,
-                top: position ? `${position.y}px` : `${bubble.y}%`,
-                rotate: `${bubble.rotate}deg`,
-                animationDelay: `${index * -0.45}s`,
-                animationDuration: `${3.4 + index * 0.22}s`,
-              }}
-              aria-label={`${bubble.text}. Drag to move.`}
-            >
-              {bubble.text}
-            </button>
-          );
-        })}
+        {bubbles.map((bubble, index) => (
+          <button
+            key={bubble.text}
+            ref={(element) => {
+              bubbleRefs.current[index] = element;
+            }}
+            type="button"
+            data-index={index}
+            onPointerDown={(event) => startDrag(event, index)}
+            onPointerMove={moveDrag}
+            onPointerUp={stopDrag}
+            onPointerCancel={stopDrag}
+            className={`absolute z-10 touch-none select-none rounded-full px-4 py-4 text-center font-display text-sm font-semibold leading-tight shadow-sm active:cursor-grabbing sm:px-5 sm:text-lg ${bubble.width} ${toneClasses[bubble.tone]} cursor-grab`}
+            style={{ left: `${bubble.x}%`, top: `${bubble.y}%`, rotate: `${bubble.rotate}deg` }}
+            aria-label={`${bubble.text}. Drag to move.`}
+          >
+            {bubble.text}
+          </button>
+        ))}
       </div>
     </article>
   );
@@ -114,7 +282,7 @@ export default function InspectionBubbles() {
           <BubblePanel title="Why it’s not optional" />
         </div>
         <p className="mt-5 text-center text-xs font-medium text-ink-soft/55">
-          Drag any label to explore and rearrange the inspection moments.
+          Drag any label, then release it to let gravity take over.
         </p>
       </div>
     </section>

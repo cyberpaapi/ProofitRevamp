@@ -8,6 +8,7 @@ import DarkEnquiryForm from "@/components/DarkEnquiryForm";
 import HomeAboutSequence from "@/components/HomeAboutSequence";
 import HomeMediaBridge from "@/components/HomeMediaBridge";
 import InspectionBubbles from "@/components/InspectionBubbles";
+import ModelsReveal, { ModelsRevealMobile } from "@/components/ModelsReveal";
 import { site } from "@/lib/site";
 
 /* ------------------------------ Content (per client refs) ------------------------------ */
@@ -278,64 +279,11 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- ONE PLATFORM, TWO MODELS ------------------ */}
-      <section className="pb-20 md:pb-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[minmax(260px,340px)_1fr] lg:gap-16">
-            <div>
-              <Reveal>
-                <h2 className="font-display text-4xl font-semibold leading-tight md:text-[2.6rem]">
-                  One Platform.
-                  <br />
-                  Two Models
-                </h2>
-                <p className="mt-5 leading-relaxed text-ink-soft/75">
-                  Choose Your Inspection Approach. Whether you manage properties at scale or own a single home,
-                  PROOFIT delivers structured, AI-led home health assessments designed for your context.
-                </p>
-              </Reveal>
-              <Reveal delay={150} className="tile mt-8 p-6 text-center">
-                <div className="mx-auto flex aspect-square w-40 items-center justify-center rounded-xl bg-cream p-4">
-                  <Image src="/images/logo.svg" alt="PROOFIT" width={150} height={50} className="h-auto w-full" />
-                </div>
-                <div className="mt-5">
-                  <ArrowBtn href="/process" variant="white" className="border border-line">
-                    View Sample Report
-                  </ArrowBtn>
-                </div>
-              </Reveal>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {[b2b, b2c].map((m, mi) => (
-                <Reveal key={m.title} delay={mi * 130} className="card-outline flex h-full flex-col p-6 md:p-7">
-                  <h3 className="font-display text-xl font-semibold">{m.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-soft/75">{m.tagline}</p>
-                  <div className="mt-5 rounded-xl bg-cream p-4">
-                    <p className="font-display text-sm font-semibold">Ideal For</p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-ink-soft/80">{m.idealFor}</p>
-                  </div>
-                  <p className="mt-5 font-display text-sm font-semibold">Key Benefits</p>
-                  <ul className="mt-2 flex-1 space-y-2">
-                    {m.benefits.map((b) => (
-                      <li key={b} className="flex items-start gap-2.5 text-sm leading-snug text-ink-soft">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" aria-hidden />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-5 rounded-xl bg-cream p-4">
-                    <p className="font-display text-sm font-semibold">Outcome</p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-ink-soft/80">{m.outcome}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModelsReveal b2b={b2b} b2c={b2c} />
+      <ModelsRevealMobile b2b={b2b} b2c={b2c} />
 
       {/* ----------------------------- SERVING MUMBAI ------------------------- */}
-      <section className="bg-ink py-20 text-white md:py-28">
+      <section className="bg-[#101010] py-20 text-white md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
@@ -347,10 +295,10 @@ export default function HomePage() {
           <div className="mt-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal from="left" className="relative mx-auto w-full max-w-sm">
               <Image
-                src="/images/mumbai-map.webp"
-                alt="Glowing outline map of Maharashtra with Mumbai marked"
-                width={900}
-                height={1205}
+                src="/images/mumbai-map-orange.png"
+                alt="Orange outline map of Mumbai with a glowing location marker"
+                width={666}
+                height={956}
                 className="h-auto w-full"
               />
             </Reveal>
@@ -393,7 +341,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------ FINAL CTA ----------------------------- */}
-      <section className="border-t border-white/10 bg-ink pb-20 pt-16 text-white md:pb-24">
+      <section className="border-t border-white/10 bg-[#101010] pb-20 pt-16 text-white md:pb-24">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
           <Reveal>
             <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
