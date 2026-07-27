@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 const menuLinks = [
   { href: "/", label: "Home" },
+  { href: "/landing-page", label: "Landing Page" },
   { href: "/about", label: "About Us" },
   { href: "/process", label: "Our Process" },
   { href: "/services", label: "Services" },
