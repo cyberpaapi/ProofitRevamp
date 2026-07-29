@@ -22,7 +22,7 @@ const Check = () => (
   </svg>
 );
 
-function AboutCopy() {
+function AboutCopy({ hideCta = false }: { hideCta?: boolean }) {
   return (
     <>
       <p className="leading-relaxed text-ink-soft/85">
@@ -31,11 +31,13 @@ function AboutCopy() {
         <strong className="font-semibold text-ink">IR technology (Thermal Scanning)</strong> to detect issues that
         traditional visual inspections often miss.
       </p>
-      <div className="mt-7">
-        <ArrowBtn href="/about" variant="dark">
-          About Us
-        </ArrowBtn>
-      </div>
+      {!hideCta && (
+        <div className="mt-7">
+          <ArrowBtn href="/about" variant="dark">
+            About Us
+          </ArrowBtn>
+        </div>
+      )}
     </>
   );
 }
@@ -62,7 +64,7 @@ function Distinction() {
   );
 }
 
-export default function HomeAboutSequence() {
+export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boolean }) {
   const stageRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -147,7 +149,7 @@ export default function HomeAboutSequence() {
         <div>
           <div className="flex items-start pb-12 pt-[9vh]">
             <div className="w-full">
-              <AboutCopy />
+              <AboutCopy hideCta={hideCta} />
             </div>
           </div>
 
@@ -184,7 +186,7 @@ export default function HomeAboutSequence() {
           </video>
         </div>
         <div className="mt-8">
-          <AboutCopy />
+          <AboutCopy hideCta={hideCta} />
         </div>
         <div className="mt-8">
           <Distinction />

@@ -16,7 +16,7 @@ export type ServiceSlide = {
   mediaAlt: string;
 };
 
-export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] }) {
+export default function ServicesCarousel({ slides, hideLinks = false }: { slides: ServiceSlide[]; hideLinks?: boolean }) {
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const stageRef = useRef<HTMLElement>(null);
@@ -135,10 +135,12 @@ export default function ServicesCarousel({ slides }: { slides: ServiceSlide[] })
           </ul>
 
           <div className="mt-4 flex items-center gap-3 lg:mt-9 lg:gap-4">
-            <ArrowBtn href={slide.href} variant="white">
-              Learn More
-            </ArrowBtn>
-            <div className="ml-auto flex gap-2">
+            {!hideLinks && (
+              <ArrowBtn href={slide.href} variant="white">
+                Learn More
+              </ArrowBtn>
+            )}
+            <div className={`${hideLinks ? "ml-0" : "ml-auto"} flex gap-2`}>
               <button
                 type="button"
                 onClick={() => go(-1)}

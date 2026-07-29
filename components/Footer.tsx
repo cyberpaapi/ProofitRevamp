@@ -34,7 +34,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-12 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
         {/* Brand */}
         <div>
-          <Image src="/images/logo.svg" alt="Proofit" width={150} height={50} className="mb-4 rounded-md bg-white px-3 py-2" />
+          <Image src="/images/logo.svg" alt="Proofit" width={150} height={50} className="mb-4 h-auto w-[150px] brightness-0 invert" />
           <p className="text-sm leading-relaxed text-white/60">
             Independent, evidence-backed home inspections in {site.serviceArea}. International standards, thermal
             imaging, and reports that settle arguments.

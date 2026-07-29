@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
+import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSiteChrome";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -69,12 +67,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Header />
+        <ConditionalHeader />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <Footer />
-        <WhatsAppFloat />
+        <ConditionalFooter />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

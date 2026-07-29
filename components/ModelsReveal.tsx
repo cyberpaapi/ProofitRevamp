@@ -38,7 +38,7 @@ function ModelCard({ model, className = "" }: { model: InspectionModel; classNam
   );
 }
 
-export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
+export default function ModelsReveal({ b2b, b2c, hideLinks = false }: { b2b: InspectionModel; b2c: InspectionModel; hideLinks?: boolean }) {
   const stageRef = useRef<HTMLElement>(null);
   const movingCardRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
@@ -99,11 +99,13 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
                 className="object-contain"
               />
             </div>
-            <div className="mt-5">
-              <ArrowBtn href="/process" variant="white" className="border border-line">
-                View Sample Report
-              </ArrowBtn>
-            </div>
+            {!hideLinks && (
+              <div className="mt-5">
+                <ArrowBtn href="/process" variant="white" className="border border-line">
+                  View Sample Report
+                </ArrowBtn>
+              </div>
+            )}
           </div>
         </div>
 
@@ -120,7 +122,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
   );
 }
 
-export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
+export function ModelsRevealMobile({ b2b, b2c, hideLinks = false }: { b2b: InspectionModel; b2c: InspectionModel; hideLinks?: boolean }) {
   return (
     <section className="px-5 pb-20 sm:px-8 lg:hidden">
       <h2 className="font-display text-4xl font-semibold leading-tight">
@@ -136,11 +138,13 @@ export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: In
         <div className="relative mx-auto aspect-square w-44 overflow-hidden rounded-xl bg-[#fcfcfe]">
           <Image src="/images/proofit-peace.png" alt="PROOFIT for Peace" fill sizes="176px" className="object-contain" />
         </div>
-        <div className="mt-5">
-          <ArrowBtn href="/process" variant="white" className="border border-line">
-            View Sample Report
-          </ArrowBtn>
-        </div>
+        {!hideLinks && (
+          <div className="mt-5">
+            <ArrowBtn href="/process" variant="white" className="border border-line">
+              View Sample Report
+            </ArrowBtn>
+          </div>
+        )}
       </div>
       <div className="mt-8 grid gap-6">
         <ModelCard model={b2b} />

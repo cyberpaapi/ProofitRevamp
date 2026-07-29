@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import ArrowBtn from "@/components/ArrowBtn";
+import { CampaignFooter, CampaignHeader } from "@/components/CampaignChrome";
+import LandingEnquiryPopup from "@/components/LandingEnquiryPopup";
 import LandingLeadForm from "@/components/LandingLeadForm";
 import Reveal from "@/components/Reveal";
+import ScrollToEnquiryButton from "@/components/ScrollToEnquiryButton";
 
 export const metadata: Metadata = {
   title: "Property Inspection & Thermal Scanning in Mumbai",
@@ -116,6 +118,7 @@ const Check = () => (
 export default function LandingPage() {
   return (
     <>
+      <CampaignHeader />
       <section className="relative overflow-hidden bg-[#f2efe8] px-4 pb-14 pt-28 sm:px-6 md:pb-20 md:pt-32 lg:px-8">
         <div className="pointer-events-none absolute -left-24 top-28 h-72 w-72 rounded-full bg-brand/12 blur-3xl" aria-hidden />
         <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[32px] bg-ink shadow-[0_40px_100px_-55px_rgba(17,17,18,0.7)] lg:grid-cols-[1.1fr_0.9fr]">
@@ -153,8 +156,7 @@ export default function LandingPage() {
                 ))}
               </div>
               <div className="hero-rise mt-8 flex flex-wrap gap-3" style={{ ["--rise-delay" as string]: "300ms" }}>
-                <ArrowBtn href="#landing-enquiry" variant="orange">Claim ₹1,000 Off</ArrowBtn>
-                <ArrowBtn href="tel:+919833779955" variant="ghost" className="border border-white/35">Call 98337 79955</ArrowBtn>
+                <ScrollToEnquiryButton targetId="landing-enquiry" variant="orange">Claim ₹1,000 Off</ScrollToEnquiryButton>
               </div>
             </div>
           </div>
@@ -323,8 +325,8 @@ export default function LandingPage() {
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Questions</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Before you book.</h2>
             <p className="mt-5 max-w-md leading-relaxed text-ink-soft/70">
-              Need a quick answer? Call <a href="tel:+919833779955" className="font-semibold text-brand hover:text-brand-deep">98337 79955</a> or{" "}
-              <a href="tel:+919820268840" className="font-semibold text-brand hover:text-brand-deep">98202 68840</a>.
+              Share the property details and concern through the enquiry form. A Proofit team member will follow up
+              within 24–48 hours.
             </p>
           </Reveal>
           <div className="space-y-3">
@@ -352,11 +354,12 @@ export default function LandingPage() {
             </h2>
           </Reveal>
           <Reveal delay={120} className="flex shrink-0 flex-wrap gap-3">
-            <ArrowBtn href="#landing-enquiry" variant="dark">Request Inspection</ArrowBtn>
-            <ArrowBtn href="tel:+919833779955" variant="white">Call Now</ArrowBtn>
+            <ScrollToEnquiryButton targetId="landing-enquiry" variant="dark">Request Inspection</ScrollToEnquiryButton>
           </Reveal>
         </div>
       </section>
+      <CampaignFooter idPrefix="landing-footer-enquiry" />
+      <LandingEnquiryPopup />
     </>
   );
 }
