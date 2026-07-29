@@ -80,7 +80,7 @@ export function CareServices({ services }: { services: Service[] }) {
                 {String(index + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
               </p>
               <h3 className="mt-4 font-display text-2xl font-semibold leading-tight">{services[index].title}</h3>
-              <p className="mt-5 leading-relaxed text-ink-soft/80">{services[index].body}</p>
+              <p className="mt-3 leading-relaxed text-ink-soft/80 md:mt-5">{services[index].body}</p>
             </article>
           </div>
 

@@ -63,7 +63,7 @@ export default function Header() {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           heroMode
             ? "bg-gradient-to-b from-ink/70 to-transparent text-white"
-            : "bg-paper/95 text-ink shadow-[0_1px_0_rgba(17,17,18,0.06)] backdrop-blur-md"
+            : "bg-white/75 text-ink shadow-[0_1px_0_rgba(17,17,18,0.08)] backdrop-blur-xl"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">

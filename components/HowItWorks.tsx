@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 
 type Step = {
   title: string;
@@ -10,11 +10,40 @@ type Step = {
   intro?: string;
 };
 
+const cardColors = ["#f7941d", "#f9ad49", "#fbc98b", "#fff4e5"];
+type MotionDirection = "forward" | "backward";
+
 export default function HowItWorks({ steps }: { steps: Step[] }) {
   const [index, setIndex] = useState(0);
+  const [leavingIndex, setLeavingIndex] = useState<number | null>(null);
+  const [motion, setMotion] = useState<MotionDirection | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const stageRef = useRef<HTMLElement>(null);
   const touchX = useRef<number | null>(null);
+  const indexRef = useRef(0);
+  const scrollIndexRef = useRef(0);
+  const leaveTimerRef = useRef<number | null>(null);
+  const transitionRef = useRef<(nextIndex: number, direction?: MotionDirection) => void>(() => {});
   const step = steps[index];
+
+  transitionRef.current = (nextIndex: number, direction?: MotionDirection) => {
+    const normalized = (nextIndex + steps.length) % steps.length;
+    const current = indexRef.current;
+    if (current === normalized) return;
+    const resolvedDirection = direction ?? (normalized < current ? "backward" : "forward");
+
+    if (leaveTimerRef.current !== null) window.clearTimeout(leaveTimerRef.current);
+    setMotion(resolvedDirection);
+    setLeavingIndex(resolvedDirection === "forward" ? current : null);
+    indexRef.current = normalized;
+    setIndex(normalized);
+    leaveTimerRef.current = window.setTimeout(() => {
+      setLeavingIndex(null);
+      setMotion(null);
+      leaveTimerRef.current = null;
+    }, 520);
+  };
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -27,7 +56,11 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
       const travel = Math.max(1, stage.offsetHeight - window.innerHeight);
       const progress = Math.min(1, Math.max(0, -bounds.top / travel));
       const nextIndex = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-      setIndex((current) => current === nextIndex ? current : nextIndex);
+      if (nextIndex !== scrollIndexRef.current) {
+        const direction = nextIndex < scrollIndexRef.current ? "backward" : "forward";
+        scrollIndexRef.current = nextIndex;
+        transitionRef.current(nextIndex, direction);
+      }
     };
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(render);
@@ -38,14 +71,35 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
     window.addEventListener("resize", schedule);
     return () => {
       cancelAnimationFrame(raf);
+      if (leaveTimerRef.current !== null) window.clearTimeout(leaveTimerRef.current);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
   }, [steps.length]);
 
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "-20% 0px -20% 0px" },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || isPaused || steps.length <= 1) return;
+    const timer = window.setTimeout(() => {
+      transitionRef.current(indexRef.current + 1, "forward");
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [index, isPaused, isVisible, steps.length]);
+
   const selectIndex = (nextIndex: number) => {
     const normalized = (nextIndex + steps.length) % steps.length;
-    setIndex(normalized);
+    const direction = nextIndex < indexRef.current ? "backward" : "forward";
+    transitionRef.current(normalized, direction);
     const stage = stageRef.current;
     if (!stage) return;
     const bounds = stage.getBoundingClientRect();
@@ -57,13 +111,17 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
     });
   };
 
-  const onTouchStart = (event: React.TouchEvent) => {
+  const onTouchStart = (event: TouchEvent) => {
+    setIsPaused(true);
     touchX.current = event.touches[0].clientX;
   };
-  const onTouchEnd = (event: React.TouchEvent) => {
-    if (touchX.current === null) return;
-    const distance = event.changedTouches[0].clientX - touchX.current;
+
+  const onTouchEnd = (event: TouchEvent) => {
+    const startX = touchX.current;
     touchX.current = null;
+    setIsPaused(false);
+    if (startX === null) return;
+    const distance = event.changedTouches[0].clientX - startX;
     if (Math.abs(distance) > 48) selectIndex(index + (distance < 0 ? 1 : -1));
   };
 
@@ -73,40 +131,66 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
       className="relative"
       style={{ height: `calc(100svh + ${(steps.length - 1) * 70}svh)` }}
     >
-      <div className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col justify-center py-8 lg:top-[72px] lg:h-[calc(100svh-72px)]">
+      <div className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col justify-center py-6 lg:top-[72px] lg:h-[calc(100svh-72px)] lg:py-8">
         <div
-          className="relative min-h-0 flex-1 touch-pan-y pt-7"
+          className="relative min-h-0 flex-1 touch-pan-y pt-9 md:pt-14"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
+          onTouchCancel={() => {
+            touchX.current = null;
+            setIsPaused(false);
+          }}
         >
-          <div className="absolute left-1/2 top-0 h-16 w-[calc(100%-4rem)] -translate-x-1/2 rounded-t-2xl border border-brand/30 bg-white" aria-hidden />
-          <div className="absolute left-1/2 top-3.5 h-16 w-[calc(100%-2rem)] -translate-x-1/2 rounded-t-2xl border border-brand/50 bg-white" aria-hidden />
+          <div
+            className="absolute left-[2.25rem] top-0 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/10 bg-[#fff8ed] md:left-[4.5rem] md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)]"
+            style={{ backgroundColor: cardColors[(index + 3) % cardColors.length] }}
+            aria-hidden
+          />
+          <div
+            className="absolute left-6 top-3 h-[calc(100%-1.5rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/15 bg-[#ffd39f] md:left-12 md:top-5 md:h-[calc(100%-2.5rem)] md:w-[calc(100%-4.5rem)]"
+            style={{ backgroundColor: cardColors[(index + 2) % cardColors.length] }}
+            aria-hidden
+          />
+          <div
+            className="absolute left-3 top-6 h-[calc(100%-0.75rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/20 bg-[#f6aa4d] md:left-6 md:top-10 md:h-[calc(100%-1.25rem)] md:w-[calc(100%-4.5rem)]"
+            style={{ backgroundColor: cardColors[(index + 1) % cardColors.length] }}
+            aria-hidden
+          />
 
           <article
             key={step.title}
-            className="deck-enter relative h-full overflow-hidden rounded-2xl border border-brand bg-white p-4 md:p-6"
+            className={`${motion === "backward" ? "deck-enter-left z-20" : ""} relative h-full w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] p-4 text-ink shadow-[0_24px_60px_rgba(154,82,0,0.24)] sm:p-5 md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10`}
+            style={{ backgroundColor: cardColors[index % cardColors.length] }}
           >
-            <div className="grid h-full min-h-0 grid-rows-[22svh_1fr] gap-4 md:grid-cols-[minmax(260px,420px)_1fr] md:grid-rows-1 md:gap-10">
-              <div className="relative min-h-0 overflow-hidden rounded-xl">
+            <div className="grid h-full min-h-0 grid-rows-[24svh_1fr] gap-5 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
+              <div className="relative min-h-0 overflow-hidden rounded-[1.4rem]">
                 <Image
                   src={step.image}
                   alt={step.title}
                   fill
-                  sizes="(min-width: 768px) 420px, 100vw"
+                  sizes="(min-width: 1024px) 470px, (min-width: 768px) 40vw, 100vw"
                   className="object-cover"
+                  priority={index === 0}
                 />
               </div>
-              <div className="min-h-0 overflow-hidden pb-1 md:py-3 md:pr-3">
-                <p className="text-xs text-ink-soft/70 sm:text-sm">
+
+              <div className="flex min-h-0 flex-col overflow-hidden pb-1 md:justify-center md:py-3 md:pr-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink/55 sm:text-sm">
                   Step {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-1 font-display text-xl font-bold uppercase tracking-tight text-ink sm:text-2xl md:text-[1.75rem]">
+                <h3 className="mt-1 font-display text-xl font-semibold tracking-tight sm:text-2xl md:mt-2 md:text-[2rem]">
                   {step.title}
                 </h3>
-                {step.intro && <p className="mt-1 text-xs leading-relaxed text-ink-soft/80 sm:text-sm md:mt-2 md:text-base">{step.intro}</p>}
-                <ul className="mt-3 grid gap-2 md:mt-5 md:gap-3">
+                {step.intro && (
+                  <p className="mt-1 text-xs leading-relaxed text-ink/75 sm:text-sm md:mt-3 md:text-base">
+                    {step.intro}
+                  </p>
+                )}
+                <ul className="mt-3 grid gap-2 sm:mt-4 md:mt-6 md:gap-3">
                   {step.points.map((point) => (
-                    <li key={point} className="rounded-lg bg-cream px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
+                    <li key={point} className="rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
                       {point}
                     </li>
                   ))}
@@ -114,32 +198,57 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
               </div>
             </div>
           </article>
-        </div>
 
-        <div className="mt-4 hidden flex-wrap items-center justify-center gap-3 md:flex">
-          {steps.map((item, stepIndex) => (
-            <button
-              key={item.title}
-              type="button"
-              onClick={() => selectIndex(stepIndex)}
-              aria-pressed={stepIndex === index}
-              className={`cursor-pointer rounded-full px-5 py-2.5 font-display text-sm font-semibold transition-colors ${
-                stepIndex === index
-                  ? "bg-ink text-white"
-                  : "border border-line text-ink-soft hover:border-brand hover:text-brand-deep"
-              }`}
+          {leavingIndex !== null && (
+            <article
+              key={`leaving-${leavingIndex}-${index}`}
+              className="deck-exit-left absolute left-0 top-9 z-20 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] p-4 text-ink shadow-[0_24px_60px_rgba(154,82,0,0.24)] sm:p-5 md:top-14 md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10"
+              style={{ backgroundColor: cardColors[leavingIndex % cardColors.length] }}
+              aria-hidden
             >
-              {String(stepIndex + 1).padStart(2, "0")} · {item.title}
-            </button>
-          ))}
+              <div className="grid h-full min-h-0 grid-rows-[24svh_1fr] gap-5 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
+                <div className="relative min-h-0 overflow-hidden rounded-[1.4rem]">
+                  <Image
+                    src={steps[leavingIndex].image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 470px, (min-width: 768px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex min-h-0 flex-col overflow-hidden pb-1 md:justify-center md:py-3 md:pr-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink/55 sm:text-sm">
+                    Step {String(leavingIndex + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-1 font-display text-xl font-semibold tracking-tight sm:text-2xl md:mt-2 md:text-[2rem]">
+                    {steps[leavingIndex].title}
+                  </h3>
+                  {steps[leavingIndex].intro && (
+                    <p className="mt-1 text-xs leading-relaxed text-ink/75 sm:text-sm md:mt-3 md:text-base">
+                      {steps[leavingIndex].intro}
+                    </p>
+                  )}
+                  <ul className="mt-3 grid gap-2 sm:mt-4 md:mt-6 md:gap-3">
+                    {steps[leavingIndex].points.map((point) => (
+                      <li key={point} className="rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
+          )}
         </div>
 
-        <div className="mt-4 flex justify-center gap-2 md:hidden" aria-label={`Step ${index + 1} of ${steps.length}`}>
+        <div className="mt-4 flex justify-center gap-2" aria-label={`Step ${index + 1} of ${steps.length}`}>
           {steps.map((item, stepIndex) => (
             <span
               key={item.title}
+              aria-label={`View step ${stepIndex + 1}: ${item.title}`}
+              aria-current={stepIndex === index ? "step" : undefined}
               className={`h-1.5 rounded-full transition-all ${
-                stepIndex === index ? "w-8 bg-brand" : "w-4 bg-line"
+                stepIndex === index ? "w-8 bg-brand" : "w-4 bg-brand/20"
               }`}
             />
           ))}

@@ -11,8 +11,8 @@
   --color-cream: #fdf6ea;
   --color-line: #e8e2d6;
 
-  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -245,14 +245,27 @@ h1, h2, h3, h4, .font-display {
 }
 
 /* ---------- Card deck cycle (How PROOFIT Works) ---------- */
-@keyframes deck-leave {
+@keyframes deck-exit-left {
   to {
-    transform: translateX(56px) rotate(2.5deg) scale(0.96);
-    opacity: 0;
+    transform: translateX(-115%) rotate(-3deg);
+    opacity: 0.15;
   }
 }
-.deck-leave {
-  animation: deck-leave 0.3s ease-in forwards;
+.deck-exit-left {
+  animation: deck-exit-left 0.52s cubic-bezier(0.55, 0, 0.85, 0.35) forwards;
+}
+@keyframes deck-enter-left {
+  from {
+    transform: translateX(-115%) rotate(-3deg);
+    opacity: 0.15;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.deck-enter-left {
+  animation: deck-enter-left 0.52s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes deck-enter {
   from {
@@ -301,7 +314,7 @@ h1, h2, h3, h4, .font-display {
   .draw-check path {
     animation: none !important;
   }
-  .deck-leave, .deck-enter, .service-card-enter {
+  .deck-exit-left, .deck-enter-left, .deck-enter, .service-card-enter {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

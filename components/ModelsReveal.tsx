@@ -85,7 +85,7 @@ export default function ModelsReveal({ b2b, b2c, hideLinks = false }: { b2b: Ins
             <br />
             Two Models
           </h2>
-          <p className="mt-5 leading-relaxed text-ink-soft/75">
+          <p className="mt-3 leading-relaxed text-ink-soft/75 md:mt-5">
             Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
             delivers structured, AI-led home health assessments designed for your context.
           </p>
@@ -130,7 +130,7 @@ export function ModelsRevealMobile({ b2b, b2c, hideLinks = false }: { b2b: Inspe
         <br />
         Two Models
       </h2>
-      <p className="mt-5 leading-relaxed text-ink-soft/75">
+      <p className="mt-3 leading-relaxed text-ink-soft/75 md:mt-5">
         Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
         delivers structured, AI-led home health assessments designed for your context.
       </p>

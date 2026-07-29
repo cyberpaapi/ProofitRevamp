@@ -27,7 +27,7 @@ export default function PageHero({ eyebrow, title, accent, lede, image, imageAlt
           {title} {accent && <span className="text-brand">{accent}</span>}
         </h1>
         {lede && (
-          <p className="hero-rise mt-6 max-w-2xl text-lg leading-relaxed text-white/80" style={{ ["--rise-delay" as string]: "240ms" }}>
+          <p className="hero-rise mt-4 max-w-2xl text-lg leading-relaxed text-white/80 md:mt-6" style={{ ["--rise-delay" as string]: "240ms" }}>
             {lede}
           </p>
         )}

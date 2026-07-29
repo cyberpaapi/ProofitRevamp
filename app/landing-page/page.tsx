@@ -142,7 +142,7 @@ export default function LandingPage() {
                 Find hidden property problems before they become expensive repairs.
               </h1>
               <p
-                className="hero-rise mt-6 max-w-2xl text-base leading-relaxed text-white/82 sm:text-lg"
+                className="hero-rise mt-4 max-w-2xl text-base leading-relaxed text-white/82 sm:text-lg md:mt-6"
                 style={{ ["--rise-delay" as string]: "120ms" }}
               >
                 AI-powered thermal scanning and professional property inspections for leakage, seepage, dampness,
@@ -205,7 +205,7 @@ export default function LandingPage() {
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
               A damp patch is usually the symptom, not the source.
             </h2>
-            <p className="mt-6 max-w-2xl leading-relaxed text-ink-soft/75">
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft/75 md:mt-6">
               Repainting, patch repairs, or repeated waterproofing can fail when the real leakage path has not been
               identified. Proofit combines structured visual checks with thermal scanning and calibrated instruments
               to help locate hidden risks before repair decisions are made.
@@ -270,7 +270,7 @@ export default function LandingPage() {
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
               Not an opinion. A clear record of what we found.
             </h2>
-            <p className="mt-6 max-w-2xl leading-relaxed text-ink-soft/75">
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft/75 md:mt-6">
               The inspection is translated into an accurate, structured report that helps owners, committees,
               facility managers, builders, and repair vendors work from the same evidence.
             </p>
@@ -324,7 +324,7 @@ export default function LandingPage() {
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Questions</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Before you book.</h2>
-            <p className="mt-5 max-w-md leading-relaxed text-ink-soft/70">
+            <p className="mt-3 max-w-md leading-relaxed text-ink-soft/70 md:mt-5">
               Share the property details and concern through the enquiry form. A Proofit team member will follow up
               within 24–48 hours.
             </p>

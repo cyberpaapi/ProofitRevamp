@@ -3,7 +3,7 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 
 const serviceLinks = [
-  { href: "/services/home-inspection", label: "New Flat Possession Inspection" },
+  { href: "/services/home-inspection", label: "Pre Possession Inspection" },
   { href: "/services/home-inspection", label: "Resale Property Inspection" },
   { href: "/services/home-inspection", label: "Rental Move-In / Out Inspection" },
   { href: "/services/water-inspection", label: "Thermal Inspection" },
@@ -31,7 +31,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-[#121212] text-white">
-      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-12 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-4 pb-12 pt-8 sm:px-6 md:pt-10 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
         {/* Brand */}
         <div>
           <Image src="/images/logo.svg" alt="Proofit" width={150} height={50} className="mb-4 h-auto w-[150px] brightness-0 invert" />
@@ -39,9 +39,16 @@ export default function Footer() {
             Independent, evidence-backed home inspections in {site.serviceArea}. International standards, thermal
             imaging, and reports that settle arguments.
           </p>
-          <ul className="mt-5 space-y-1.5 text-sm text-white/70">
-            <li>
-              <a href={site.phoneHref} className="transition-colors hover:text-brand">{site.phone}</a>
+          <ul className="mt-5 space-y-2 text-sm text-white/70">
+            <li className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              {site.phones.map((phone, index) => (
+                <span key={phone.href} className="inline-flex items-center gap-2">
+                  {index > 0 && <span className="text-white/35">/</span>}
+                  <a href={phone.href} className="transition-colors hover:text-brand">
+                    {phone.label}
+                  </a>
+                </span>
+              ))}
             </li>
             <li>
               <a href={`mailto:${site.email}`} className="transition-colors hover:text-brand">{site.email}</a>
@@ -51,11 +58,11 @@ export default function Footer() {
 
         {/* Services */}
         <div>
-          <h3 className="mb-6 text-sm font-medium text-white/45">Services</h3>
-          <ul className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
+          <h3 className="mb-5 text-base font-medium text-white/45">Services</h3>
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-10">
             {serviceLinks.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="font-display font-semibold transition-colors hover:text-brand">
+                <Link href={l.href} className="font-display text-base font-semibold leading-snug transition-colors hover:text-brand sm:text-lg">
                   {l.label}
                 </Link>
               </li>

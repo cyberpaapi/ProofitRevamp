@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <section className="flex min-h-dvh items-center justify-center bg-ink px-5 py-16 text-white">
+    <section className="flex min-h-dvh items-center justify-center bg-brand px-5 py-16 text-white">
       <div className="w-full max-w-2xl text-center">
         <Image
           src="/images/logo.svg"
@@ -18,13 +18,13 @@ export default function ThankYouPage() {
           priority
           className="mx-auto h-auto w-[150px] brightness-0 invert"
         />
-        <span className="mx-auto mt-12 flex h-20 w-20 items-center justify-center rounded-full bg-brand text-white">
+        <span className="mx-auto mt-12 flex h-20 w-20 items-center justify-center rounded-full bg-white text-brand-deep shadow-[0_18px_45px_rgba(83,40,0,0.18)]">
           <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="m4 12.5 5 5L20 6.5" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
         <h1 className="mt-8 font-display text-5xl font-semibold sm:text-6xl">Thank You!</h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/75">
+        <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/90 md:mt-6">
           Your enquiry has been successfully received. A member of the Proofit team will contact you within 24–48 hours.
         </p>
       </div>

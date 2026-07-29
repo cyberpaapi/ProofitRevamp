@@ -57,7 +57,7 @@ export default function AboutPage() {
             Inspired by Canadian Standards. Engineered for Mumbai Homes.
           </h1>
           <p
-            className="hero-rise mt-6 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base"
+            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base md:mt-6"
             style={{ ["--rise-delay" as string]: "140ms" }}
           >
             Helping uncover hidden property risks through globally inspired inspection practices and local expertise
@@ -74,7 +74,7 @@ export default function AboutPage() {
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
               Built on Engineering. Powered by AI.
             </h2>
-            <div className="mt-7 max-w-2xl space-y-5 leading-relaxed text-ink-soft/82">
+            <div className="mt-4 max-w-2xl space-y-5 leading-relaxed text-ink-soft/82 md:mt-7">
               <p>
                 Proofit is India’s first AI-led home, thermal and commercial inspection company, bringing together
                 engineering expertise, advanced inspection technology, and globally inspired methodologies to help
@@ -156,7 +156,7 @@ export default function AboutPage() {
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
               Our Inspection Framework
             </h2>
-            <div className="mt-7 space-y-5 text-lg leading-relaxed text-ink-soft/82">
+            <div className="mt-4 space-y-5 text-lg leading-relaxed text-ink-soft/82 md:mt-7">
               <p>
                 Our inspection framework draws inspiration from internationally recognised Canadian inspection
                 practices while being specifically adapted for Mumbai’s unique environmental conditions.
@@ -175,14 +175,14 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-7xl gap-6 px-5 sm:px-8 md:grid-cols-2">
           <Reveal className="rounded-2xl bg-brand p-8 md:p-10">
             <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/75">Our Mission</p>
-            <p className="mt-5 text-xl font-medium leading-relaxed">
+            <p className="mt-3 text-xl font-medium leading-relaxed md:mt-5">
               Making home inspections an essential part of every property decision by helping people buy, own and
               maintain homes with greater confidence.
             </p>
           </Reveal>
           <Reveal delay={120} className="rounded-2xl border border-white/15 bg-white/5 p-8 md:p-10">
             <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-brand">Our Vision</p>
-            <p className="mt-5 text-xl font-medium leading-relaxed">
+            <p className="mt-3 text-xl font-medium leading-relaxed md:mt-5">
               To become India’s most trusted property intelligence company by setting new benchmarks in
               transparency, technology, and preventive home care.
             </p>
@@ -240,7 +240,7 @@ export default function AboutPage() {
             <h2 className="max-w-3xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
               Know Your Property Before You Commit.
             </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft/78">
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft/78 md:mt-6">
               Whether you’re buying your first home, investing in real estate, or maintaining an existing property,
               Proofit gives you the confidence to make informed decisions.
             </p>

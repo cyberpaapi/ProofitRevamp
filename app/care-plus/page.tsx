@@ -129,7 +129,7 @@ export default function CarePlusPage() {
             From Inspection to Execution
           </h1>
           <p
-            className="hero-rise mt-6 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base"
+            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base md:mt-6"
             style={{ ["--rise-delay" as string]: "140ms" }}
           >
             Inspect. Verify. Trust. Repair. One professional partner from problem identification to final execution
@@ -145,7 +145,7 @@ export default function CarePlusPage() {
             <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
               Complete Property Care. One Trusted Partner.
             </h2>
-            <p className="mt-7 max-w-5xl leading-relaxed text-ink-soft/82">
+            <p className="mt-4 max-w-5xl leading-relaxed text-ink-soft/82 md:mt-7">
               Proofit Care Plus is a trusted property care and facility management company delivering reliable,
               technology-driven maintenance solutions for housing societies, hospitals, commercial buildings,
               industrial facilities, educational institutions, hotels, and corporate campuses. Our team of skilled
@@ -213,7 +213,7 @@ export default function CarePlusPage() {
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
               One Partner. Multiple Solutions.
             </h2>
-            <p className="mt-5 max-w-2xl leading-relaxed text-ink-soft/80">
+            <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft/80 md:mt-5">
               From inspection to execution, we provide coordinated property care through one accountable team.
             </p>
           </Reveal>

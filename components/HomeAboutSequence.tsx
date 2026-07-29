@@ -161,7 +161,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
               <h2 className="mt-16 font-display text-5xl font-semibold leading-[1.15]">
                 Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
               </h2>
-              <p className="mt-5 max-w-xl text-ink-soft/75">
+              <p className="mt-3 max-w-xl text-ink-soft/75 md:mt-5">
                 A wide array of pre-emptive and problem-solving inspection services designed to protect your
                 property, your investment, and your peace of mind.
               </p>
@@ -195,7 +195,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
           <h2 className="font-display text-3xl font-semibold leading-[1.15] sm:text-4xl">
             Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
           </h2>
-          <p className="mt-5 text-ink-soft/75">
+          <p className="mt-3 text-ink-soft/75 md:mt-5">
             A wide array of pre-emptive and problem-solving inspection services designed to protect your property,
             your investment, and your peace of mind.
           </p>

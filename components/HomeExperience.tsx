@@ -268,7 +268,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
       <section className="pb-20 pt-24 md:pb-28 md:pt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 grid gap-6 md:grid-cols-2 md:items-end">
+          <div className="mb-12 grid gap-4 md:grid-cols-2 md:items-end md:gap-6">
             <Reveal>
               <h2 className="font-display text-4xl font-semibold md:text-5xl">
                 How PROOFIT
@@ -361,7 +361,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
               <br />
               Home. PROOFIT.
             </h2>
-            <p className="mt-6 max-w-md leading-relaxed text-white/70">
+            <p className="mt-4 max-w-md leading-relaxed text-white/70 md:mt-6">
               Because ownership should begin with certainty, not surprises. An inspection today can prevent repair
               bills worth lakhs tomorrow.
             </p>
