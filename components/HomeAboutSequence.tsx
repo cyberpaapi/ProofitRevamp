@@ -116,7 +116,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
 
   return (
     <section ref={stageRef} className="relative z-10 bg-white">
-      <div className="mx-auto hidden max-w-[1200px] grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-16 lg:grid">
+      <div className="mx-auto hidden max-w-7xl grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-16 px-8 lg:grid">
         <div>
           <div ref={canvasRef} className="sticky top-[72px] h-[calc(100vh-72px)] overflow-hidden">
             <h2

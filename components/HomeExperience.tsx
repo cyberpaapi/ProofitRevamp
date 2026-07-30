@@ -180,7 +180,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
         {/* ------------------------------- HERO ------------------------------- */}
         <ThermalHero>
           <div className="absolute inset-x-0 top-0 z-10 pt-28 sm:pt-32 lg:pt-[9.5rem]">
-            <div className="mx-auto max-w-[1200px] px-5 sm:px-8 lg:px-0">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
               <h1
                 className="hero-rise max-w-[620px] font-display text-[2.45rem] font-semibold leading-[1.08] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-[3.4rem]"
                 style={{ ["--rise-delay" as string]: "80ms" }}
@@ -197,7 +197,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
             </div>
           </div>
           <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12 lg:pb-32">
-            <div className="mx-auto flex max-w-[1200px] flex-col items-start gap-6 px-5 sm:px-8 md:items-end lg:px-0">
+            <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-5 sm:px-8 md:items-end">
               <p
                 className="hero-rise max-w-[500px] font-display text-sm font-semibold leading-[1.45] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-base md:text-left"
                 style={{ ["--rise-delay" as string]: "220ms" }}
@@ -291,8 +291,8 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       </section>
 
       {/* -------------------------- ONE PLATFORM, TWO MODELS ------------------ */}
-      <ModelsReveal b2b={b2b} b2c={b2c} hideLinks={campaignMode} />
-      <ModelsRevealMobile b2b={b2b} b2c={b2c} hideLinks={campaignMode} />
+      <ModelsReveal b2b={b2b} b2c={b2c} />
+      <ModelsRevealMobile b2b={b2b} b2c={b2c} />
 
       {/* ----------------------------- SERVING MUMBAI ------------------------- */}
       <section className="bg-[#101010] py-20 text-white md:py-28">

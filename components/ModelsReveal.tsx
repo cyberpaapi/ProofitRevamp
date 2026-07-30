@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
-import ArrowBtn from "@/components/ArrowBtn";
 
 export type InspectionModel = {
   title: string;
@@ -38,7 +36,7 @@ function ModelCard({ model, className = "" }: { model: InspectionModel; classNam
   );
 }
 
-export default function ModelsReveal({ b2b, b2c, hideLinks = false }: { b2b: InspectionModel; b2c: InspectionModel; hideLinks?: boolean }) {
+export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
   const stageRef = useRef<HTMLElement>(null);
   const movingCardRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
@@ -89,24 +87,6 @@ export default function ModelsReveal({ b2b, b2c, hideLinks = false }: { b2b: Ins
             Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
             delivers structured, AI-led home health assessments designed for your context.
           </p>
-          <div className="tile mt-7 p-5 text-center">
-            <div className="relative mx-auto aspect-square w-44 overflow-hidden rounded-xl bg-[#fcfcfe]">
-              <Image
-                src="/images/proofit-peace.png"
-                alt="PROOFIT for Peace"
-                fill
-                sizes="176px"
-                className="object-contain"
-              />
-            </div>
-            {!hideLinks && (
-              <div className="mt-5">
-                <ArrowBtn href="/process" variant="white" className="border border-line">
-                  View Sample Report
-                </ArrowBtn>
-              </div>
-            )}
-          </div>
         </div>
 
         <div ref={deckRef} className="relative h-full min-h-0 overflow-visible">
@@ -122,7 +102,7 @@ export default function ModelsReveal({ b2b, b2c, hideLinks = false }: { b2b: Ins
   );
 }
 
-export function ModelsRevealMobile({ b2b, b2c, hideLinks = false }: { b2b: InspectionModel; b2c: InspectionModel; hideLinks?: boolean }) {
+export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
   return (
     <section className="px-5 pb-20 sm:px-8 lg:hidden">
       <h2 className="font-display text-4xl font-semibold leading-tight">
@@ -134,18 +114,6 @@ export function ModelsRevealMobile({ b2b, b2c, hideLinks = false }: { b2b: Inspe
         Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
         delivers structured, AI-led home health assessments designed for your context.
       </p>
-      <div className="tile mt-8 p-5 text-center">
-        <div className="relative mx-auto aspect-square w-44 overflow-hidden rounded-xl bg-[#fcfcfe]">
-          <Image src="/images/proofit-peace.png" alt="PROOFIT for Peace" fill sizes="176px" className="object-contain" />
-        </div>
-        {!hideLinks && (
-          <div className="mt-5">
-            <ArrowBtn href="/process" variant="white" className="border border-line">
-              View Sample Report
-            </ArrowBtn>
-          </div>
-        )}
-      </div>
       <div className="mt-8 grid gap-6">
         <ModelCard model={b2b} />
         <ModelCard model={b2c} />

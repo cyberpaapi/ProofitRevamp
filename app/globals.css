@@ -13,6 +13,9 @@
 
   --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  /* Keep wide desktop layouts proportional instead of capping them at 1280px. */
+  --container-7xl: 108rem;
 }
 
 html {

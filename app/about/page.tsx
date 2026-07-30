@@ -108,18 +108,18 @@ export default function AboutPage() {
             <SectionHeading eyebrow="Our Story" title="Why India needed" accent="a Proofit." />
             <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
               <p>
-                In North America, no serious property deal closes without an independent inspection. In India —
-                where a home is usually the single largest purchase of a lifetime — buyers routinely sign on trust,
+                In North America, no serious property deal closes without an independent inspection. In India -
+                where a home is usually the single largest purchase of a lifetime - buyers routinely sign on trust,
                 a walkthrough, and fresh paint.
               </p>
               <p>
                 Proofit exists to change that. We provide independent, third-party evaluations of residential
-                properties — from compact apartments to luxury homes and villas — combining expert on-site
+                properties - from compact apartments to luxury homes and villas - combining expert on-site
                 evaluation with AI-enabled thermal imaging to reveal what the eye can’t see.
               </p>
               <p>
                 Every engagement ends with an evidence-backed report: photographed, thermally documented, and
-                severity-graded. Not opinions — proof.
+                severity-graded. Not opinions - proof.
               </p>
             </Reveal>
           </div>

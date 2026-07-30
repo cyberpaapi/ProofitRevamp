@@ -338,7 +338,7 @@ function BubblePanel({ title }: { title: string }) {
 export default function InspectionBubbles() {
   return (
     <section className="bg-[#f5f5f5] py-20 md:py-28">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <h2 className="text-center font-display text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
           You Bought the Home.
           <br />
