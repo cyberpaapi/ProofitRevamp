@@ -128,11 +128,11 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
             <div
               id="about-service-media-source"
               ref={imageRef}
-              className="absolute z-[2] overflow-hidden rounded-2xl will-change-[left,top,width,height]"
+              className="absolute z-[2] overflow-hidden rounded-2xl bg-white [clip-path:inset(0_round_1rem)] will-change-[left,top,width,height]"
               style={{ left: "34%", top: "20%", width: "63%", height: "54%" }}
             >
               <video
-                className="h-full w-full object-cover"
+                className="absolute -inset-[2px] h-[calc(100%+4px)] w-[calc(100%+4px)] max-w-none object-cover"
                 autoPlay
                 muted
                 loop
