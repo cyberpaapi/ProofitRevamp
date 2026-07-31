@@ -5,9 +5,11 @@ import { useEffect, useRef, useState, type TouchEvent } from "react";
 
 type Step = {
   title: string;
-  points: string[];
+  points?: string[];
   image: string;
   intro?: string;
+  body?: string[];
+  outro?: string;
 };
 
 type MotionDirection = "forward" | "backward";
@@ -159,7 +161,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
             key={step.title}
             className={`${motion === "backward" ? "deck-enter-left z-20" : ""} how-it-works-card absolute bottom-0 left-0 z-10 h-[90%] w-[90%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9`}
           >
-            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(6.5rem,18svh,9rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
+            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
               <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
                 <Image
                   src={step.image}
@@ -183,13 +185,25 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                     {step.intro}
                   </p>
                 )}
-                <ul className="how-it-works-list mt-2 grid gap-1.5 min-[390px]:mt-2.5 min-[390px]:gap-2 sm:mt-4 md:mt-6 md:gap-3">
-                  {step.points.map((point) => (
-                    <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1.5 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-2 min-[390px]:text-xs sm:text-sm md:px-5 md:py-3">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                {step.body?.map((paragraph) => (
+                  <p key={paragraph} className="how-it-works-intro mt-2 text-xs leading-snug text-ink/75 min-[390px]:text-[0.8125rem] sm:text-sm md:mt-3 md:text-base md:leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+                {step.points && (
+                  <ul className="how-it-works-list mt-2 grid gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
+                    {step.points.map((point) => (
+                      <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-1.5 min-[390px]:text-xs sm:text-sm md:px-4 md:py-2">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {step.outro && (
+                  <p className="how-it-works-intro mt-2 text-xs leading-snug text-ink/75 min-[390px]:text-[0.8125rem] sm:text-sm md:mt-3 md:text-base md:leading-relaxed">
+                    {step.outro}
+                  </p>
+                )}
               </div>
             </div>
           </article>
@@ -200,7 +214,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
               className="deck-exit-left how-it-works-card absolute bottom-0 left-0 z-20 h-[90%] w-[90%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9"
               aria-hidden
             >
-              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(6.5rem,18svh,9rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
+              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
                 <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
                   <Image
                     src={steps[leavingIndex].image}
@@ -222,13 +236,25 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                       {steps[leavingIndex].intro}
                     </p>
                   )}
-                  <ul className="how-it-works-list mt-2 grid gap-1.5 min-[390px]:mt-2.5 min-[390px]:gap-2 sm:mt-4 md:mt-6 md:gap-3">
-                    {steps[leavingIndex].points.map((point) => (
-                      <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1.5 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-2 min-[390px]:text-xs sm:text-sm md:px-5 md:py-3">
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
+                  {steps[leavingIndex].body?.map((paragraph) => (
+                    <p key={paragraph} className="how-it-works-intro mt-2 text-xs leading-snug text-ink/75 min-[390px]:text-[0.8125rem] sm:text-sm md:mt-3 md:text-base md:leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                  {steps[leavingIndex].points && (
+                    <ul className="how-it-works-list mt-2 grid gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
+                      {steps[leavingIndex].points.map((point) => (
+                        <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-1.5 min-[390px]:text-xs sm:text-sm md:px-4 md:py-2">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {steps[leavingIndex].outro && (
+                    <p className="how-it-works-intro mt-2 text-xs leading-snug text-ink/75 min-[390px]:text-[0.8125rem] sm:text-sm md:mt-3 md:text-base md:leading-relaxed">
+                      {steps[leavingIndex].outro}
+                    </p>
+                  )}
                 </div>
               </div>
             </article>

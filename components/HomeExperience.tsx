@@ -97,24 +97,26 @@ const serviceSlides: ServiceSlide[] = [
 
 const howSteps = [
   {
-    title: "Book & Brief",
-    intro: "Tell us about the property and your concern — we plan the right inspection for it:",
-    points: [
-      "Possession, resale, rental or leak investigation",
-      "Configuration, age and leak history captured upfront",
-      "Visit scheduled — all you provide is access",
+    title: "Stage-Based Assessment",
+    body: [
+      "Risk is different at every stage of ownership.",
+      "A newly handed-over home may have construction defects. A lived-in home may develop seepage, plumbing inefficiencies, or electrical stress over time.",
+      "We begin by understanding the age, usage pattern, and current concerns to define the inspection scope.",
     ],
     image: "/images/process-1.webp",
   },
   {
-    title: "On-Site Assessment",
-    intro: "A structured, room-by-room evaluation against international-standard checklists:",
+    title: "System-Level Evaluation",
+    intro: "We do not conduct a surface walkthrough.",
+    body: ["We evaluate core performance areas including:"],
     points: [
-      "Civil finishes, doors, windows and fittings",
-      "Every electrical point tested",
-      "Plumbing fixtures and drainage flow-checked",
-      "Waterproofing-critical zones scanned thermally",
+      "Bathroom and balcony drainage slopes",
+      "Moisture intrusion and dampness mapping",
+      "Waterproofing effectiveness",
+      "Plumbing pressure and leakage indicators",
+      "Electrical load and safety checks",
     ],
+    outro: "AI-supported diagnostics strengthen pattern recognition and risk identification.",
     image: "/images/process-2.webp",
   },
   {
@@ -127,16 +129,20 @@ const howSteps = [
       "Plumbing inconsistencies increasing long-term leakage risk",
       "Electrical irregularities creating safety hazards",
     ],
+    outro: "We identify these conditions before they escalate.",
     image: "/images/thermal-camera-screen.webp",
   },
   {
-    title: "Interactive Report & Walkthrough",
-    intro: "Within 48 hours, evidence you can act on:",
+    title: "Structured Reporting",
+    intro: "Every finding is documented with:",
     points: [
-      "Every finding photographed and severity-graded",
-      "Thermal documentation where relevant",
-      "Walkthrough of findings and rectification priorities",
+      "Photographic evidence",
+      "Location tagging",
+      "Severity grading",
+      "Clear technical observations",
+      "Actionable recommendations",
     ],
+    outro: "You receive a structured digital report that helps you prioritize corrective action, negotiate with builders, or plan preventive maintenance.",
     image: "/images/process-5.webp",
   },
 ];
