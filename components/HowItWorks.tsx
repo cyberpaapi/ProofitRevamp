@@ -173,7 +173,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                 />
               </div>
 
-              <div className="how-it-works-content flex min-h-0 flex-col items-center justify-center overflow-hidden pb-0.5 text-center sm:py-2 sm:px-2 md:py-3 md:px-3">
+              <div className="how-it-works-content flex min-h-0 flex-col items-stretch justify-start overflow-hidden pb-0.5 pt-2 text-justify sm:items-center sm:justify-center sm:px-2 sm:py-2 sm:text-center md:px-3 md:py-3">
                 <p className="how-it-works-step text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-ink/60 min-[390px]:text-xs sm:text-sm">
                   Step {String(index + 1).padStart(2, "0")}
                 </p>
@@ -224,7 +224,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                     className="object-contain object-center"
                   />
                 </div>
-                <div className="how-it-works-content flex min-h-0 flex-col items-center justify-center overflow-hidden pb-0.5 text-center sm:py-2 sm:px-2 md:py-3 md:px-3">
+                <div className="how-it-works-content flex min-h-0 flex-col items-stretch justify-start overflow-hidden pb-0.5 pt-2 text-justify sm:items-center sm:justify-center sm:px-2 sm:py-2 sm:text-center md:px-3 md:py-3">
                   <p className="how-it-works-step text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-ink/60 min-[390px]:text-xs sm:text-sm">
                     Step {String(leavingIndex + 1).padStart(2, "0")}
                   </p>

@@ -128,15 +128,13 @@ const howSteps = [
   },
   {
     title: "Early Risk Identification",
-    intro: "Many expensive repairs begin as small technical failures:",
     points: [
-      "Incorrect slope leading to water stagnation",
-      "Minor waterproofing gaps that result in seepage",
+      "Incorrect slopes causing water stagnation",
+      "Waterproofing gaps leading to seepage",
       "Hidden moisture damaging woodwork and paint",
-      "Plumbing inconsistencies increasing long-term leakage risk",
+      "Plumbing inconsistencies increasing leakage risk",
       "Electrical irregularities creating safety hazards",
     ],
-    outro: "We identify these conditions before they escalate.",
     image: "/images/thermal-camera-screen.webp",
   },
   {
