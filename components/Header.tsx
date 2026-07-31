@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const menuLinks = [
   { href: "/", label: "Home" },
-  { href: "/landing-page", label: "Landing Page" },
   { href: "/about", label: "About Us" },
   { href: "/process", label: "Our Process" },
   { href: "/services", label: "Services" },
@@ -22,7 +21,6 @@ const menuLinks = [
 const serviceLinks = [
   { href: "/services/water-inspection", label: "Water Inspection" },
   { href: "/services/home-inspection", label: "Home Inspection" },
-  { href: "/care-plus", label: "Proofit Care+" },
 ];
 
 export default function Header() {
@@ -66,8 +64,8 @@ export default function Header() {
             : "bg-white/75 text-ink shadow-[0_1px_0_rgba(17,17,18,0.08)] backdrop-blur-xl"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-4 md:gap-6 lg:gap-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit — home" className="shrink-0">
               <Image
                 src="/images/logo.svg"
@@ -75,7 +73,7 @@ export default function Header() {
                 width={128}
                 height={43}
                 priority
-                className={`h-auto w-[108px] transition-[filter] duration-300 md:w-[128px] ${
+                className={`h-auto w-[88px] transition-[filter] duration-300 sm:w-[108px] md:w-[128px] ${
                   heroMode ? "brightness-0 invert" : ""
                 }`}
               />
@@ -84,12 +82,12 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex shrink-0 cursor-pointer items-center gap-2 font-display text-sm font-semibold transition-colors hover:text-brand md:hidden"
+              className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-current/20 transition-colors hover:border-brand hover:text-brand md:order-last"
               aria-label="Open menu"
               aria-expanded={open}
             >
-              Menu
-              <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden>
+              <span className="sr-only">Menu</span>
+              <svg width="20" height="16" viewBox="0 0 18 14" fill="none" aria-hidden>
                 <path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
@@ -166,7 +164,9 @@ export default function Header() {
               heroMode ? "bg-white text-ink" : "bg-ink text-white"
             }`}
           >
-            <span className="whitespace-nowrap pl-4 font-display text-sm font-semibold">Enquire Now</span>
+            <span className="whitespace-nowrap pl-3 font-display text-sm font-semibold sm:pl-4">
+              Enquire<span className="hidden sm:inline"> Now</span>
+            </span>
             <span className={`mx-1 flex h-7 w-7 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:translate-x-0.5 ${
               heroMode ? "text-white" : "text-ink"
             }`}>
@@ -200,7 +200,7 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <nav aria-label="Site" className="mx-auto grid h-[calc(100dvh-80px)] max-w-7xl content-center gap-1 overflow-y-auto px-4 sm:px-6 lg:grid-cols-2 lg:gap-x-16 lg:px-8">
+        <nav aria-label="Site" className="mx-auto grid h-[calc(100dvh-80px)] max-w-7xl content-start gap-1 overflow-y-auto px-4 py-5 sm:px-6 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16 lg:px-8">
           {menuLinks.map((l, i) => (
             <Link
               key={l.href}

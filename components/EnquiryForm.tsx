@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const serviceOptions = [
-  "Water Inspection",
-  "Home Inspection — New Flat / Possession",
-  "Home Inspection — Resale Purchase",
-  "Home Inspection — Rental Move In/Out",
-  "Home Inspection — Renovation / Builder Audit",
-  "Proofit Care+ (Annual Plan)",
-  "Not sure — need advice",
-];
+import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -107,15 +98,15 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
         </div>
         <div>
           <label htmlFor="service" className="mb-1.5 block text-sm font-semibold">
-            Service needed
+            What do you need?
           </label>
           <select
             id="service"
             name="service"
-            defaultValue={defaultService || serviceOptions[0]}
+            defaultValue={defaultService || enquiryServiceOptions[0]}
             className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
           >
-            {serviceOptions.map((s) => (
+            {enquiryServiceOptions.map((s) => (
               <option key={s}>{s}</option>
             ))}
           </select>
@@ -124,16 +115,18 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
 
       <div>
         <label htmlFor="property" className="mb-1.5 block text-sm font-semibold">
-          Property details
+          Property type
         </label>
-        <input
+        <select
           id="property"
           name="property"
-          type="text"
-          placeholder="e.g. 2BHK apartment, Powai — possession next month"
-          className="w-full rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
-        />
-        <p className="mt-1.5 text-xs text-ink-soft/60">Configuration, locality, and anything you&apos;d like us to know.</p>
+          defaultValue={propertyTypeOptions[0]}
+          className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
+        >
+          {propertyTypeOptions.map((property) => (
+            <option key={property}>{property}</option>
+          ))}
+        </select>
       </div>
 
       <div>

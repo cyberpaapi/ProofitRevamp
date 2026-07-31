@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 
 type Status = "idle" | "sending" | "error";
 type Variant = "card" | "horizontal" | "popup";
@@ -87,25 +88,20 @@ export default function LandingLeadForm({
           <label htmlFor={`${idPrefix}-property`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             Property type
           </label>
-          <select id={`${idPrefix}-property`} name="property" defaultValue="Housing society" className={`${inputClass} cursor-pointer`}>
-            <option>Housing society</option>
-            <option>Home / Apartment</option>
-            <option>Commercial property</option>
-            <option>Industrial property</option>
-            <option>Managed property portfolio</option>
+          <select id={`${idPrefix}-property`} name="property" defaultValue={propertyTypeOptions[0]} className={`${inputClass} cursor-pointer`}>
+            {propertyTypeOptions.map((property) => (
+              <option key={property}>{property}</option>
+            ))}
           </select>
         </div>
         <div>
           <label htmlFor={`${idPrefix}-service`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             What do you need?
           </label>
-          <select id={`${idPrefix}-service`} name="service" defaultValue="Water leakage & seepage inspection" className={`${inputClass} cursor-pointer`}>
-            <option>Water leakage & seepage inspection</option>
-            <option>Thermal scanning</option>
-            <option>Waterproofing diagnosis</option>
-            <option>Pre-possession inspection</option>
-            <option>Electrical safety audit</option>
-            <option>Property quality audit</option>
+          <select id={`${idPrefix}-service`} name="service" defaultValue={enquiryServiceOptions[0]} className={`${inputClass} cursor-pointer`}>
+            {enquiryServiceOptions.map((service) => (
+              <option key={service}>{service}</option>
+            ))}
           </select>
         </div>
         <div>

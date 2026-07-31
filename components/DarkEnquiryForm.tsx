@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const serviceOptions = [
-  "Pre Possession Inspection",
-  "Resale Property Inspection",
-  "Rental Move In / Move Out Inspection",
-  "Water Leakage & Dampness Inspection",
-  "Pre / Post Renovation Inspection",
-  "Builder Quality Audit",
-  "Proofit Care+ (Annual Plan)",
-];
+import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -75,13 +66,21 @@ export default function DarkEnquiryForm() {
           <input id="cta-phone" name="phone" type="tel" required autoComplete="tel" placeholder="+91 9876543212" className={field} />
         </div>
         <div>
-          <label htmlFor="cta-service" className="mb-1 block font-display text-sm font-semibold text-white">Service</label>
-          <select id="cta-service" name="service" defaultValue={serviceOptions[0]} className={`${field} cursor-pointer [&>option]:text-ink`}>
-            {serviceOptions.map((s) => (
+          <label htmlFor="cta-service" className="mb-1 block font-display text-sm font-semibold text-white">What do you need?</label>
+          <select id="cta-service" name="service" defaultValue={enquiryServiceOptions[0]} className={`${field} cursor-pointer [&>option]:text-ink`}>
+            {enquiryServiceOptions.map((s) => (
               <option key={s}>{s}</option>
             ))}
           </select>
         </div>
+      </div>
+      <div>
+        <label htmlFor="cta-property" className="mb-1 block font-display text-sm font-semibold text-white">Property type</label>
+        <select id="cta-property" name="property" defaultValue={propertyTypeOptions[0]} className={`${field} cursor-pointer [&>option]:text-ink`}>
+          {propertyTypeOptions.map((property) => (
+            <option key={property}>{property}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label htmlFor="cta-message" className="mb-1 block font-display text-sm font-semibold text-white">Message</label>

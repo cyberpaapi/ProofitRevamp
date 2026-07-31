@@ -10,7 +10,6 @@ type Step = {
   intro?: string;
 };
 
-const cardColors = ["#f7941d", "#f9ad49", "#fbc98b", "#fff4e5"];
 type MotionDirection = "forward" | "backward";
 
 export default function HowItWorks({ steps }: { steps: Step[] }) {
@@ -144,27 +143,23 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
           }}
         >
           <div
-            className="absolute left-[2.25rem] top-0 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/10 bg-[#fff8ed] md:left-[4.5rem] md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)]"
-            style={{ backgroundColor: cardColors[(index + 3) % cardColors.length] }}
+            className="absolute left-[2.25rem] top-0 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border-2 border-brand bg-white md:left-[4.5rem] md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)]"
             aria-hidden
           />
           <div
-            className="absolute left-6 top-3 h-[calc(100%-1.5rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/15 bg-[#ffd39f] md:left-12 md:top-5 md:h-[calc(100%-2.5rem)] md:w-[calc(100%-4.5rem)]"
-            style={{ backgroundColor: cardColors[(index + 2) % cardColors.length] }}
+            className="absolute left-6 top-3 h-[calc(100%-1.5rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border-2 border-brand bg-white md:left-12 md:top-5 md:h-[calc(100%-2.5rem)] md:w-[calc(100%-4.5rem)]"
             aria-hidden
           />
           <div
-            className="absolute left-3 top-6 h-[calc(100%-0.75rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border border-brand/20 bg-[#f6aa4d] md:left-6 md:top-10 md:h-[calc(100%-1.25rem)] md:w-[calc(100%-4.5rem)]"
-            style={{ backgroundColor: cardColors[(index + 1) % cardColors.length] }}
+            className="absolute left-3 top-6 h-[calc(100%-0.75rem)] w-[calc(100%-2.25rem)] rounded-[1.75rem] border-2 border-brand bg-white md:left-6 md:top-10 md:h-[calc(100%-1.25rem)] md:w-[calc(100%-4.5rem)]"
             aria-hidden
           />
 
           <article
             key={step.title}
-            className={`${motion === "backward" ? "deck-enter-left z-20" : ""} relative h-full w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] p-4 text-ink shadow-[0_24px_60px_rgba(154,82,0,0.24)] sm:p-5 md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10`}
-            style={{ backgroundColor: cardColors[index % cardColors.length] }}
+            className={`${motion === "backward" ? "deck-enter-left z-20" : ""} relative h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] border-2 border-brand bg-white p-4 text-ink shadow-[0_24px_60px_rgba(17,17,18,0.12)] sm:p-5 md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10`}
           >
-            <div className="grid h-full min-h-0 grid-rows-[24svh_1fr] gap-5 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
+            <div className="grid h-full min-h-0 grid-rows-[20svh_1fr] gap-4 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
               <div className="relative min-h-0 overflow-hidden rounded-[1.4rem]">
                 <Image
                   src={step.image}
@@ -190,7 +185,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                 )}
                 <ul className="mt-3 grid gap-2 sm:mt-4 md:mt-6 md:gap-3">
                   {step.points.map((point) => (
-                    <li key={point} className="rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
+                    <li key={point} className="rounded-lg border border-brand/20 bg-brand/[0.06] px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
                       {point}
                     </li>
                   ))}
@@ -202,11 +197,10 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
           {leavingIndex !== null && (
             <article
               key={`leaving-${leavingIndex}-${index}`}
-              className="deck-exit-left absolute left-0 top-9 z-20 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] p-4 text-ink shadow-[0_24px_60px_rgba(154,82,0,0.24)] sm:p-5 md:top-14 md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10"
-              style={{ backgroundColor: cardColors[leavingIndex % cardColors.length] }}
+              className="deck-exit-left absolute left-0 top-9 z-20 h-[calc(100%-2.25rem)] w-[calc(100%-2.25rem)] overflow-hidden rounded-[1.75rem] border-2 border-brand bg-white p-4 text-ink shadow-[0_24px_60px_rgba(17,17,18,0.12)] sm:p-5 md:top-14 md:h-[calc(100%-3.5rem)] md:w-[calc(100%-4.5rem)] md:p-8 lg:p-10"
               aria-hidden
             >
-              <div className="grid h-full min-h-0 grid-rows-[24svh_1fr] gap-5 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
+              <div className="grid h-full min-h-0 grid-rows-[20svh_1fr] gap-4 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:grid-rows-1 md:gap-10 lg:gap-16">
                 <div className="relative min-h-0 overflow-hidden rounded-[1.4rem]">
                   <Image
                     src={steps[leavingIndex].image}
@@ -230,7 +224,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                   )}
                   <ul className="mt-3 grid gap-2 sm:mt-4 md:mt-6 md:gap-3">
                     {steps[leavingIndex].points.map((point) => (
-                      <li key={point} className="rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
+                      <li key={point} className="rounded-lg border border-brand/20 bg-brand/[0.06] px-3 py-2 text-xs font-semibold leading-snug text-ink sm:text-sm md:px-5 md:py-3">
                         {point}
                       </li>
                     ))}
