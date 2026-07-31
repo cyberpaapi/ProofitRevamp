@@ -132,7 +132,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
       className="relative"
       style={{ height: `calc(100svh + ${(steps.length - 1) * 70}svh)` }}
     >
-      <div className="how-it-works-sticky sticky top-16 flex h-[calc(100svh-4rem)] flex-col justify-center py-6 lg:top-[72px] lg:h-[calc(100svh-72px)] lg:py-8">
+      <div className="how-it-works-sticky sticky top-16 flex h-[calc(100svh-4rem)] flex-col justify-center py-2 lg:top-[72px] lg:h-[calc(100svh-72px)] lg:py-3">
         <div
           className="relative min-h-0 flex-1 touch-pan-y"
           onMouseEnter={() => setIsPaused(true)}
@@ -145,21 +145,21 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
           }}
         >
           <div
-            className="absolute left-[10%] top-0 h-[90%] w-[90%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
+            className="absolute left-[6%] top-0 h-[94%] w-[94%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
             aria-hidden
           />
           <div
-            className="absolute left-[6.666%] top-[3.333%] h-[90%] w-[90%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
+            className="absolute left-[4%] top-[2%] h-[94%] w-[94%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
             aria-hidden
           />
           <div
-            className="absolute left-[3.333%] top-[6.666%] h-[90%] w-[90%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
+            className="absolute left-[2%] top-[4%] h-[94%] w-[94%] rounded-[1.5rem] border-2 border-brand bg-white md:rounded-[1.75rem]"
             aria-hidden
           />
 
           <article
             key={step.title}
-            className={`${motion === "backward" ? "deck-enter-left z-20" : ""} how-it-works-card absolute bottom-0 left-0 z-10 h-[90%] w-[90%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9`}
+            className={`${motion === "backward" ? "deck-enter-left z-20" : ""} how-it-works-card absolute bottom-0 left-0 z-10 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9`}
           >
             <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
               <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
@@ -168,7 +168,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                   alt={step.title}
                   fill
                   sizes="(min-width: 1024px) 420px, (min-width: 640px) 38vw, 90vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                   priority={index === 0}
                 />
               </div>
@@ -211,7 +211,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
           {leavingIndex !== null && (
             <article
               key={`leaving-${leavingIndex}-${index}`}
-              className="deck-exit-left how-it-works-card absolute bottom-0 left-0 z-20 h-[90%] w-[90%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9"
+              className="deck-exit-left how-it-works-card absolute bottom-0 left-0 z-20 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9"
               aria-hidden
             >
               <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
@@ -221,7 +221,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 420px, (min-width: 640px) 38vw, 90vw"
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div className="how-it-works-content flex min-h-0 flex-col overflow-hidden pb-0.5 sm:justify-center sm:py-2 sm:pr-2 md:py-3 md:pr-3">
@@ -261,7 +261,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
           )}
         </div>
 
-        <div className="how-it-works-progress mt-4 flex justify-center gap-2" aria-label={`Step ${index + 1} of ${steps.length}`}>
+        <div className="how-it-works-progress mt-2 flex justify-center gap-2" aria-label={`Step ${index + 1} of ${steps.length}`}>
           {steps.map((item, stepIndex) => (
             <span
               key={item.title}

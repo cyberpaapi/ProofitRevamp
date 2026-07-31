@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { posts } from "@/lib/content";
 import { site } from "@/lib/site";
 
@@ -55,7 +56,12 @@ export default async function PostPage({ params }: Params) {
           <Image src={post.image} alt="" fill priority sizes="100vw" className="object-cover opacity-25" aria-hidden />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" aria-hidden />
           <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <p className="hero-rise mb-4 flex items-center gap-3 text-sm">
+            <Breadcrumbs
+              items={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post.title }]}
+              className="hero-rise mb-5"
+            />
+            <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Blog</p>
+            <p className="hero-rise mb-4 mt-4 flex items-center gap-3 text-sm">
               <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{post.tag}</span>
               <span className="text-white/70">
                 {fmt.format(new Date(post.date))} · {post.readMins} min read

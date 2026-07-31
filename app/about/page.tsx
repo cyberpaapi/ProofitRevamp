@@ -4,6 +4,7 @@ import ArrowBtn from "@/components/ArrowBtn";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import AboutAccordion from "@/components/AboutAccordion";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { faqs } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -66,7 +67,9 @@ export default function AboutPage() {
         />
         <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="hero-rise max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl">
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About Us" }]} className="hero-rise mb-5" />
+          <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">About Us</p>
+          <h1 className="hero-rise mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl">
             Inspired by Canadian Standards. Engineered for Indian Homes.
           </h1>
           <p
@@ -154,7 +157,7 @@ export default function AboutPage() {
       <section className="py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <Reveal>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/images/thermal-technician.webp"
                 alt="Inspector using thermal scanning technology"

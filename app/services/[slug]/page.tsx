@@ -45,8 +45,11 @@ export default async function ServicePage({ params }: Params) {
       <PageHero
         eyebrow={service.name}
         title={service.hero}
+        lede={service.short}
         image={service.image}
         imageAlt={service.name}
+        breadcrumbLabel={service.name}
+        breadcrumbParent={{ label: "Services", href: "/services" }}
       />
 
       {/* Intro + includes */}

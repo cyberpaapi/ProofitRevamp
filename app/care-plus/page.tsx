@@ -3,6 +3,7 @@ import Image from "next/image";
 import ArrowBtn from "@/components/ArrowBtn";
 import { CareServices, CareWhyCarousel } from "@/components/CarePlusInteractive";
 import Reveal from "@/components/Reveal";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -112,15 +113,24 @@ export default function CarePlusPage() {
     <>
       <section className="relative flex min-h-[700px] items-end overflow-hidden bg-ink pb-12 pt-28 text-white md:min-h-[540px] md:pb-14 md:pt-32">
         <Image
-          src="/images/careplus-rooftop.webp"
+          src="/images/careplus-hero-mobile.webp"
           alt="Technician executing waterproofing repair on a rooftop terrace"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover md:hidden"
+        />
+        <Image
+          src="/images/careplus-hero-desktop.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hidden object-cover md:block"
         />
         <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Proofit Care+" }]} className="hero-rise mb-5" />
           <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">
             Proofit Care+
           </p>
