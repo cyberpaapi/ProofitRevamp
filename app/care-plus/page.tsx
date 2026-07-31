@@ -171,22 +171,14 @@ export default function CarePlusPage() {
             </h2>
           </Reveal>
 
-          <Reveal delay={100} className="mt-12 overflow-x-auto pb-5">
-            <ol className="flex min-w-max items-center">
+          <Reveal delay={100} className="mt-12">
+            <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {howWeWork.map((step, index) => (
-                <li key={step} className="flex items-center">
-                  <div className="w-56 shrink-0 rounded-2xl border border-ink/15 bg-white p-5">
+                <li key={step} className="h-full">
+                  <div className="h-full min-h-36 rounded-2xl border border-ink/15 bg-white p-5 md:p-6">
                     <p className="font-display text-sm font-semibold text-brand">{String(index + 1).padStart(2, "0")}</p>
                     <p className="mt-3 font-display text-lg font-semibold leading-snug">{step}</p>
                   </div>
-                  {index < howWeWork.length - 1 && (
-                    <div className="flex w-14 shrink-0 items-center" aria-hidden>
-                      <span className="h-px flex-1 bg-brand" />
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="m8 5 7 7-7 7" stroke="#F7941D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  )}
                 </li>
               ))}
             </ol>

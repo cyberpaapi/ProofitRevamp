@@ -43,7 +43,7 @@ export default function LandingEnquiryPopup() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-      <div className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[28px] bg-white p-6 shadow-2xl sm:p-8">
+      <div className="scrollbar-hidden relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[28px] bg-white p-6 shadow-2xl sm:p-8">
         <button
           type="button"
           onClick={() => setOpen(false)}

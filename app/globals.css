@@ -23,6 +23,13 @@ html {
   /* iOS ignores overflow clipping set only on body — required on both to stop
      horizontal panning exposing off-canvas reveal animations. */
   overflow-x: clip;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -31,6 +38,17 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
 h1, h2, h3, h4, .font-display {

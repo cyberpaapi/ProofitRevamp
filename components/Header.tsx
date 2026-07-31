@@ -200,7 +200,7 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <nav aria-label="Site" className="mx-auto grid h-[calc(100dvh-80px)] max-w-7xl content-start gap-1 overflow-y-auto px-4 py-5 sm:px-6 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16 lg:px-8">
+        <nav aria-label="Site" className="scrollbar-hidden mx-auto grid h-[calc(100dvh-80px)] max-w-7xl content-start gap-1 overflow-y-auto px-4 py-5 sm:px-6 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16 lg:px-8">
           {menuLinks.map((l, i) => (
             <Link
               key={l.href}
