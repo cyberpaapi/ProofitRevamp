@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import ArrowBtn from "@/components/ArrowBtn";
+import Reveal from "@/components/Reveal";
 
 const distinction = [
   "Affordable Pricing",
@@ -22,10 +23,28 @@ const Check = () => (
   </svg>
 );
 
+function AboutVideo({ className = "" }: { className?: string }) {
+  return (
+    <div className={`overflow-hidden rounded-2xl bg-ink shadow-[0_24px_70px_-38px_rgba(17,17,18,0.5)] ${className}`}>
+      <video
+        className="h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label="Proofit inspector using a tablet during a property assessment"
+      >
+        <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
+      </video>
+    </div>
+  );
+}
+
 function AboutCopy({ hideCta = false }: { hideCta?: boolean }) {
   return (
     <>
-      <p className="leading-relaxed text-ink-soft/85">
+      <p className="max-w-xl font-body text-base leading-[1.75] text-ink-soft/85 xl:text-[1.05rem]">
         With decades of combined engineering and on-site building experience, the PROOFIT team understands how
         homes are built and where they commonly fail. We combine hands-on expertise with{" "}
         <strong className="font-semibold text-ink">IR technology (Thermal Scanning)</strong> to detect issues that
@@ -33,7 +52,7 @@ function AboutCopy({ hideCta = false }: { hideCta?: boolean }) {
       </p>
       {!hideCta && (
         <div className="mt-7">
-          <ArrowBtn href="/about" variant="dark">
+          <ArrowBtn href="/about" variant="dark" className="about-cta">
             About Us
           </ArrowBtn>
         </div>
@@ -45,12 +64,13 @@ function AboutCopy({ hideCta = false }: { hideCta?: boolean }) {
 function Distinction() {
   return (
     <>
-      <h3 className="font-display text-2xl font-semibold md:text-3xl">
+      <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-brand">Why Proofit</p>
+      <h3 className="mt-3 font-display text-3xl font-semibold leading-[1.08] md:text-4xl">
         The PROOFIT
         <br />
         Distinction
       </h3>
-      <div className="mt-6 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
+      <div className="mt-7 grid max-w-xl grid-cols-2 gap-x-6 gap-y-5 xl:gap-x-10">
         {distinction.map((item) => (
           <div key={item} className="flex items-center gap-3">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-ink" aria-hidden>
@@ -64,40 +84,74 @@ function Distinction() {
   );
 }
 
+function SavingsStatement() {
+  return (
+    <div className="mt-12 border-t border-ink/10 pt-9">
+      <h2 className="max-w-2xl font-display text-3xl font-semibold leading-[1.12] xl:text-[2.65rem]">
+        Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
+      </h2>
+      <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink-soft/75 xl:text-base">
+        A wide array of pre-emptive and problem-solving inspection services designed to protect your property,
+        your investment, and your peace of mind.
+      </p>
+    </div>
+  );
+}
+
 export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boolean }) {
-  const stageRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const desktopStageRef = useRef<HTMLElement>(null);
+  const desktopMediaRef = useRef<HTMLDivElement>(null);
+  const desktopIntroRef = useRef<HTMLDivElement>(null);
+  const desktopDetailRef = useRef<HTMLDivElement>(null);
+  const mobileIntroRef = useRef<HTMLDivElement>(null);
+  const mobileMediaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const stage = stageRef.current;
-    const canvas = canvasRef.current;
-    const image = imageRef.current;
-    const title = titleRef.current;
-    if (!stage || !canvas || !image || !title) return;
+    const desktopStage = desktopStageRef.current;
+    const desktopMedia = desktopMediaRef.current;
+    const desktopIntro = desktopIntroRef.current;
+    const desktopDetail = desktopDetailRef.current;
+    const mobileIntro = mobileIntroRef.current;
+    const mobileMedia = mobileMediaRef.current;
+    if (!desktopStage || !desktopMedia || !desktopIntro || !desktopDetail || !mobileIntro || !mobileMedia) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
+    let desktopCurrent = 0;
+    let mobileCurrent = 0;
 
     const clamp = (value: number) => Math.min(1, Math.max(0, value));
-    const lerp = (from: number, to: number, amount: number) => from + (to - from) * amount;
+    const smoothstep = (value: number) => value * value * (3 - 2 * value);
 
     const render = () => {
       raf = 0;
-      const stageTop = stage.getBoundingClientRect().top;
-      const scrollable = Math.max(1, stage.offsetHeight - window.innerHeight);
-      const progress = reducedMotion ? 1 : clamp(-stageTop / scrollable);
-      const morphProgress = clamp((progress - 0.03) / 0.92);
-      const morph = morphProgress * morphProgress * (3 - 2 * morphProgress);
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
 
-      image.style.left = `${lerp(width * 0.34, 0, morph)}px`;
-      image.style.top = `${lerp(height * 0.2, height * 0.14, morph)}px`;
-      image.style.width = `${lerp(width * 0.63, width, morph)}px`;
-      image.style.height = `${lerp(height * 0.54, height * 0.72, morph)}px`;
-      title.style.transform = `translate3d(0, ${-110 * morph}px, 0)`;
+      const desktopBounds = desktopStage.getBoundingClientRect();
+      const desktopTravel = Math.max(1, desktopStage.offsetHeight - window.innerHeight);
+      const desktopTarget = clamp(-desktopBounds.top / desktopTravel);
+      desktopCurrent = reducedMotion ? desktopTarget : desktopCurrent + (desktopTarget - desktopCurrent) * 0.16;
+      const reveal = smoothstep(clamp((desktopCurrent - 0.28) / 0.44));
+      const introFade = smoothstep(clamp((desktopCurrent - 0.2) / 0.32));
+
+      desktopMedia.style.transform = `translate3d(0, ${desktopCurrent * 34}px, 0) scale(${1 + desktopCurrent * 0.045})`;
+      desktopIntro.style.opacity = `${1 - introFade}`;
+      desktopIntro.style.transform = `translate3d(0, ${-24 * introFade}px, 0)`;
+      desktopIntro.style.pointerEvents = introFade > 0.75 ? "none" : "auto";
+      desktopDetail.style.opacity = `${reveal}`;
+      desktopDetail.style.transform = `translate3d(0, ${(1 - reveal) * 34}px, 0)`;
+
+      const mobileBounds = mobileIntro.getBoundingClientRect();
+      const mobileTravel = Math.max(1, mobileIntro.offsetHeight - window.innerHeight * 0.7);
+      const mobileTarget = clamp(-mobileBounds.top / mobileTravel);
+      mobileCurrent = reducedMotion ? mobileTarget : mobileCurrent + (mobileTarget - mobileCurrent) * 0.14;
+      mobileMedia.style.transform = `translate3d(0, ${mobileCurrent * 22}px, 0) scale(${1 + mobileCurrent * 0.035})`;
+
+      if (
+        Math.abs(desktopTarget - desktopCurrent) > 0.001 ||
+        Math.abs(mobileTarget - mobileCurrent) > 0.001
+      ) {
+        raf = requestAnimationFrame(render);
+      }
     };
 
     const schedule = () => {
@@ -115,92 +169,59 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
   }, []);
 
   return (
-    <section ref={stageRef} className="relative z-10 bg-white">
-      <div className="mx-auto hidden max-w-7xl grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-16 px-8 lg:grid">
-        <div>
-          <div ref={canvasRef} className="sticky top-[72px] h-[calc(100vh-72px)] overflow-hidden">
-            <h2
-              ref={titleRef}
-              className="absolute left-0 top-[9%] z-[3] font-display text-5xl font-semibold will-change-transform"
-            >
-              About Us
-            </h2>
-            <div
-              id="about-service-media-source"
-              ref={imageRef}
-              className="absolute z-[2] overflow-hidden rounded-2xl bg-white [clip-path:inset(0_round_1rem)] will-change-[left,top,width,height]"
-              style={{ left: "34%", top: "20%", width: "63%", height: "54%" }}
-            >
-              <video
-                className="absolute -inset-[2px] h-[calc(100%+4px)] w-[calc(100%+4px)] max-w-none object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                aria-label="Proofit inspector using a tablet during a property assessment"
-              >
-                <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
-              </video>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-start pb-12 pt-[9vh]">
-            <div className="w-full">
-              <AboutCopy hideCta={hideCta} />
-            </div>
-          </div>
-
-          <div className="flex min-h-[calc(100vh-72px)] translate-x-5 flex-col justify-start pb-16 pt-4">
-            <div>
-              <Distinction />
-            </div>
-            <div>
-              <h2 className="mt-16 font-display text-5xl font-semibold leading-[1.15]">
-                Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
+    <>
+      <section ref={desktopStageRef} className="about-texture relative z-10 hidden h-[190svh] bg-[#fbfaf7] lg:block">
+        <div className="sticky top-[72px] h-[calc(100svh-72px)] overflow-hidden">
+          <div className="mx-auto grid h-full max-w-7xl grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] gap-16 px-8 xl:gap-24">
+            <div className="relative min-h-0">
+              <h2 className="absolute left-0 top-[8.5vh] z-[2] font-display text-5xl font-semibold xl:text-[3.4rem]">
+                About Us
               </h2>
-              <p className="mt-3 max-w-xl text-ink-soft/75 md:mt-5">
-                A wide array of pre-emptive and problem-solving inspection services designed to protect your
-                property, your investment, and your peace of mind.
-              </p>
+              <div
+                ref={desktopMediaRef}
+                className="absolute left-0 top-[19vh] h-[58vh] max-h-[620px] min-h-[430px] w-[94%] origin-center will-change-transform"
+              >
+                <AboutVideo className="h-full w-full" />
+              </div>
+            </div>
+
+            <div className="relative h-full min-h-0">
+              <div
+                ref={desktopIntroRef}
+                className="absolute inset-x-0 top-[9vh] will-change-[opacity,transform]"
+              >
+                <AboutCopy hideCta={hideCta} />
+              </div>
+              <div
+                ref={desktopDetailRef}
+                className="absolute inset-x-0 top-[8vh] opacity-0 will-change-[opacity,transform]"
+              >
+                <Distinction />
+                <SavingsStatement />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="px-5 py-20 sm:px-8 lg:hidden">
-        <h2 className="font-display text-4xl font-semibold sm:text-5xl">About Us</h2>
-        <div className="relative -mx-5 mt-8 aspect-[4/3] overflow-hidden sm:mx-0 sm:rounded-2xl">
-          <video
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-label="Proofit inspector using a tablet during a property assessment"
-          >
-            <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
-          </video>
+      <section className="about-texture relative z-10 bg-[#fbfaf7] lg:hidden">
+        <div ref={mobileIntroRef} className="min-h-[calc(100svh-4rem)] px-5 pb-12 pt-10 sm:px-8">
+          <h2 className="font-display text-4xl font-semibold sm:text-5xl">About Us</h2>
+          <div ref={mobileMediaRef} className="mt-6 aspect-[4/3] origin-center will-change-transform sm:mt-8">
+            <AboutVideo className="h-full w-full" />
+          </div>
+          <div className="relative z-[2] mt-7 rounded-2xl bg-[#fbfaf7]/92 pt-1 backdrop-blur-[2px]">
+            <AboutCopy hideCta={hideCta} />
+          </div>
         </div>
-        <div className="mt-8">
-          <AboutCopy hideCta={hideCta} />
+
+        <div className="flex min-h-[calc(100svh-4rem)] items-center px-5 py-16 sm:px-8">
+          <Reveal from="up" className="w-full">
+            <Distinction />
+            <SavingsStatement />
+          </Reveal>
         </div>
-        <div className="mt-8">
-          <Distinction />
-        </div>
-        <div className="mt-14">
-          <h2 className="font-display text-3xl font-semibold leading-[1.15] sm:text-4xl">
-            Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
-          </h2>
-          <p className="mt-3 text-ink-soft/75 md:mt-5">
-            A wide array of pre-emptive and problem-solving inspection services designed to protect your property,
-            your investment, and your peace of mind.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -33,6 +33,31 @@ body {
   overflow-x: clip;
 }
 
+/* ---------- Subtle Figma-style material texture ---------- */
+.about-texture {
+  background-color: #fbfaf7;
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(247, 148, 29, 0.055), transparent 24rem),
+    radial-gradient(circle at 82% 74%, rgba(17, 17, 18, 0.035), transparent 28rem),
+    repeating-linear-gradient(112deg, rgba(17, 17, 18, 0.018) 0 1px, transparent 1px 5px);
+  background-size: auto, auto, 7px 7px;
+}
+
+.ink-texture,
+.ink-texture > section {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(247, 148, 29, 0.13), transparent 30rem),
+    radial-gradient(circle at 88% 72%, rgba(255, 255, 255, 0.055), transparent 32rem),
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 6px);
+  background-size: auto, auto, 8px 8px;
+}
+
+.about-cta:hover > span:last-child {
+  background: var(--color-ink);
+  color: #fff;
+}
+
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.01em;
@@ -384,4 +409,9 @@ h1, h2, h3, h4, .font-display {
     transform: none !important;
   }
   .thermal-lens { display: none; }
+  .about-cta,
+  .about-cta > span,
+  [class*="will-change-"] {
+    transition: none !important;
+  }
 }

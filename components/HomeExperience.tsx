@@ -6,7 +6,6 @@ import ServicesCarousel, { type ServiceSlide } from "@/components/ServicesCarous
 import HowItWorks from "@/components/HowItWorks";
 import DarkEnquiryForm from "@/components/DarkEnquiryForm";
 import HomeAboutSequence from "@/components/HomeAboutSequence";
-import HomeMediaBridge from "@/components/HomeMediaBridge";
 import InspectionBubbles from "@/components/InspectionBubbles";
 import ModelsReveal, { ModelsRevealMobile } from "@/components/ModelsReveal";
 import LandingLeadForm from "@/components/LandingLeadForm";
@@ -25,7 +24,7 @@ const serviceSlides: ServiceSlide[] = [
       "Rectification by the builder, at zero cost to you",
       "Understand the true condition of the property",
     ],
-    media: { type: "placeholder" },
+    media: { type: "image", src: "/images/svc-possession-tablet.webp" },
     href: "/services/home-inspection",
     mediaAlt: "Inspector scanning a room with a tablet showing live thermal imagery",
   },
@@ -230,13 +229,12 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       </div>
 
       {/* --------------------------- SERVICES CAROUSEL ------------------------ */}
-      <section>
+      <section className="ink-texture">
         <ServicesCarousel slides={serviceSlides} hideLinks={campaignMode} />
       </section>
-      <HomeMediaBridge />
 
       {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
-      <section className="pb-20 pt-20 md:pb-28 md:pt-28">
+      <section className="about-texture pb-20 pt-20 md:pb-28 md:pt-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="flex flex-col items-start gap-8 rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:p-12">
@@ -266,7 +264,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       <InspectionBubbles />
 
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
-      <section className="pb-20 pt-24 md:pb-28 md:pt-32">
+      <section className="about-texture pb-20 pt-24 md:pb-28 md:pt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 grid gap-4 md:grid-cols-2 md:items-end md:gap-6">
             <Reveal>

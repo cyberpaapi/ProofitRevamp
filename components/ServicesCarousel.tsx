@@ -10,8 +10,7 @@ export type ServiceSlide = {
   benefits: string[];
   media:
     | { type: "video"; src: string; poster: string }
-    | { type: "image"; src: string }
-    | { type: "placeholder" };
+    | { type: "image"; src: string };
   href: string;
   mediaAlt: string;
 };
@@ -68,8 +67,6 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
       >
         {/* Media */}
         <div
-          id="service-one-media-target"
-          data-active-service-index={index}
           className="relative h-[26svh] min-h-[180px] max-h-[280px] bg-black sm:h-[30svh] lg:h-auto lg:max-h-none"
         >
           {slide.media.type === "video" ? (
@@ -93,21 +90,10 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
               alt={slide.mediaAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
+              quality={84}
               className="service-card-enter object-cover"
             />
-          ) : (
-            <video
-              className="service-card-enter absolute inset-0 h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label={slide.mediaAlt}
-            >
-              <source src="/videos/S1.mp4?v=pexels-29296279" type="video/mp4" />
-            </video>
-          )}
+          ) : null}
         </div>
 
         {/* Panel */}

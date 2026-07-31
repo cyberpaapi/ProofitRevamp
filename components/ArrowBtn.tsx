@@ -14,7 +14,7 @@ type Props = {
 export default function ArrowBtn({ href, children, variant = "white", external, className = "" }: Props) {
   const shell = {
     white: "bg-white text-ink shadow-[0_4px_18px_rgba(17,17,18,0.18)]",
-    dark: "bg-ink text-white",
+    dark: "bg-ink text-white ring-1 ring-transparent hover:bg-white hover:text-ink hover:ring-ink/15",
     ghost: "bg-transparent text-white",
     orange: "bg-brand text-white",
   }[variant];
@@ -22,7 +22,7 @@ export default function ArrowBtn({ href, children, variant = "white", external, 
   const inner = (
     <>
       <span className="whitespace-nowrap pl-5 font-display text-sm font-semibold">{children}</span>
-      <span className="mx-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:translate-x-0.5">
+      <span className="mx-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -30,7 +30,7 @@ export default function ArrowBtn({ href, children, variant = "white", external, 
     </>
   );
 
-  const cls = `group inline-flex h-11 cursor-pointer items-center gap-2 rounded-full transition-all hover:-translate-y-0.5 ${shell} ${className}`;
+  const cls = `group inline-flex h-11 cursor-pointer items-center gap-2 rounded-full transition-[transform,background-color,color,box-shadow,border-color] duration-300 hover:-translate-y-0.5 ${shell} ${className}`;
 
   if (external) {
     return (
