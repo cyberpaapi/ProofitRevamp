@@ -23,7 +23,7 @@ function ModelCard({ model, className = "" }: { model: InspectionModel; classNam
         <p className="mt-1.5 text-sm leading-relaxed text-ink-soft/80">{model.idealFor}</p>
       </div>
       <p className="mt-5 font-display text-sm font-semibold">Key Benefits</p>
-      <ul className="mt-2 flex-1 space-y-2">
+      <ul className="mt-2 space-y-2">
         {model.benefits.map((benefit) => (
           <li key={benefit} className="flex items-start gap-2.5 text-sm leading-snug text-ink-soft">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" aria-hidden />
@@ -101,8 +101,8 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
   }, []);
 
   return (
-    <section ref={stageRef} className="relative mb-24 hidden h-[150vh] lg:block">
-      <div className="sticky top-[72px] mx-auto grid h-[calc(100vh-72px)] max-w-7xl grid-cols-[minmax(260px,340px)_1fr] gap-16 px-8 py-10">
+    <section ref={stageRef} className="relative mb-12 hidden h-[125vh] lg:block">
+      <div className="sticky top-[72px] mx-auto grid h-[calc(100vh-72px)] max-w-7xl grid-cols-[minmax(260px,340px)_1fr] gap-16 px-8 py-8">
         <div className="flex min-h-0 flex-col">
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">
             One Platform.
@@ -131,7 +131,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
 
 export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
   return (
-    <section className="px-5 pb-20 sm:px-8 lg:hidden">
+    <section className="px-5 pb-10 sm:px-8 lg:hidden">
       <h2 className="font-display text-4xl font-semibold leading-tight">
         One Platform.
         <br />

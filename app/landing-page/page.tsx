@@ -325,7 +325,7 @@ export default function LandingPage() {
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Before you book.</h2>
             <p className="mt-3 max-w-md leading-relaxed text-ink-soft/70 md:mt-5">
               Share the property details and concern through the enquiry form. A Proofit team member will follow up
-              within 24–48 hours.
+              within 24-48 hours.
             </p>
           </Reveal>
           <div className="space-y-3">

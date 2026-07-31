@@ -13,7 +13,6 @@ const menuLinks = [
   { href: "/care-plus", label: "Proofit Care+" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/blog", label: "Blog" },
-  { href: "/faqs", label: "FAQs" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact Us" },
 ];
@@ -188,7 +187,20 @@ export default function Header() {
         aria-label="Site menu"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
-          <Image src="/images/logo.svg" alt="Proofit" width={128} height={43} className="h-auto w-[110px] brightness-0 invert md:w-[128px]" />
+          <Image
+            src="/images/logo-black.png"
+            alt="Proofit"
+            width={556}
+            height={192}
+            className="h-auto w-[110px] brightness-0 invert md:hidden"
+          />
+          <Image
+            src="/images/logo.svg"
+            alt="Proofit"
+            width={128}
+            height={43}
+            className="hidden h-auto w-[128px] brightness-0 invert md:block"
+          />
           <button
             type="button"
             onClick={() => setOpen(false)}

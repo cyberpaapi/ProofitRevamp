@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Proofit",
   },
   description:
-    "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2–5 business working days.",
+    "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2-5 business working days.",
   keywords: [
     "home inspection Mumbai",
     "property inspection",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Proofit",
     title: "Proofit - Home & Water Inspection Experts | Mumbai & Nearby Cities",
     description:
-      "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2–5 business working days.",
+      "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2-5 business working days.",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Proofit - home inspection, proven" }],
   },
   twitter: {

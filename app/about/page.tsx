@@ -4,6 +4,7 @@ import ArrowBtn from "@/components/ArrowBtn";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import AboutAccordion from "@/components/AboutAccordion";
+import { faqs } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Us - The Team Behind Proofit",
@@ -33,6 +34,16 @@ const leadership = [
 ];
 
 export default function AboutPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+
   return (
     <>
       {/* Responsive banner: 480×700 mobile / 1440×540 desktop */}
@@ -241,6 +252,36 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Frequently Asked Questions */}
+      <section className="bg-cream py-20 md:py-28">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="FAQs"
+            title="Straight answers, no jargon."
+            lede="Everything people usually ask us before booking their first inspection."
+            center
+          />
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <Reveal key={faq.q} delay={Math.min(index, 4) * 60}>
+                <details className="group tile open:border-brand/50 open:shadow-md">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-bold marker:content-none [&::-webkit-details-marker]:hidden">
+                    {faq.q}
+                    <span
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xl font-bold text-brand transition-transform duration-200 group-open:rotate-45"
+                      aria-hidden
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <p className="px-5 pb-5 leading-relaxed text-ink-soft/85">{faq.a}</p>
+                </details>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Page closing section, separate from the footer */}
       <section className="bg-brand-soft py-20 md:py-24">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 px-4 sm:px-6 lg:px-8 lg:flex-row lg:items-end">
@@ -260,6 +301,7 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
     </>
   );
 }

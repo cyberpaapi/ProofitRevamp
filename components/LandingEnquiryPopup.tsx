@@ -59,7 +59,7 @@ export default function LandingEnquiryPopup() {
           Let us recommend the right inspection.
         </h2>
         <p className="mb-7 mt-3 max-w-xl text-sm leading-relaxed text-ink-soft/65">
-          Share the property details and concern. A Proofit team member will follow up within 24–48 hours.
+          Share the property details and concern. A Proofit team member will follow up within 24-48 hours.
         </p>
         <LandingLeadForm variant="popup" idPrefix={`popup-${pathname.replaceAll("/", "")}`} />
         <button

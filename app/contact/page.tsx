@@ -91,7 +91,7 @@ export default function ContactPage() {
             </div>
             <Reveal delay={300} className="mt-8 tile-black p-7">
               <h3 className="mb-2 font-bold text-brand">Hours</h3>
-              <p className="text-white/80">Monday – Saturday, 9:00 – 19:00 IST. Emergency leak calls answered on Sundays too.</p>
+              <p className="text-white/80">Monday - Saturday, 9:00 - 19:00 IST. Emergency leak calls answered on Sundays too.</p>
             </Reveal>
             <Reveal delay={360} className="mt-4">
               <a href="https://maps.app.goo.gl/xS3WCeqHxkms1j8q8?g_st=ic" target="_blank" rel="noopener" aria-label="Open Proofit in Google Maps for navigation" className="group relative block h-64 overflow-hidden rounded-2xl border border-line bg-cream shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">

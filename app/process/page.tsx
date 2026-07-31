@@ -9,7 +9,7 @@ import { processSteps } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Our Inspection Process - Booked to Briefed in 5 Steps",
   description:
-    "How a Proofit inspection works: booking, structured on-site inspection, thermal and instrument scanning, an evidence-backed report delivered in 2–5 business working days, and a findings walkthrough.",
+    "How a Proofit inspection works: booking, structured on-site inspection, thermal and instrument scanning, an evidence-backed report delivered in 2-5 business working days, and a findings walkthrough.",
 };
 
 const tools = [

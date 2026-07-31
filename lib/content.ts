@@ -157,7 +157,7 @@ export const processSteps = [
   },
   {
     title: "Evidence-backed report",
-    desc: "Within 2–5 business working days you receive a detailed snag report - every defect photographed, thermally documented where relevant, severity-graded, and mapped to its location.",
+    desc: "Within 2-5 business working days you receive a detailed snag report - every defect photographed, thermally documented where relevant, severity-graded, and mapped to its location.",
   },
   {
     title: "Walkthrough & next steps",
@@ -181,11 +181,11 @@ export const faqs = [
   },
   {
     q: "How long does an inspection take?",
-    a: "A typical 2–3 BHK apartment takes 2 to 4 hours depending on size and condition. Water-leak investigations vary with complexity - tracing a source across floors can take longer.",
+    a: "A typical 2-3 BHK apartment takes 2 to 4 hours depending on size and condition. Water-leak investigations vary with complexity - tracing a source across floors can take longer.",
   },
   {
     q: "When do I get the report?",
-    a: "Within 2–5 business working days of the inspection. Every finding is photographed, thermally documented where relevant, severity-graded and mapped to its location in the home.",
+    a: "Within 2-5 business working days of the inspection. Every finding is photographed, thermally documented where relevant, severity-graded and mapped to its location in the home.",
   },
   {
     q: "Can I use the report with my builder or society?",
@@ -264,7 +264,7 @@ export const posts: Post[] = [
     body: [
       { p: "Possession day is exciting - and it's also your maximum point of leverage. Defects flagged before handover get fixed on the builder's schedule and budget. The same defects discovered after you move in become your problem." },
       { h: "What a snag inspection covers", p: "Room by room: tile hollowness and levels, wall and ceiling finish, door and window operation and sealing, every electrical point tested, plumbing fixtures and drainage flow, balcony slopes, and waterproofing-critical zones scanned thermally." },
-      { h: "The numbers", p: "A typical new 2–3 BHK in Mumbai yields dozens of snags - most are minor finish issues, but nearly every inspection also surfaces a handful of significant items: bathroom seepage indicators, improperly sealed windows, or unsafe electrical work." },
+      { h: "The numbers", p: "A typical new 2-3 BHK in Mumbai yields dozens of snags - most are minor finish issues, but nearly every inspection also surfaces a handful of significant items: bathroom seepage indicators, improperly sealed windows, or unsafe electrical work." },
       { h: "How the report helps", p: "Our reports are formatted the way builder site teams work - location-mapped, photographed, severity-graded - so rectification is a checklist, not an argument. Most builders in our experience act on a professional report far faster than on a verbal complaint list." },
     ],
   },
@@ -389,6 +389,6 @@ export const testimonials = [
 export const stats = [
   { value: 300, suffix: "+", label: "Inspections completed" },
   { value: 12000, suffix: "+", label: "Defects documented" },
-  { value: "2–5", suffix: " days", label: "Report turnaround" },
+  { value: "2-5", suffix: " days", label: "Report turnaround" },
   { value: 100, suffix: "%", label: "Non-destructive methods" },
 ];

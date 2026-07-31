@@ -15,7 +15,6 @@ const quickLinks = [
   { href: "/about", label: "About" },
   { href: "/careers", label: "Career" },
   { href: "/contact", label: "Contact Us" },
-  { href: "/faqs", label: "FAQs" },
   { href: "/process", label: "Methodology" },
   { href: "/care-plus", label: "Proofit Care+" },
 ];

@@ -1,6 +1,6 @@
 # Proofit Website
 
-Marketing + enquiry site for Proofit (proofitcompany.com) — Next.js 15 (App Router), Tailwind CSS v4, TypeScript.
+Marketing + enquiry site for Proofit (proofitcompany.com) - Next.js 15 (App Router), Tailwind CSS v4, TypeScript.
 
 ## Run locally (no keys needed)
 
@@ -33,16 +33,16 @@ Copy `.env.example` to `.env.local` and fill in:
 
 ## Editing content
 
-All copy lives in two files — no component changes needed for routine updates:
+All copy lives in two files - no component changes needed for routine updates:
 
-- [lib/content.ts](lib/content.ts) — services, process steps, FAQs, blog posts, case studies, careers, testimonials, stats, founder bios
-- [lib/site.ts](lib/site.ts) — phone, email, WhatsApp link, service area
+- [lib/content.ts](lib/content.ts) - services, process steps, FAQs, blog posts, case studies, careers, testimonials, stats, founder bios
+- [lib/site.ts](lib/site.ts) - phone, email, WhatsApp link, service area
 
 Images live in `public/images/` (WebP, pre-optimized).
 
 ## Structure
 
-- `app/` — routes (home, about, process, services/[slug], faqs, blog/[slug], careers, case-studies, contact)
-- `app/api/enquiry/route.ts` — enquiry pipeline: validate → store → email
-- `components/` — Header, Footer, Reveal (scroll animations), Counter, EnquiryForm, etc.
+- `app/` - routes (home, about with FAQs, process, services/[slug], blog/[slug], careers, case-studies, contact)
+- `app/api/enquiry/route.ts` - enquiry pipeline: validate → store → email
+- `components/` - Header, Footer, Reveal (scroll animations), Counter, EnquiryForm, etc.
 - SEO: per-page metadata, `app/sitemap.ts`, `app/robots.ts`, JSON-LD (LocalBusiness, FAQPage, BlogPosting), `public/og.jpg`, `public/icon.svg`
