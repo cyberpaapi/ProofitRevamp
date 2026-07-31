@@ -25,7 +25,7 @@ export default function ThankYouPage() {
         </span>
         <h1 className="mt-8 font-display text-5xl font-semibold sm:text-6xl">Thank You!</h1>
         <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/90 md:mt-6">
-          Your enquiry has been successfully received. A member of the Proofit team will contact you within 24–48 hours.
+          Thank you for filling the form, someone from the Proofit team will reach out to you shortly.
         </p>
       </div>
     </section>

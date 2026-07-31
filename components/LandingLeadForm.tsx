@@ -124,7 +124,7 @@ export default function LandingLeadForm({
         </p>
       )}
 
-      <div className={isHorizontal ? "mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" : ""}>
+      <div className={isHorizontal ? "mt-5 flex flex-col items-start gap-4 lg:flex-row lg:items-center lg:justify-between" : ""}>
         {isHorizontal && (
           <p className="max-w-2xl text-xs leading-relaxed text-white/45">
             By submitting, you agree to receive calls, SMS, or email about your enquiry.

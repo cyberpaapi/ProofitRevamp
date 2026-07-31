@@ -37,19 +37,19 @@ export default function DarkEnquiryForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-white/15 p-10 text-center" role="status">
+      <div className="rounded-2xl border border-white/15 p-8 text-left sm:p-10" role="status">
         <svg className="draw-check mx-auto mb-5" width="64" height="64" viewBox="0 0 72 72" fill="none" aria-hidden>
           <circle cx="36" cy="36" r="34" stroke="#F7941D" strokeWidth="3" />
           <path d="M22 37 L32 47 L52 26" stroke="#F7941D" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </svg>
         <h3 className="mb-2 font-display text-2xl font-semibold text-white">Enquiry received</h3>
-        <p className="text-white/70">We&apos;ll get back to you within one working day.</p>
+        <p className="text-white/70">Thank you for filling the form, someone from the Proofit team will reach out to you shortly.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-7" noValidate>
+    <form onSubmit={onSubmit} className="grid gap-7 text-left" noValidate>
       <div className="grid gap-7 sm:grid-cols-2">
         <div>
           <label htmlFor="cta-name" className="mb-1 block font-display text-sm font-semibold text-white">Name</label>

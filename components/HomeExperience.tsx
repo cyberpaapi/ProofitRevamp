@@ -8,6 +8,7 @@ import DarkEnquiryForm from "@/components/DarkEnquiryForm";
 import HomeAboutSequence from "@/components/HomeAboutSequence";
 import InspectionBubbles from "@/components/InspectionBubbles";
 import ModelsReveal, { ModelsRevealMobile } from "@/components/ModelsReveal";
+import MumbaiTestimonials from "@/components/MumbaiTestimonials";
 import LandingLeadForm from "@/components/LandingLeadForm";
 import ScrollToEnquiryButton from "@/components/ScrollToEnquiryButton";
 import { site } from "@/lib/site";
@@ -299,62 +300,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       <ModelsRevealMobile b2b={b2b} b2c={b2c} />
 
       {/* ----------------------------- SERVING MUMBAI ------------------------- */}
-      <section className="bg-[#101010] py-20 text-white md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
-              Serving Mumbai &amp;
-              <br />
-              It&apos;s People
-            </h2>
-          </Reveal>
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <Reveal from="left" className="relative mx-auto w-full max-w-sm">
-              <Image
-                src="/images/mumbai-map-orange.png"
-                alt="Orange outline map of Mumbai with a glowing location marker"
-                width={666}
-                height={956}
-                className="h-auto w-full"
-              />
-            </Reveal>
-            <div>
-              <Reveal>
-                <p className="max-w-md leading-relaxed text-white/80">
-                  We serve homeowners, buyers, and businesses from coastal neighborhoods to inland communities.
-                  PROOFIT provides professional inspection services wherever Mumbai&apos;s humidity creates risk.
-                </p>
-              </Reveal>
-              <Reveal delay={140} className="mt-10">
-                <svg width="44" height="34" viewBox="0 0 32 24" fill="none" aria-hidden>
-                  <path d="M0 24V14.4C0 6.4 4.8 1.6 12.8 0l1.6 4c-4.8 1.6-7.2 4.27-7.2 8h6.4v12H0Zm18.4 0V14.4c0-8 4.8-12.8 12.8-14.4l1.6 4c-4.8 1.6-7.2 4.27-7.2 8H32v12H18.4Z" fill="#F7941D" />
-                </svg>
-                <p className="mt-5 max-w-xl font-display font-semibold leading-relaxed">
-                  As a developer, post-handover complaints were becoming a recurring issue for us, especially around
-                  seepage and bathroom slopes. PROOFIT&apos;s structured inspection before possession helped us identify
-                  technical gaps early and fix them systematically. The result was fewer escalations, smoother
-                  handovers, and stronger buyer confidence
-                </p>
-                <div className="mt-7 flex items-center gap-4 border-t border-white/15 pt-6">
-                  <span className="relative h-12 w-12 overflow-hidden rounded-full">
-                    <Image
-                      src="/images/director.webp"
-                      alt="Project Director of a residential development firm"
-                      fill
-                      sizes="48px"
-                      className="object-cover"
-                    />
-                  </span>
-                  <div>
-                    <p className="font-display text-lg font-semibold">Project Director</p>
-                    <p className="text-sm font-semibold text-white/70">Residential Development Firm</p>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
+      <MumbaiTestimonials />
 
       {/* ------------------------------ FINAL CTA ----------------------------- */}
       <section className="border-t border-white/10 bg-[#101010] pb-20 pt-16 text-white md:pb-24">
@@ -370,7 +316,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
               bills worth lakhs tomorrow.
             </p>
           </Reveal>
-          <Reveal delay={150}>
+          <Reveal delay={150} className="text-left">
             {campaignMode ? <LandingLeadForm idPrefix="landing2-enquiry" /> : <DarkEnquiryForm />}
           </Reveal>
         </div>

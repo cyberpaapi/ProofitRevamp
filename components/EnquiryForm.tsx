@@ -41,8 +41,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
         </svg>
         <h3 className="mb-2 text-2xl font-bold">Enquiry received</h3>
         <p className="text-ink-soft/80">
-          Thank you — we&apos;ve got your details and will get back to you within one working day. A confirmation
-          email is on its way to your inbox.
+          Thank you for filling the form, someone from the Proofit team will reach out to you shortly.
         </p>
       </div>
     );

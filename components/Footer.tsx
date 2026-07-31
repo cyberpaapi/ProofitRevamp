@@ -31,10 +31,10 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-[#121212] text-white">
-      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-4 pb-12 pt-8 sm:px-6 md:pt-10 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-4 pb-12 pt-5 sm:px-6 md:pt-6 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
         {/* Brand */}
         <div>
-          <Image src="/images/logo.svg" alt="Proofit" width={150} height={50} className="mb-4 h-auto w-[150px] brightness-0 invert" />
+          <Image src="/images/logo.svg" alt="Proofit" width={150} height={50} className="mb-3 h-auto w-[150px] brightness-0 invert" />
           <p className="text-sm leading-relaxed text-white/60">
             Independent, evidence-backed home inspections in {site.serviceArea}. International standards, thermal
             imaging, and reports that settle arguments.
@@ -62,7 +62,7 @@ export default function Footer() {
           <ul className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-10">
             {serviceLinks.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="font-display text-base font-semibold leading-snug transition-colors hover:text-brand sm:text-lg">
+                <Link href={l.href} className="font-display text-lg font-semibold leading-snug transition-colors hover:text-brand sm:text-xl">
                   {l.label}
                 </Link>
               </li>
