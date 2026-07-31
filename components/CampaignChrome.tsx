@@ -1,17 +1,14 @@
-import Image from "next/image";
 import LandingLeadForm from "@/components/LandingLeadForm";
+import ProofitLogo from "@/components/ProofitLogo";
 
 export function CampaignHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/92 text-white backdrop-blur-md">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 sm:px-6 lg:px-8">
-        <Image
-          src="/images/logo.svg"
-          alt="Proofit"
-          width={138}
-          height={46}
+        <ProofitLogo
           priority
-          className="h-auto w-[118px] brightness-0 invert sm:w-[138px]"
+          className="w-[118px] sm:w-[138px]"
+          imageClassName="brightness-0 invert"
         />
       </div>
     </header>
@@ -24,13 +21,7 @@ export function CampaignFooter({ idPrefix }: { idPrefix: string }) {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
         <div className="mb-9 grid gap-6 lg:grid-cols-[260px_1fr] lg:items-end">
           <div>
-            <Image
-              src="/images/logo.svg"
-              alt="Proofit"
-              width={150}
-              height={50}
-              className="h-auto w-[140px] brightness-0 invert"
-            />
+            <ProofitLogo className="w-[140px]" imageClassName="brightness-0 invert" />
             <p className="mt-4 text-sm leading-relaxed text-white/60">
               Evidence-backed property inspections for clearer decisions.
             </p>

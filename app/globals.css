@@ -336,7 +336,7 @@ h1, h2, h3, h4, .font-display {
 
 @media (max-width: 639px) and (max-height: 700px) {
   .how-it-works-grid {
-    grid-template-rows: 5.25rem minmax(0, 1fr);
+    grid-template-rows: clamp(10rem, 26svh, 12rem) minmax(0, 1fr);
     gap: 0.5rem;
   }
 }

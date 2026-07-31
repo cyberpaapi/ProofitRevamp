@@ -161,14 +161,14 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
             key={step.title}
             className={`${motion === "backward" ? "deck-enter-left z-20" : ""} how-it-works-card absolute bottom-0 left-0 z-10 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9`}
           >
-            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(11rem,27svh,15rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(250px,1fr)_minmax(0,1fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(330px,1.08fr)_minmax(0,0.92fr)] md:gap-8 lg:gap-10">
-              <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
+            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(14rem,34svh,19rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(280px,1.1fr)_minmax(0,0.9fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(390px,1.25fr)_minmax(0,0.75fr)] md:gap-8 lg:gap-10">
+              <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] bg-[#f3f1ed] md:rounded-[1.4rem]">
                 <Image
                   src={step.image}
                   alt={step.title}
                   fill
                   sizes="(min-width: 1024px) 420px, (min-width: 640px) 38vw, 90vw"
-                  className="object-cover object-top"
+                  className="object-contain object-center"
                   priority={index === 0}
                 />
               </div>
@@ -214,14 +214,14 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
               className="deck-exit-left how-it-works-card absolute bottom-0 left-0 z-20 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9"
               aria-hidden
             >
-              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(11rem,27svh,15rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(250px,1fr)_minmax(0,1fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(330px,1.08fr)_minmax(0,0.92fr)] md:gap-8 lg:gap-10">
-                <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
+              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(14rem,34svh,19rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(280px,1.1fr)_minmax(0,0.9fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(390px,1.25fr)_minmax(0,0.75fr)] md:gap-8 lg:gap-10">
+                <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] bg-[#f3f1ed] md:rounded-[1.4rem]">
                   <Image
                     src={steps[leavingIndex].image}
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 420px, (min-width: 640px) 38vw, 90vw"
-                    className="object-cover object-top"
+                    className="object-contain object-center"
                   />
                 </div>
                 <div className="how-it-works-content flex min-h-0 flex-col items-center justify-center overflow-hidden pb-0.5 text-center sm:py-2 sm:px-2 md:py-3 md:px-3">

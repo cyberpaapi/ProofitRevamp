@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import ProofitLogo from "@/components/ProofitLogo";
 
 const menuLinks = [
   { href: "/", label: "Home" },
@@ -66,13 +66,10 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit - home" className="shrink-0">
-              <Image
-                src="/images/logo.svg"
-                alt="Proofit"
-                width={128}
-                height={43}
+              <ProofitLogo
                 priority
-                className={`h-auto w-[88px] transition-[filter] duration-300 sm:w-[108px] md:w-[128px] ${
+                className="w-[88px] sm:w-[108px] md:w-[128px]"
+                imageClassName={`transition-[filter] duration-300 ${
                   heroMode ? "brightness-0 invert" : ""
                 }`}
               />
@@ -187,19 +184,9 @@ export default function Header() {
         aria-label="Site menu"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
-          <Image
-            src="/images/logo-black.png"
-            alt="Proofit"
-            width={556}
-            height={192}
-            className="h-auto w-[110px] brightness-0 invert md:hidden"
-          />
-          <Image
-            src="/images/logo.svg"
-            alt="Proofit"
-            width={128}
-            height={43}
-            className="hidden h-auto w-[128px] brightness-0 invert md:block"
+          <ProofitLogo
+            className="w-[110px] md:w-[128px]"
+            imageClassName="brightness-0 invert"
           />
           <button
             type="button"
