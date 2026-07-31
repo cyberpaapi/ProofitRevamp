@@ -258,18 +258,16 @@ h1, h2, h3, h4, .font-display {
 }
 
 /* ---------- Scroll-driven services ---------- */
-@keyframes service-card-enter {
+@keyframes service-content-fade {
   from {
-    opacity: 0.2;
-    transform: translateY(38px);
+    opacity: 0;
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
-.service-card-enter {
-  animation: service-card-enter 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+.service-content-fade {
+  animation: service-content-fade 260ms ease-out both;
 }
 
 /* ---------- Card deck cycle (How PROOFIT Works) ---------- */
@@ -403,7 +401,7 @@ h1, h2, h3, h4, .font-display {
   .draw-check path {
     animation: none !important;
   }
-  .deck-exit-left, .deck-enter-left, .deck-enter, .service-card-enter {
+  .deck-exit-left, .deck-enter-left, .deck-enter, .service-content-fade {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

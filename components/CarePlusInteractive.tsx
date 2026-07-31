@@ -75,7 +75,7 @@ export function CareServices({ services }: { services: Service[] }) {
               if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
             }}
           >
-            <article key={services[index].title} className="service-card-enter rounded-2xl border border-ink/15 bg-white p-6 sm:p-8" aria-live="polite">
+            <article key={services[index].title} className="service-content-fade rounded-2xl border border-ink/15 bg-white p-6 sm:p-8" aria-live="polite">
               <p className="font-display text-sm font-semibold text-brand">
                 {String(index + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
               </p>
@@ -138,7 +138,7 @@ export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
               if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
             }}
           >
-            <article key={reasons[index].title} className="service-card-enter grid gap-6 border-t border-white/15 pt-8 md:grid-cols-[160px_1fr] md:gap-12" aria-live="polite">
+            <article key={reasons[index].title} className="service-content-fade grid gap-6 border-t border-white/15 pt-8 md:grid-cols-[160px_1fr] md:gap-12" aria-live="polite">
               <p className="font-display text-lg font-semibold text-brand">
                 {String(index + 1).padStart(2, "0")} / {String(reasons.length).padStart(2, "0")}
               </p>

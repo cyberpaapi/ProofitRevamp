@@ -26,7 +26,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-possession-tablet.webp" },
     href: "/services/home-inspection",
-    mediaAlt: "Inspector scanning a room with a tablet showing live thermal imagery",
+    mediaAlt: "Proofit inspector checking a damp wall while homeowners observe",
   },
   {
     title: "Resale Property Inspection",
@@ -39,7 +39,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-resale.webp" },
     href: "/services/home-inspection",
-    mediaAlt: "Inspector examining the wall of a resale apartment",
+    mediaAlt: "Proofit inspector examining the condition of a resale apartment",
   },
   {
     title: "Rental Move In / Move Out Inspection",
@@ -52,7 +52,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-rental.webp" },
     href: "/services/home-inspection",
-    mediaAlt: "Inspector handing over keys at a rental move-in",
+    mediaAlt: "Proofit inspector documenting a rental property handover",
   },
   {
     title: "Water Leakage & Dampness Inspection",
@@ -65,7 +65,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-water.webp" },
     href: "/services/water-inspection",
-    mediaAlt: "Inspector pointing a thermal camera at a bathroom wall",
+    mediaAlt: "Proofit inspector checking moisture beside a kitchen sink",
   },
   {
     title: "Pre / Post Renovation Inspection",
@@ -78,7 +78,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-renovation.webp" },
     href: "/services/home-inspection",
-    mediaAlt: "Inspector checking freshly renovated room finishes",
+    mediaAlt: "Proofit inspector checking finishes after renovation work",
   },
   {
     title: "Builder Quality Audit",
@@ -91,7 +91,7 @@ const serviceSlides: ServiceSlide[] = [
     ],
     media: { type: "image", src: "/images/svc-audit.webp" },
     href: "/services/home-inspection",
-    mediaAlt: "Inspector in a hard hat auditing new construction",
+    mediaAlt: "Proofit inspector auditing construction quality on site",
   },
 ];
 
@@ -235,9 +235,9 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
 
       {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
       <section className="about-texture pb-20 pt-20 md:pb-28 md:pt-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-[calc(100%-2rem)] max-w-[1500px] sm:w-[calc(100%-3rem)]">
           <Reveal>
-            <div className="flex flex-col items-start gap-8 rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:p-12">
+            <div className="flex flex-col items-start gap-8 overflow-visible rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:px-14 md:py-12 xl:px-20">
               <div>
                 <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Proofit Care+</p>
                 <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold leading-[1.15] md:text-4xl">

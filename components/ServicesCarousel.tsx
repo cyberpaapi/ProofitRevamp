@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ArrowBtn from "./ArrowBtn";
+import ProofitCheck from "./ProofitCheck";
 
 export type ServiceSlide = {
   title: string;
@@ -66,38 +67,42 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
         onTouchEnd={onTouchEnd}
       >
         {/* Media */}
-        <div
-          className="relative h-[26svh] min-h-[180px] max-h-[280px] bg-black sm:h-[30svh] lg:h-auto lg:max-h-none"
-        >
-          {slide.media.type === "video" ? (
-            <video
-              key={slide.media.src}
-              className="service-card-enter absolute inset-0 h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={slide.media.poster}
-              aria-label={slide.mediaAlt}
+        <div className="relative h-[26svh] min-h-[180px] max-h-[280px] overflow-hidden bg-black sm:h-[30svh] lg:h-auto lg:max-h-none">
+          {slides.map((service, serviceIndex) => (
+            <div
+              key={service.media.src}
+              className={`absolute inset-0 transition-opacity duration-500 ease-out ${serviceIndex === index ? "z-10 opacity-100" : "pointer-events-none opacity-0"}`}
+              aria-hidden={serviceIndex !== index}
             >
-              <source src={slide.media.src} type="video/mp4" />
-            </video>
-          ) : slide.media.type === "image" ? (
-            <Image
-              key={slide.media.src}
-              src={slide.media.src}
-              alt={slide.mediaAlt}
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              quality={84}
-              className="service-card-enter object-cover"
-            />
-          ) : null}
+              {service.media.type === "video" ? (
+                <video
+                  className="h-full w-full object-cover"
+                  autoPlay={serviceIndex === index}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  poster={service.media.poster}
+                  aria-label={service.mediaAlt}
+                >
+                  <source src={service.media.src} type="video/mp4" />
+                </video>
+              ) : (
+                <Image
+                  src={service.media.src}
+                  alt={service.mediaAlt}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  quality={84}
+                  className="object-cover"
+                />
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Panel */}
-        <div key={`service-panel-${index}`} className="service-card-enter relative flex min-h-0 flex-col justify-center px-5 pb-8 pt-8 sm:px-7 sm:pb-10 sm:pt-9 md:p-10 lg:overflow-hidden lg:p-16">
+        <div key={`service-panel-${index}`} className="service-content-fade relative flex min-h-0 flex-col justify-center px-5 pb-8 pt-8 sm:px-7 sm:pb-10 sm:pt-9 md:p-10 lg:overflow-hidden lg:p-16">
           <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-brand sm:text-sm">Our Services</p>
           <p className="mt-2 font-display text-base text-white/60 lg:mt-8 lg:text-lg">
             {String(index + 1).padStart(2, "0")}
@@ -110,11 +115,7 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
           <ul className="mt-2 grid max-w-lg grid-cols-2 gap-x-4 gap-y-2 lg:mt-4 lg:gap-x-8 lg:gap-y-4">
             {slide.benefits.map((benefit) => (
               <li key={benefit} className="flex items-start gap-2 text-xs text-white/85 sm:text-sm lg:gap-3">
-                <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] bg-white lg:h-5 lg:w-5" aria-hidden>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
+                <ProofitCheck inverse />
                 {benefit}
               </li>
             ))}
