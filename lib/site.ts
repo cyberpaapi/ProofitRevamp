@@ -12,6 +12,8 @@ export const site = {
   ],
   email: "info@proofitcompany.com",
   whatsapp: "https://api.whatsapp.com/send?phone=919594013666&text=Inspection%20Enquiry",
+  whatsappSampleReport:
+    "https://api.whatsapp.com/send?phone=919594013666&text=Hi%20Proofit%2C%20I%27d%20like%20to%20see%20a%20sample%20inspection%20report.",
   city: "Mumbai",
   serviceArea: "Mumbai, Navi Mumbai & Thane",
 };

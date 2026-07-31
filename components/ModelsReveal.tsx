@@ -1,6 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
+import ArrowBtn from "@/components/ArrowBtn";
+import { site } from "@/lib/site";
 
 export type InspectionModel = {
   title: string;
@@ -33,6 +36,29 @@ function ModelCard({ model, className = "" }: { model: InspectionModel; classNam
         <p className="mt-1.5 text-sm leading-relaxed text-ink-soft/80">{model.outcome}</p>
       </div>
     </article>
+  );
+}
+
+function SampleReportPrompt({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center ${className}`}>
+      <Image
+        src="/images/proofit-certified-stamp.png"
+        alt="Proofit officially certified inspection stamp"
+        width={266}
+        height={244}
+        sizes="(min-width: 1024px) 180px, 168px"
+        className="h-auto w-[10.5rem] object-contain lg:w-[11.25rem]"
+      />
+      <ArrowBtn
+        href={site.whatsappSampleReport}
+        external
+        variant="dark"
+        className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+      >
+        Ask for Sample Report
+      </ArrowBtn>
+    </div>
   );
 }
 
@@ -77,7 +103,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
   return (
     <section ref={stageRef} className="relative mb-24 hidden h-[150vh] lg:block">
       <div className="sticky top-[72px] mx-auto grid h-[calc(100vh-72px)] max-w-7xl grid-cols-[minmax(260px,340px)_1fr] gap-16 px-8 py-10">
-        <div>
+        <div className="flex min-h-0 flex-col">
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">
             One Platform.
             <br />
@@ -87,6 +113,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
             Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
             delivers structured, AI-led home health assessments designed for your context.
           </p>
+          <SampleReportPrompt className="mt-7" />
         </div>
 
         <div ref={deckRef} className="relative h-full min-h-0 overflow-visible">
@@ -114,6 +141,7 @@ export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: In
         Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
         delivers structured, AI-led home health assessments designed for your context.
       </p>
+      <SampleReportPrompt className="mt-7" />
       <div className="mt-8 grid gap-6">
         <ModelCard model={b2b} />
         <ModelCard model={b2c} />
