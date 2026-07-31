@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
+import ThemedSelect from "@/components/ThemedSelect";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -50,7 +51,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
   return (
     <form onSubmit={onSubmit} className="grid gap-5 tile p-6 shadow-sm sm:p-8" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
+        <div className="min-w-0">
           <label htmlFor="name" className="mb-1.5 block text-sm font-semibold">
             Full name <span className="text-brand" aria-hidden>*</span>
           </label>
@@ -95,37 +96,31 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
             className="w-full rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
           />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor="service" className="mb-1.5 block text-sm font-semibold">
             What do you need?
           </label>
-          <select
+          <ThemedSelect
             id="service"
             name="service"
             defaultValue={defaultService || enquiryServiceOptions[0]}
-            className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
-          >
-            {enquiryServiceOptions.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
+            options={enquiryServiceOptions}
+            className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 hover:border-brand focus-visible:border-brand"
+          />
         </div>
       </div>
 
-      <div>
+      <div className="min-w-0">
         <label htmlFor="property" className="mb-1.5 block text-sm font-semibold">
           Property type
         </label>
-        <select
+        <ThemedSelect
           id="property"
           name="property"
           defaultValue={propertyTypeOptions[0]}
-          className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
-        >
-          {propertyTypeOptions.map((property) => (
-            <option key={property}>{property}</option>
-          ))}
-        </select>
+          options={propertyTypeOptions}
+          className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 hover:border-brand focus-visible:border-brand"
+        />
       </div>
 
       <div>

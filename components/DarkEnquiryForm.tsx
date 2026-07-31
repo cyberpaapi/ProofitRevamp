@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
+import ThemedSelect from "@/components/ThemedSelect";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -51,7 +52,7 @@ export default function DarkEnquiryForm() {
   return (
     <form onSubmit={onSubmit} className="grid gap-7 text-left" noValidate>
       <div className="grid gap-7 sm:grid-cols-2">
-        <div>
+        <div className="min-w-0">
           <label htmlFor="cta-name" className="mb-1 block font-display text-sm font-semibold text-white">Name</label>
           <input id="cta-name" name="name" type="text" required autoComplete="name" placeholder="John Doe" className={field} />
         </div>
@@ -65,22 +66,14 @@ export default function DarkEnquiryForm() {
           <label htmlFor="cta-phone" className="mb-1 block font-display text-sm font-semibold text-white">Phone</label>
           <input id="cta-phone" name="phone" type="tel" required autoComplete="tel" placeholder="+91 9876543212" className={field} />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor="cta-service" className="mb-1 block font-display text-sm font-semibold text-white">What do you need?</label>
-          <select id="cta-service" name="service" defaultValue={enquiryServiceOptions[0]} className={`${field} cursor-pointer [&>option]:text-ink`}>
-            {enquiryServiceOptions.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
+          <ThemedSelect id="cta-service" name="service" defaultValue={enquiryServiceOptions[0]} options={enquiryServiceOptions} variant="dark" className={`${field} cursor-pointer`} />
         </div>
       </div>
-      <div>
+      <div className="min-w-0">
         <label htmlFor="cta-property" className="mb-1 block font-display text-sm font-semibold text-white">Property type</label>
-        <select id="cta-property" name="property" defaultValue={propertyTypeOptions[0]} className={`${field} cursor-pointer [&>option]:text-ink`}>
-          {propertyTypeOptions.map((property) => (
-            <option key={property}>{property}</option>
-          ))}
-        </select>
+        <ThemedSelect id="cta-property" name="property" defaultValue={propertyTypeOptions[0]} options={propertyTypeOptions} variant="dark" className={`${field} cursor-pointer`} />
       </div>
       <div>
         <label htmlFor="cta-message" className="mb-1 block font-display text-sm font-semibold text-white">Message</label>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
+import ThemedSelect from "@/components/ThemedSelect";
 
 type Status = "idle" | "sending" | "error";
 type Variant = "card" | "horizontal" | "popup";
@@ -66,13 +67,13 @@ export default function LandingLeadForm({
       )}
 
       <div className={`${isCard ? "mt-6" : ""} ${gridClass}`}>
-        <div>
+        <div className="min-w-0">
           <label htmlFor={`${idPrefix}-name`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             Name
           </label>
           <input id={`${idPrefix}-name`} name="name" type="text" required autoComplete="name" placeholder="Your full name" className={inputClass} />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor={`${idPrefix}-phone`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             Phone
           </label>
@@ -84,25 +85,17 @@ export default function LandingLeadForm({
           </label>
           <input id={`${idPrefix}-email`} name="email" type="email" required autoComplete="email" placeholder="you@email.com" className={inputClass} />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor={`${idPrefix}-property`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             Property type
           </label>
-          <select id={`${idPrefix}-property`} name="property" defaultValue={propertyTypeOptions[0]} className={`${inputClass} cursor-pointer`}>
-            {propertyTypeOptions.map((property) => (
-              <option key={property}>{property}</option>
-            ))}
-          </select>
+          <ThemedSelect id={`${idPrefix}-property`} name="property" defaultValue={propertyTypeOptions[0]} options={propertyTypeOptions} className={`${inputClass} cursor-pointer`} />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor={`${idPrefix}-service`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
             What do you need?
           </label>
-          <select id={`${idPrefix}-service`} name="service" defaultValue={enquiryServiceOptions[0]} className={`${inputClass} cursor-pointer`}>
-            {enquiryServiceOptions.map((service) => (
-              <option key={service}>{service}</option>
-            ))}
-          </select>
+          <ThemedSelect id={`${idPrefix}-service`} name="service" defaultValue={enquiryServiceOptions[0]} options={enquiryServiceOptions} className={`${inputClass} cursor-pointer`} />
         </div>
         <div>
           <label htmlFor={`${idPrefix}-message`} className={`mb-1.5 block font-display text-sm font-semibold ${isHorizontal ? "text-white" : ""}`}>
