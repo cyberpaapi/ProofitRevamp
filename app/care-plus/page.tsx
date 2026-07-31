@@ -170,11 +170,14 @@ export default function CarePlusPage() {
             </h2>
           </Reveal>
 
-          <Reveal delay={100} className="mt-12 overflow-x-auto pb-5">
-            <ol className="flex min-w-max items-center">
+          <Reveal
+            delay={100}
+            className="proofit-scrollbar mt-12 overflow-x-auto overscroll-x-contain pb-6"
+          >
+            <ol className="flex min-w-max snap-x snap-mandatory items-stretch" aria-label="Proofit Care Plus process">
               {howWeWork.map((step, index) => (
-                <li key={step} className="flex items-center">
-                  <div className="w-56 shrink-0 rounded-2xl border border-ink/15 bg-white p-5">
+                <li key={step} className="flex snap-start items-center">
+                  <div className="flex h-36 w-56 shrink-0 flex-col rounded-2xl border border-brand/35 bg-white p-5 shadow-[0_10px_28px_rgba(34,29,25,0.06)]">
                     <p className="font-display text-sm font-semibold text-brand">{String(index + 1).padStart(2, "0")}</p>
                     <p className="mt-3 font-display text-lg font-semibold leading-snug">{step}</p>
                   </div>

@@ -53,6 +53,7 @@ export function CareServices({ services }: { services: Service[] }) {
   const go = (direction: 1 | -1) => {
     setIndex((current) => (current + direction + services.length) % services.length);
   };
+  const serviceCardColors = "border-ink/15 bg-white text-ink";
 
   return (
     <section className="bg-cream py-20 md:py-28">
@@ -75,7 +76,7 @@ export function CareServices({ services }: { services: Service[] }) {
               if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
             }}
           >
-            <article key={services[index].title} className="service-content-fade rounded-2xl border border-ink/15 bg-white p-6 sm:p-8" aria-live="polite">
+            <article key={services[index].title} className={`service-content-fade rounded-2xl border p-6 sm:p-8 ${serviceCardColors}`} aria-live="polite">
               <p className="font-display text-sm font-semibold text-brand">
                 {String(index + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
               </p>
@@ -98,7 +99,7 @@ export function CareServices({ services }: { services: Service[] }) {
 
         <div className="mt-12 hidden grid-cols-2 gap-5 lg:grid xl:grid-cols-3">
           {services.map((service, serviceIndex) => (
-            <article key={service.title} className="rounded-2xl border border-ink/15 bg-white p-7">
+            <article key={service.title} className={`rounded-2xl border p-7 ${serviceCardColors}`}>
               <p className="font-display text-sm font-semibold text-brand">{String(serviceIndex + 1).padStart(2, "0")}</p>
               <h3 className="mt-4 font-display text-xl font-semibold leading-tight">{service.title}</h3>
               <p className="mt-4 text-sm leading-relaxed text-ink-soft/80">{service.body}</p>
@@ -127,7 +128,7 @@ export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
           </h2>
 
           <div
-            className="mt-10"
+            className="mt-10 h-[390px] sm:h-[300px] md:h-[230px]"
             onTouchStart={(event) => {
               touchX.current = event.touches[0].clientX;
             }}
@@ -138,7 +139,7 @@ export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
               if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
             }}
           >
-            <article key={reasons[index].title} className="service-content-fade grid gap-6 border-t border-white/15 pt-8 md:grid-cols-[160px_1fr] md:gap-12" aria-live="polite">
+            <article key={reasons[index].title} className="service-content-fade grid h-full content-start gap-6 border-t border-white/15 pt-8 md:grid-cols-[160px_1fr] md:gap-12" aria-live="polite">
               <p className="font-display text-lg font-semibold text-brand">
                 {String(index + 1).padStart(2, "0")} / {String(reasons.length).padStart(2, "0")}
               </p>
@@ -151,7 +152,7 @@ export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
             </article>
           </div>
 
-          <div className="mt-9 flex gap-3">
+          <div className="mt-9 flex justify-end gap-3">
             <CarouselButton label="Previous reason" direction="left" onClick={() => go(-1)} />
             <CarouselButton label="Next reason" direction="right" onClick={() => go(1)} />
           </div>

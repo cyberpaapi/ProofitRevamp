@@ -82,14 +82,14 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-current/20 transition-colors hover:border-brand hover:text-brand md:order-last"
+              className="flex h-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-current/20 px-3.5 transition-colors hover:border-brand hover:text-brand md:order-last sm:px-4"
               aria-label="Open menu"
               aria-expanded={open}
             >
-              <span className="sr-only">Menu</span>
               <svg width="20" height="16" viewBox="0 0 18 14" fill="none" aria-hidden>
                 <path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
+              <span className="font-display text-xs font-semibold sm:text-sm">Menu</span>
             </button>
 
             <nav aria-label="Primary" className="hidden items-center gap-6 md:flex lg:gap-8">

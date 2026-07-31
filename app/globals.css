@@ -408,6 +408,27 @@ h1, h2, h3, h4, .font-display {
   background-size: 100% 2px;
 }
 
+/* ---------- Proofit horizontal journey scrollbar ---------- */
+.proofit-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #f7941d rgba(247, 148, 29, 0.16);
+}
+
+.proofit-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
+.proofit-scrollbar::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(247, 148, 29, 0.16);
+}
+
+.proofit-scrollbar::-webkit-scrollbar-thumb {
+  border: 2px solid #fff8ef;
+  border-radius: 999px;
+  background: #f7941d;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .hero-rise {

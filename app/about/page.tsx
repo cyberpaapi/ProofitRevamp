@@ -14,16 +14,19 @@ export const metadata: Metadata = {
 const leadership = [
   {
     name: "Hardik Sampat",
+    image: "/images/team/hardik-back.webp",
     role: "Co-Founder · Head of Business Development",
     bio: "Hardik spent his formative professional years in Canada, where he developed deep expertise in residential construction, building materials, and property systems. After working with Home Depot, he managed end-to-end residential projects as a General Contractor before training with Primary Home Inspection in structured, standards-based inspection methodologies. At Proofit, Hardik leads business development while driving the adoption of globally inspired inspection practices, helping establish new benchmarks for transparency, quality, and preventive property care in India.",
   },
   {
     name: "Nupur Mahipal",
+    image: "/images/team/nupur-back.webp",
     role: "Partner · Chief Marketing Officer (CMO)",
     bio: "Nupur brings over seven years of experience in the property inspection industry, with expertise spanning operations, client relationships, marketing, and business development. Her hands-on understanding of the industry has helped shape Proofit’s customer-first approach while strengthening its brand presence and strategic partnerships. She leads marketing and growth initiatives with a focus on building trust, creating meaningful customer experiences, and expanding Proofit’s reach across India’s evolving real estate landscape.",
   },
   {
     name: "Dhyan Parekh",
+    image: "/images/team/dhyan-back.webp",
     role: "Co-Founder · Operations & Quality Lead",
     bio: "Having lived and worked in Canada, Dhyan recognised that professional home inspections were a standard part of property ownership - something largely missing in Mumbai despite its demanding climate and ageing infrastructure. Inspired to bridge that gap, he co-founded Proofit to bring globally inspired inspection standards to India. He leads inspection workflows, report structuring, and quality assurance, ensuring every report is evidence-backed, consistent, and easy for clients to understand.",
   },
@@ -103,6 +106,17 @@ export default function AboutPage() {
       {/* Our Story - retained */}
       <section className="bg-cream py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2 lg:gap-20">
+          <Reveal>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/images/about-india-building.webp"
+                alt="Low-angle view of a brown building beneath a cloudy sky"
+                fill
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
           <div>
             <SectionHeading eyebrow="Our Story" title="Why India needed" accent="a Proofit." />
             <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
@@ -122,17 +136,6 @@ export default function AboutPage() {
               </p>
             </Reveal>
           </div>
-          <Reveal from="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/images/facade-warm.webp"
-                alt="Whitewashed residential home facade in soft morning light"
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -201,10 +204,16 @@ export default function AboutPage() {
           <div className="grid items-stretch gap-7 lg:grid-cols-3">
             {leadership.map((leader, index) => (
               <Reveal key={leader.name} delay={index * 120} className="tile flex h-full flex-col p-7 md:p-8">
-                <div className="mb-6 flex min-h-16 items-center gap-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand font-display text-xl font-bold text-white">
-                    {leader.name.split(" ").map((name) => name[0]).join("")}
-                  </div>
+                <div className="relative mb-6 aspect-square w-full overflow-hidden rounded-xl bg-brand-soft">
+                  <Image
+                    src={leader.image}
+                    alt={`${leader.name} wearing the orange Proofit team shirt, seen from behind`}
+                    fill
+                    sizes="(min-width: 1024px) 28vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="mb-6 flex min-h-16 items-center">
                   <div>
                     <h3 className="font-display text-xl font-semibold">{leader.name}</h3>
                     <p className="mt-1 text-sm font-semibold leading-snug text-brand-deep">{leader.role}</p>
