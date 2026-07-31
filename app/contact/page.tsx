@@ -7,14 +7,13 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact Us — Book an Inspection",
   description:
-    "Book a Proofit home or water inspection in Mumbai, Navi Mumbai or Thane. Call +91-9594013666, WhatsApp us, or send an enquiry — we respond the same day.",
+    "Contact Proofit for expert property inspections and solutions. Call, WhatsApp, email, or send an enquiry to our Mumbai team.",
 };
 
 const channels = [
   {
     label: "Call us",
-    value: site.phone,
-    href: site.phoneHref,
+    phones: site.phones,
     icon: (
       <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
         <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328z" />
@@ -49,9 +48,9 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact us"
-        title="Same-day answers."
-        accent="48-hour reports."
-        lede={`Serving ${site.serviceArea}. Tell us what's worrying you about the property — we'll tell you honestly what an inspection can do about it.`}
+        title="Ready to"
+        accent="Proofit?"
+        lede="From inspections to solutions, our experts are here to help every step of the way."
       />
 
       <section className="py-20 md:py-28">
@@ -63,29 +62,48 @@ export default function ContactPage() {
             <div className="space-y-4">
               {channels.map((c, i) => (
                 <Reveal key={c.label} delay={i * 90}>
-                  <a
-                    href={c.href}
-                    {...(c.external ? { target: "_blank", rel: "noopener" } : {})}
-                    className="tile tile-hover flex items-center gap-4 p-5"
-                  >
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand-deep">
-                      {c.icon}
-                    </span>
-                    <span>
-                      <span className="block text-sm text-ink-soft/60">{c.label}</span>
-                      <span className="font-bold">{c.value}</span>
-                    </span>
-                  </a>
+                  {"phones" in c ? (
+                    <div className="tile flex items-start gap-4 p-5">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand-deep">{c.icon}</span>
+                      <span className="min-w-0">
+                        <span className="block text-sm text-ink-soft/60">{c.label}</span>
+                        <span className="mt-1 flex flex-wrap gap-x-2 gap-y-1 font-bold">
+                          {c.phones!.map((phone, phoneIndex) => (
+                            <span key={phone.href} className="inline-flex items-center gap-2">
+                              {phoneIndex > 0 && <span className="text-ink-soft/35">/</span>}
+                              <a href={phone.href} className="transition-colors hover:text-brand-deep">{phone.label}</a>
+                            </span>
+                          ))}
+                        </span>
+                      </span>
+                    </div>
+                  ) : (
+                    <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener" } : {})} className="tile tile-hover flex items-center gap-4 p-5">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand-deep">{c.icon}</span>
+                      <span>
+                        <span className="block text-sm text-ink-soft/60">{c.label}</span>
+                        <span className="font-bold">{c.value}</span>
+                      </span>
+                    </a>
+                  )}
                 </Reveal>
               ))}
             </div>
             <Reveal delay={300} className="mt-8 tile-black p-7">
-              <h3 className="mb-2 font-bold text-brand">Service area</h3>
-              <p className="text-white/80">
-                {site.serviceArea}. Outside this area? Write to us — we take up select assignments.
-              </p>
-              <h3 className="mb-2 mt-5 font-bold text-brand">Hours</h3>
+              <h3 className="mb-2 font-bold text-brand">Hours</h3>
               <p className="text-white/80">Monday – Saturday, 9:00 – 19:00 IST. Emergency leak calls answered on Sundays too.</p>
+            </Reveal>
+            <Reveal delay={360} className="mt-4">
+              <a href="https://maps.app.goo.gl/xS3WCeqHxkms1j8q8?g_st=ic" target="_blank" rel="noopener" aria-label="Open Proofit in Google Maps for navigation" className="group relative block h-64 overflow-hidden rounded-2xl border border-line bg-cream shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+                <iframe
+                  title="Proofit office location on Google Maps"
+                  src="https://www.google.com/maps?q=Proofit,+Auto+Commerce+House+building,+Kennedy+Bridge,+Jyoti+Studio+Compound,+Grant+Road+(W),+Gamdevi,+Mumbai,+Maharashtra+400007&output=embed"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="pointer-events-none h-full w-full border-0"
+                />
+                <span className="absolute bottom-3 left-3 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white shadow-lg transition-colors group-hover:bg-brand-deep">Open in Google Maps</span>
+              </a>
             </Reveal>
           </div>
 

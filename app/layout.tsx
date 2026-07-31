@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Proofit",
   },
   description:
-    "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, 48-hour reports. New flat snagging, water leakage detection, annual home care.",
+    "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, reports in 2–5 business working days. New flat snagging, water leakage detection, annual home care.",
   keywords: [
     "home inspection Mumbai",
     "property inspection",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Proofit",
     title: "Proofit — Home & Water Inspection Experts | Mumbai",
     description:
-      "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, 48-hour reports.",
+      "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, reports in 2–5 business working days.",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Proofit — home inspection, proven" }],
   },
   twitter: {

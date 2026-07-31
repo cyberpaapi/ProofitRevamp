@@ -9,7 +9,7 @@ import { processSteps } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Our Inspection Process — Booked to Briefed in 5 Steps",
   description:
-    "How a Proofit inspection works: booking, structured on-site inspection, thermal and instrument scanning, a 48-hour evidence-backed report, and a findings walkthrough.",
+    "How a Proofit inspection works: booking, structured on-site inspection, thermal and instrument scanning, an evidence-backed report delivered in 2–5 business working days, and a findings walkthrough.",
 };
 
 const tools = [
@@ -38,7 +38,7 @@ export default function ProcessPage() {
             {processSteps.map((step, i) => (
               <Reveal key={step.title} as="li" delay={i * 80} className="relative">
                 <span
-                  className="absolute -left-[45px] flex h-9 w-9 items-center justify-center rounded-full bg-brand font-display text-sm font-bold text-white md:-left-[61px] md:h-10 md:w-10"
+                  className="absolute -left-[51px] flex h-9 w-9 items-center justify-center rounded-full bg-brand font-display text-sm font-bold text-white md:-left-[69px] md:h-10 md:w-10"
                   aria-hidden
                 >
                   {i + 1}

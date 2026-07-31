@@ -157,7 +157,7 @@ export const processSteps = [
   },
   {
     title: "Evidence-backed report",
-    desc: "Within 48 hours you receive a detailed snag report — every defect photographed, thermally documented where relevant, severity-graded, and mapped to its location.",
+    desc: "Within 2–5 business working days you receive a detailed snag report — every defect photographed, thermally documented where relevant, severity-graded, and mapped to its location.",
   },
   {
     title: "Walkthrough & next steps",
@@ -185,7 +185,7 @@ export const faqs = [
   },
   {
     q: "When do I get the report?",
-    a: "Within 48 hours of the inspection. Every finding is photographed, thermally documented where relevant, severity-graded and mapped to its location in the home.",
+    a: "Within 2–5 business working days of the inspection. Every finding is photographed, thermally documented where relevant, severity-graded and mapped to its location in the home.",
   },
   {
     q: "Can I use the report with my builder or society?",
@@ -389,6 +389,6 @@ export const testimonials = [
 export const stats = [
   { value: 300, suffix: "+", label: "Inspections completed" },
   { value: 12000, suffix: "+", label: "Defects documented" },
-  { value: 48, suffix: "hr", label: "Report turnaround" },
+  { value: "2–5", suffix: " days", label: "Report turnaround" },
   { value: 100, suffix: "%", label: "Non-destructive methods" },
 ];
