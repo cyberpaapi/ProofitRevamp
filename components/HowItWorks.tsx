@@ -161,7 +161,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
             key={step.title}
             className={`${motion === "backward" ? "deck-enter-left z-20" : ""} how-it-works-card absolute bottom-0 left-0 z-10 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9`}
           >
-            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
+            <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(11rem,27svh,15rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(250px,1fr)_minmax(0,1fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(330px,1.08fr)_minmax(0,0.92fr)] md:gap-8 lg:gap-10">
               <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
                 <Image
                   src={step.image}
@@ -173,7 +173,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                 />
               </div>
 
-              <div className="how-it-works-content flex min-h-0 flex-col overflow-hidden pb-0.5 sm:justify-center sm:py-2 sm:pr-2 md:py-3 md:pr-3">
+              <div className="how-it-works-content flex min-h-0 flex-col items-center justify-center overflow-hidden pb-0.5 text-center sm:py-2 sm:px-2 md:py-3 md:px-3">
                 <p className="how-it-works-step text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-ink/60 min-[390px]:text-xs sm:text-sm">
                   Step {String(index + 1).padStart(2, "0")}
                 </p>
@@ -191,7 +191,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                   </p>
                 ))}
                 {step.points && (
-                  <ul className="how-it-works-list mt-2 grid gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
+                  <ul className="how-it-works-list mt-2 grid w-full gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
                     {step.points.map((point) => (
                       <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-1.5 min-[390px]:text-xs sm:text-sm md:px-4 md:py-2">
                         {point}
@@ -214,7 +214,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
               className="deck-exit-left how-it-works-card absolute bottom-0 left-0 z-20 h-[94%] w-[94%] overflow-hidden rounded-[1.5rem] border-2 border-brand bg-white p-3.5 text-ink shadow-[0_20px_50px_rgba(17,17,18,0.12)] min-[390px]:p-4 sm:p-5 md:rounded-[1.75rem] md:p-7 lg:p-9"
               aria-hidden
             >
-              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(5.75rem,15svh,8rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(220px,0.82fr)_1.18fr] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(280px,0.82fr)_1.18fr] md:gap-8 lg:gap-12">
+              <div className="how-it-works-grid grid h-full min-h-0 grid-rows-[clamp(11rem,27svh,15rem)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(250px,1fr)_minmax(0,1fr)] sm:grid-rows-1 sm:gap-6 md:grid-cols-[minmax(330px,1.08fr)_minmax(0,0.92fr)] md:gap-8 lg:gap-10">
                 <div className="relative min-h-0 overflow-hidden rounded-[1.15rem] md:rounded-[1.4rem]">
                   <Image
                     src={steps[leavingIndex].image}
@@ -224,7 +224,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                     className="object-cover object-top"
                   />
                 </div>
-                <div className="how-it-works-content flex min-h-0 flex-col overflow-hidden pb-0.5 sm:justify-center sm:py-2 sm:pr-2 md:py-3 md:pr-3">
+                <div className="how-it-works-content flex min-h-0 flex-col items-center justify-center overflow-hidden pb-0.5 text-center sm:py-2 sm:px-2 md:py-3 md:px-3">
                   <p className="how-it-works-step text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-ink/60 min-[390px]:text-xs sm:text-sm">
                     Step {String(leavingIndex + 1).padStart(2, "0")}
                   </p>
@@ -242,7 +242,7 @@ export default function HowItWorks({ steps }: { steps: Step[] }) {
                     </p>
                   ))}
                   {steps[leavingIndex].points && (
-                    <ul className="how-it-works-list mt-2 grid gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
+                    <ul className="how-it-works-list mt-2 grid w-full gap-1 min-[390px]:mt-2.5 min-[390px]:gap-1.5 sm:mt-3 md:mt-4 md:gap-2">
                       {steps[leavingIndex].points.map((point) => (
                         <li key={point} className="how-it-works-point rounded-lg border border-brand/20 bg-brand/[0.06] px-2.5 py-1 text-[0.6875rem] font-semibold leading-snug text-ink min-[390px]:px-3 min-[390px]:py-1.5 min-[390px]:text-xs sm:text-sm md:px-4 md:py-2">
                           {point}
