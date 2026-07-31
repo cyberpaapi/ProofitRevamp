@@ -47,7 +47,7 @@ export default function MumbaiTestimonials() {
     <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-5 text-white md:py-10 lg:h-[calc(100svh-72px)] lg:min-h-[620px] lg:scroll-mt-[72px] lg:py-8">
       <div className="relative mx-auto flex h-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
         <h2 className="max-w-[17rem] font-display text-[2rem] font-semibold leading-[1.05] sm:max-w-none sm:text-4xl md:text-5xl">
-          Serving Mumbai &amp; Its People
+          Serving Mumbai-Wide &amp; Neighbouring Cities on Request
         </h2>
         <div className="mt-3 grid min-h-0 flex-1 items-center gap-5 md:mt-5 md:grid-cols-[minmax(190px,0.7fr)_1.3fr] md:gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="absolute right-4 top-10 -z-10 h-40 w-28 opacity-20 sm:right-8 md:static md:z-auto md:h-full md:max-h-[70svh] md:w-full md:max-w-sm md:opacity-100">
@@ -61,8 +61,8 @@ export default function MumbaiTestimonials() {
           </div>
           <div className="flex min-h-0 flex-col justify-center">
             <p className="max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
-              We serve homeowners, buyers, and businesses from coastal neighborhoods to inland communities. PROOFIT
-              provides professional inspection services wherever Mumbai&apos;s humidity creates risk.
+              We serve homeowners, buyers, and businesses Mumbai-wide, and also offer services to Mumbai&apos;s
+              neighbouring cities on request.
             </p>
             <article className="mt-3 md:mt-4" aria-live="polite" aria-atomic="true">
               <svg className="h-6 w-8 sm:h-8 sm:w-11" viewBox="0 0 32 24" fill="none" aria-hidden>

@@ -7,9 +7,9 @@ import CtaBand from "@/components/CtaBand";
 import { services } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Services — Water Inspection, Home Inspection & Proofit Care+",
+  title: "Services - Water Inspection, Home Inspection & Proofit Care+",
   description:
-    "Proofit's residential inspection services in Mumbai: thermal-imaging led water leakage detection, full home snag inspections, and the Proofit Care+ annual home-care plan.",
+    "Proofit's residential inspection services Mumbai-wide and in neighbouring cities on request: thermal imaging, water leakage detection, and full home snag inspections.",
 };
 
 export default function ServicesPage() {
@@ -19,7 +19,7 @@ export default function ServicesPage() {
         eyebrow="Services"
         title="Pick the inspection"
         accent="your situation needs."
-        lede="Chasing a leak, taking possession, buying resale, or protecting a home for the long run — there's a Proofit service built for it."
+        lede="Chasing a leak, taking possession, buying resale, or protecting a home for the long run - there's a Proofit service built for it."
         image="/images/inspector-snagging.webp"
         imageAlt="Proofit inspector documenting snags in a new apartment"
       />
@@ -71,7 +71,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <CtaBand title="Not sure which one fits?" lede="Describe your situation on WhatsApp — we'll point you to the right inspection, or tell you if you don't need one." />
+      <CtaBand title="Not sure which one fits?" lede="Describe your situation on WhatsApp - we'll point you to the right inspection, or tell you if you don't need one." />
     </>
   );
 }

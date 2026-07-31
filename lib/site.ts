@@ -15,5 +15,6 @@ export const site = {
   whatsappSampleReport:
     "https://api.whatsapp.com/send?phone=919594013666&text=Hi%20Proofit%2C%20I%27d%20like%20to%20see%20a%20sample%20inspection%20report.",
   city: "Mumbai",
-  serviceArea: "Mumbai, Navi Mumbai & Thane",
+  serviceArea: "Mumbai-wide, with services available in Mumbai's neighbouring cities on request",
+  serviceAreaClaim: "Serving Mumbai-wide. We also offer services to Mumbai's neighbouring cities on request.",
 };

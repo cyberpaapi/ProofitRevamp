@@ -7,9 +7,9 @@ import Reveal from "@/components/Reveal";
 import ScrollToEnquiryButton from "@/components/ScrollToEnquiryButton";
 
 export const metadata: Metadata = {
-  title: "Property Inspection & Thermal Scanning in Mumbai",
+  title: "Property Inspection & Thermal Scanning | Mumbai & Nearby Cities",
   description:
-    "AI-powered property inspection, thermal scanning, water leakage detection, waterproofing diagnosis and pre-possession snagging across Mumbai and its suburbs.",
+    "AI-powered property inspection, thermal scanning, water leakage detection, waterproofing diagnosis and pre-possession snagging Mumbai-wide and in neighbouring cities on request.",
   keywords: [
     "thermal scanning Mumbai",
     "water leakage inspection Mumbai",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/landing-page" },
   openGraph: {
     title: "Find Hidden Property Problems Before They Become Expensive Repairs",
-    description: "AI-powered thermal and property inspections across Mumbai. Limited-period monsoon offer: ₹1,000 off.",
+    description: "AI-powered thermal and property inspections Mumbai-wide and in neighbouring cities on request. Limited-period monsoon offer: ₹1,000 off.",
     images: [{ url: "/images/thermal-technician.webp", alt: "Proofit technician performing a thermal property inspection" }],
   },
 };
@@ -93,7 +93,7 @@ const faqs = [
   {
     question: "Who is this inspection suitable for?",
     answer:
-      "Proofit works with homeowners, housing societies, commercial and industrial properties, and property or facility management companies across Mumbai and its suburbs.",
+      "Proofit works with homeowners, housing societies, commercial and industrial properties, and property or facility management companies Mumbai-wide and in neighbouring cities on request.",
   },
   {
     question: "Can I book before taking possession of a new property?",
@@ -131,18 +131,17 @@ export default function LandingPage() {
               sizes="(min-width: 1024px) 58vw, 100vw"
               className="object-cover object-[48%_center]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/62 to-ink/10" aria-hidden />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/65 via-transparent to-transparent" aria-hidden />
+            <div className="absolute inset-y-0 left-0 w-[min(94%,58rem)] bg-gradient-to-r from-ink/65 via-ink/28 to-transparent" aria-hidden />
 
             <div className="relative max-w-3xl">
               <div className="hero-rise inline-flex rounded-full border border-white/20 bg-ink/45 px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.16em] backdrop-blur-md">
-                Mumbai & Mumbai Suburbs
+                Mumbai-Wide & Neighbouring Cities on Request
               </div>
               <h1 className="hero-rise mt-6 font-display text-[2.7rem] font-semibold leading-[1.03] sm:text-5xl lg:text-[4.2rem]">
                 Find hidden property problems before they become expensive repairs.
               </h1>
               <p
-                className="hero-rise mt-4 max-w-2xl text-base leading-relaxed text-white/82 sm:text-lg md:mt-6"
+                className="hero-rise mt-4 max-w-2xl font-normal text-base leading-relaxed text-white/85 sm:text-lg md:mt-6"
                 style={{ ["--rise-delay" as string]: "120ms" }}
               >
                 AI-powered thermal scanning and professional property inspections for leakage, seepage, dampness,
@@ -168,11 +167,11 @@ export default function LandingPage() {
       </section>
 
       <section className="border-y border-line bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 sm:px-8 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 px-4 sm:px-6 lg:px-8 lg:grid-cols-4">
           {[
             ["5,000+", "Inspections completed"],
             ["AI + IR", "Technology-backed checks"],
-            ["Mumbai", "City and suburbs"],
+            ["Mumbai-Wide", "Neighbouring cities on request"],
             ["Clear", "Accurate reporting"],
           ].map(([value, label], index) => (
             <div key={label} className={`py-7 ${index % 2 ? "pl-5" : "pr-5"} ${index > 0 ? "lg:border-l lg:border-line lg:pl-8" : ""}`}>
@@ -184,7 +183,7 @@ export default function LandingPage() {
       </section>
 
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-ink">
               <Image
@@ -220,7 +219,7 @@ export default function LandingPage() {
       </section>
 
       <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Inspection Solutions</p>
             <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -242,9 +241,9 @@ export default function LandingPage() {
       </section>
 
       <section className="bg-ink py-20 text-white md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Built for Mumbai Properties</p>
+            <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Built for Local Properties</p>
             <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
               From one apartment to an entire property portfolio.
             </h2>
@@ -264,7 +263,7 @@ export default function LandingPage() {
       </section>
 
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">The Proofit Report</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -295,7 +294,7 @@ export default function LandingPage() {
       </section>
 
       <section className="bg-[#f2efe8] py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How It Works</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Four steps from concern to clarity.</h2>
@@ -320,7 +319,7 @@ export default function LandingPage() {
       </section>
 
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Questions</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Before you book.</h2>
@@ -346,7 +345,7 @@ export default function LandingPage() {
       </section>
 
       <section className="bg-brand py-16 text-white md:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 lg:px-8 lg:flex-row lg:items-center">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-white/65">Monsoon Inspection Offer</p>
             <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">

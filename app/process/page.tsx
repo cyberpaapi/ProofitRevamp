@@ -7,15 +7,15 @@ import CtaBand from "@/components/CtaBand";
 import { processSteps } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Our Inspection Process — Booked to Briefed in 5 Steps",
+  title: "Our Inspection Process - Booked to Briefed in 5 Steps",
   description:
     "How a Proofit inspection works: booking, structured on-site inspection, thermal and instrument scanning, an evidence-backed report delivered in 2–5 business working days, and a findings walkthrough.",
 };
 
 const tools = [
-  { title: "AI-enabled thermal camera", desc: "Reads surface temperature differences as small as 0.1°C — mapping moisture, insulation gaps and electrical hot spots." },
+  { title: "AI-enabled thermal camera", desc: "Reads surface temperature differences as small as 0.1°C - mapping moisture, insulation gaps and electrical hot spots." },
   { title: "Moisture meters", desc: "Pin and pinless meters quantify dampness inside walls and slabs, separating live leaks from historic stains." },
-  { title: "Electrical testers", desc: "Every point tested for polarity, earthing and function — not just 'does the light come on'." },
+  { title: "Electrical testers", desc: "Every point tested for polarity, earthing and function - not just 'does the light come on'." },
   { title: "Structured checklists", desc: "North American inspection methodology adapted to Indian construction, so nothing depends on an inspector's mood or memory." },
 ];
 
@@ -26,7 +26,7 @@ export default function ProcessPage() {
         eyebrow="Our process"
         title="Methodical. Instrumented."
         accent="Documented."
-        lede="Every Proofit inspection follows the same disciplined sequence — so the quality of your report never depends on luck."
+        lede="Every Proofit inspection follows the same disciplined sequence - so the quality of your report never depends on luck."
         image="/images/bathroom-moisture-check.webp"
         imageAlt="Proofit inspector checking a bathroom wall with a moisture meter"
       />
@@ -98,7 +98,7 @@ export default function ProcessPage() {
         </div>
       </section>
 
-      <CtaBand title="See the process on your own property." lede="Tell us about the flat — we'll tell you what an inspection will and won't find." />
+      <CtaBand title="See the process on your own property." lede="Tell us about the flat - we'll tell you what an inspection will and won't find." />
     </>
   );
 }

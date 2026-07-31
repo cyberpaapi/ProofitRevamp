@@ -56,7 +56,7 @@ export function CareServices({ services }: { services: Service[] }) {
 
   return (
     <section className="bg-cream py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Our Services</p>
         <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
           Twelve Solutions. One Platform.
@@ -119,7 +119,7 @@ export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
 
   return (
     <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl bg-ink p-7 text-white md:p-12">
           <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Why Proofit Care+</p>
           <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">

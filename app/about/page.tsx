@@ -6,9 +6,9 @@ import SectionHeading from "@/components/SectionHeading";
 import AboutAccordion from "@/components/AboutAccordion";
 
 export const metadata: Metadata = {
-  title: "About Us — The Team Behind Proofit",
+  title: "About Us - The Team Behind Proofit",
   description:
-    "Proofit combines engineering expertise, IR technology, and globally inspired inspection practices adapted for Mumbai properties.",
+    "Proofit combines engineering expertise, IR technology, and globally inspired inspection practices adapted for Indian properties.",
 };
 
 const leadership = [
@@ -25,7 +25,7 @@ const leadership = [
   {
     name: "Dhyan Parekh",
     role: "Co-Founder · Operations & Quality Lead",
-    bio: "Having lived and worked in Canada, Dhyan recognised that professional home inspections were a standard part of property ownership—something largely missing in Mumbai despite its demanding climate and ageing infrastructure. Inspired to bridge that gap, he co-founded Proofit to bring globally inspired inspection standards to India. He leads inspection workflows, report structuring, and quality assurance, ensuring every report is evidence-backed, consistent, and easy for clients to understand.",
+    bio: "Having lived and worked in Canada, Dhyan recognised that professional home inspections were a standard part of property ownership - something largely missing in Mumbai despite its demanding climate and ageing infrastructure. Inspired to bridge that gap, he co-founded Proofit to bring globally inspired inspection standards to India. He leads inspection workflows, report structuring, and quality assurance, ensuring every report is evidence-backed, consistent, and easy for clients to understand.",
   },
 ];
 
@@ -50,14 +50,13 @@ export default function AboutPage() {
           sizes="100vw"
           className="hidden object-cover md:block"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/58 to-ink/20" aria-hidden />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/25" aria-hidden />
-        <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
+        <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="hero-rise max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl">
-            Inspired by Canadian Standards. Engineered for Mumbai Homes.
+            Inspired by Canadian Standards. Engineered for Indian Homes.
           </h1>
           <p
-            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base md:mt-6"
+            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-normal leading-[1.55] text-white/90 sm:text-base md:mt-6"
             style={{ ["--rise-delay" as string]: "140ms" }}
           >
             Helping uncover hidden property risks through globally inspired inspection practices and local expertise
@@ -68,7 +67,7 @@ export default function AboutPage() {
 
       {/* Who We Are */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Who We Are</p>
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
@@ -81,7 +80,7 @@ export default function AboutPage() {
                 homebuyers, homeowners, and property investors make informed decisions.
               </p>
               <p>
-                Every inspection goes beyond what the eye can see — detecting structural concerns, moisture
+                Every inspection goes beyond what the eye can see - detecting structural concerns, moisture
                 intrusion, plumbing issues, electrical risks, and other hidden defects before they become costly
                 surprises.
               </p>
@@ -101,9 +100,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Story — retained */}
+      {/* Our Story - retained */}
       <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeading eyebrow="Our Story" title="Why India needed" accent="a Proofit." />
             <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
@@ -139,7 +138,7 @@ export default function AboutPage() {
 
       {/* Inspection Framework */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
@@ -163,7 +162,7 @@ export default function AboutPage() {
               </p>
               <p>
                 From heavy monsoons and coastal humidity to ageing buildings and waterproofing failures, every
-                inspection is designed to identify risks that matter locally—not just globally.
+                inspection is designed to identify risks that matter locally - not just globally.
               </p>
             </div>
           </Reveal>
@@ -172,7 +171,7 @@ export default function AboutPage() {
 
       {/* Mission / Vision */}
       <section className="bg-ink py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-6 px-5 sm:px-8 md:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:px-8 md:grid-cols-2">
           <Reveal className="rounded-2xl bg-brand p-8 md:p-10">
             <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/75">Our Mission</p>
             <p className="mt-3 text-xl font-medium leading-relaxed md:mt-5">
@@ -192,7 +191,7 @@ export default function AboutPage() {
 
       {/* Leadership */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Leadership"
             title="The team behind Proofit"
@@ -220,7 +219,7 @@ export default function AboutPage() {
 
       {/* How We Work */}
       <section className="bg-ink py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How We Work</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
@@ -235,7 +234,7 @@ export default function AboutPage() {
 
       {/* Page closing section, separate from the footer */}
       <section className="bg-brand-soft py-20 md:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 px-5 sm:px-8 lg:flex-row lg:items-end">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 px-4 sm:px-6 lg:px-8 lg:flex-row lg:items-end">
           <Reveal>
             <h2 className="max-w-3xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
               Know Your Property Before You Commit.

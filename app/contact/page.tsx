@@ -5,9 +5,9 @@ import EnquiryForm from "@/components/EnquiryForm";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Book an Inspection",
+  title: "Contact Us - Book an Inspection",
   description:
-    "Contact Proofit for expert property inspections and solutions. Call, WhatsApp, email, or send an enquiry to our Mumbai team.",
+    "Contact Proofit for expert property inspections and solutions Mumbai-wide, with neighbouring-city assignments available on request.",
 };
 
 const channels = [

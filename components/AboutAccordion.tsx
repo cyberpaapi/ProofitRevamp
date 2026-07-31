@@ -5,7 +5,7 @@ import { useState } from "react";
 const items = [
   {
     title: "Independence",
-    body: "We don't sell repairs, materials, or contracting. Our only product is the truth about your property — which is why our reports carry weight with builders and societies.",
+    body: "We don't sell repairs, materials, or contracting. Our only product is the truth about your property - which is why our reports carry weight with builders and societies.",
   },
   {
     title: "Evidence",

@@ -7,7 +7,7 @@ import CtaBand from "@/components/CtaBand";
 import { posts } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Blog — Home Care, Inspection & Waterproofing Insights",
+  title: "Blog - Home Care, Inspection & Waterproofing Insights",
   description:
     "Practical guides from Proofit's inspectors: monsoon-proofing, thermal imaging, possession snag lists, and early signs of hidden water damage.",
 };
@@ -23,7 +23,7 @@ export default function BlogPage() {
         eyebrow="Blog"
         title="Field notes from"
         accent="the inspectors."
-        lede="What we learn inside Mumbai's homes, written up so you can use it — before you need us."
+        lede="What we learn inside Mumbai's homes, written up so you can use it - before you need us."
       />
 
       <section className="py-20 md:py-28">
@@ -85,7 +85,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <CtaBand title="Reading about leaks won't fix yours." lede="Book a water inspection and get the source traced — non-destructively." />
+      <CtaBand title="Reading about leaks won't fix yours." lede="Book a water inspection and get the source traced - non-destructively." />
     </>
   );
 }

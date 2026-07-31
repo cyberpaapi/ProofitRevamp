@@ -4,7 +4,7 @@ import LandingLeadForm from "@/components/LandingLeadForm";
 export function CampaignHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/92 text-white backdrop-blur-md">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-5 sm:px-8">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         <Image
           src="/images/logo.svg"
           alt="Proofit"
@@ -21,7 +21,7 @@ export function CampaignHeader() {
 export function CampaignFooter({ idPrefix }: { idPrefix: string }) {
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 md:py-16">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
         <div className="mb-9 grid gap-6 lg:grid-cols-[260px_1fr] lg:items-end">
           <div>
             <Image

@@ -66,7 +66,7 @@ export default function Header() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
-            <Link href="/" aria-label="Proofit — home" className="shrink-0">
+            <Link href="/" aria-label="Proofit - home" className="shrink-0">
               <Image
                 src="/images/logo.svg"
                 alt="Proofit"
@@ -160,8 +160,8 @@ export default function Header() {
 
           <Link
             href="/contact"
-            className={`group inline-flex h-10 shrink-0 items-center rounded-full shadow-[0_4px_18px_rgba(17,17,18,0.18)] transition-all hover:-translate-y-0.5 ${
-              heroMode ? "bg-white text-ink" : "bg-ink text-white"
+            className={`group inline-flex h-10 shrink-0 touch-manipulation items-center rounded-full shadow-[0_4px_18px_rgba(17,17,18,0.18)] transition-[transform,background-color,color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
+              heroMode ? "bg-white text-ink hover:bg-brand hover:text-white" : "bg-ink text-white hover:bg-white hover:text-ink"
             }`}
           >
             <span className="whitespace-nowrap pl-3 font-display text-sm font-semibold sm:pl-4">

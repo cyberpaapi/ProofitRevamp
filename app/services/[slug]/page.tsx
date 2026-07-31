@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
   return {
-    title: `${service.name} — Proofit Services`,
+    title: `${service.name} - Proofit Services`,
     description: service.short,
     openGraph: { images: [{ url: service.image }] },
   };
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 const formDefault: Record<string, string> = {
   "water-inspection": "Water Inspection",
-  "home-inspection": "Home Inspection — New Flat / Possession",
+  "home-inspection": "Home Inspection - New Flat / Possession",
   "proofit-care-plus": "Proofit Care+ (Annual Plan)",
 };
 
@@ -103,10 +103,10 @@ export default async function ServicePage({ params }: Params) {
               eyebrow="Get a quote"
               title="Tell us about"
               accent="the property."
-              lede="Share your configuration and concern — we'll respond with a quote and available slots the same day."
+              lede="Share your configuration and concern - we'll respond with a quote and available slots the same day."
             />
             <Reveal delay={100} className="-mt-4 space-y-3 text-ink-soft/80">
-              {["No obligation — a quote is free.", "Same-day response, report in 2–5 business working days after inspection."].map((line) => (
+              {["No obligation - a quote is free.", "Same-day response, report in 2–5 business working days after inspection."].map((line) => (
                 <p key={line} className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-soft" aria-hidden>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

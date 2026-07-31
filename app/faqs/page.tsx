@@ -5,7 +5,7 @@ import CtaBand from "@/components/CtaBand";
 import { faqs } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "FAQs — Home Inspection Questions Answered",
+  title: "FAQs - Home Inspection Questions Answered",
   description:
     "Answers to common questions about Proofit home inspections: what's covered, thermal imaging, report timelines, costs, and using reports with builders and societies.",
 };
@@ -50,7 +50,7 @@ export default function FaqsPage() {
         </div>
       </section>
 
-      <CtaBand title="Question not on the list?" lede="Ask us directly — WhatsApp or the enquiry form, whichever you prefer." />
+      <CtaBand title="Question not on the list?" lede="Ask us directly - WhatsApp or the enquiry form, whichever you prefer." />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );

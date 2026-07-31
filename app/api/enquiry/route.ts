@@ -17,11 +17,11 @@ type Enquiry = {
  * Enquiry pipeline:
  *  1. Validate.
  *  2. Persist to the local database file (data/enquiries.json). Swap `saveEnquiry`
- *     for a hosted DB (Postgres/Supabase/etc.) at deploy time — it's the only
+ *     for a hosted DB (Postgres/Supabase/etc.) at deploy time - it's the only
  *     storage touchpoint.
  *  3. If RESEND_API_KEY is set: email an acknowledgement to the enquirer and a
  *     notification to the team. Without the key (local demo), emails are skipped
- *     and logged instead — the form still works end-to-end.
+ *     and logged instead - the form still works end-to-end.
  */
 export async function POST(req: Request) {
   let body: Enquiry;
@@ -75,8 +75,8 @@ export async function POST(req: Request) {
   }
 
   if (!stored && !emailed) {
-    // Nowhere to put the lead — surface the failure honestly.
-    console.error("Enquiry lost — no storage and no email channel:", enquiry);
+    // Nowhere to put the lead - surface the failure honestly.
+    console.error("Enquiry lost - no storage and no email channel:", enquiry);
     return NextResponse.json(
       { error: "Could not submit your enquiry right now. Please WhatsApp or call us instead." },
       { status: 500 }
@@ -94,7 +94,7 @@ async function saveEnquiry(enquiry: Record<string, string>) {
   try {
     all = JSON.parse(await fs.readFile(file, "utf8"));
   } catch {
-    // first enquiry — file doesn't exist yet
+    // first enquiry - file doesn't exist yet
   }
   all.push(enquiry);
   await fs.writeFile(file, JSON.stringify(all, null, 2), "utf8");
@@ -103,7 +103,7 @@ async function saveEnquiry(enquiry: Record<string, string>) {
 async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.log(`[enquiry] RESEND_API_KEY not set — skipping emails. Enquiry ${enquiry.id} from ${enquiry.email}`);
+    console.log(`[enquiry] RESEND_API_KEY not set - skipping emails. Enquiry ${enquiry.id} from ${enquiry.email}`);
     return false;
   }
 
@@ -116,7 +116,7 @@ async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
   await resend.emails.send({
     from,
     to: enquiry.email,
-    subject: "We've received your enquiry — Proofit",
+    subject: "We've received your enquiry - Proofit",
     html: `
       <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#17181A">
         <div style="background:#17181A;padding:24px;text-align:center">
@@ -126,7 +126,7 @@ async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
           <h2 style="margin:0 0 12px">Thank you, ${escapeHtml(enquiry.name)}.</h2>
           <p style="line-height:1.6">We've received your enquiry${enquiry.service ? ` about <strong>${escapeHtml(enquiry.service)}</strong>` : ""} and will get back to you within one working day.</p>
           <p style="line-height:1.6">If it's urgent, call us on <a href="tel:+919594013666" style="color:#F7941D">+91-9594013666</a> or message us on WhatsApp.</p>
-          <p style="margin-top:24px;line-height:1.6">— Team Proofit<br/><span style="color:#888;font-size:13px">Residential property inspection · Mumbai</span></p>
+          <p style="margin-top:24px;line-height:1.6">- Team Proofit<br/><span style="color:#888;font-size:13px">Residential property inspection · Mumbai</span></p>
         </div>
       </div>`,
   });
@@ -136,7 +136,7 @@ async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
     from,
     to: teamInbox,
     replyTo: enquiry.email,
-    subject: `New enquiry: ${enquiry.service || "General"} — ${enquiry.name}`,
+    subject: `New enquiry: ${enquiry.service || "General"} - ${enquiry.name}`,
     html: `
       <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto">
         <h2>New website enquiry</h2>

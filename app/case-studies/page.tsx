@@ -6,7 +6,7 @@ import CtaBand from "@/components/CtaBand";
 import { caseStudies } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Case Studies — Real Inspections, Real Outcomes",
+  title: "Case Studies - Real Inspections, Real Outcomes",
   description:
     "How Proofit inspections played out in the field: possession snag lists builders acted on, leak mysteries solved without demolition, and neighbour disputes settled with evidence.",
 };
@@ -18,7 +18,7 @@ export default function CaseStudiesPage() {
         eyebrow="Case studies"
         title="Findings you can"
         accent="hold in your hand."
-        lede="A selection of representative engagements — anonymised, but exactly how they unfolded on site."
+        lede="A selection of representative engagements - anonymised, but exactly how they unfolded on site."
         image="/images/duotone-split-room.webp"
         imageAlt="Split view of a room showing water damage and its thermal signature"
       />

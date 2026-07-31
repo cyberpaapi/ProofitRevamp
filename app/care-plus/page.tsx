@@ -30,7 +30,7 @@ const services = [
   },
   {
     title: "Facility Management Services",
-    body: "Simplify property operations with integrated facility management solutions. Proofit Care+ offers preventive maintenance, technical vendor coordination, building upkeep, maintenance planning, Annual Maintenance Contracts (AMC), and day-to-day operational support—providing clients with a single trusted partner for ongoing property care.",
+    body: "Simplify property operations with integrated facility management solutions. Proofit Care+ offers preventive maintenance, technical vendor coordination, building upkeep, maintenance planning, Annual Maintenance Contracts (AMC), and day-to-day operational support - providing clients with a single trusted partner for ongoing property care.",
   },
   {
     title: "Deep Cleaning Services",
@@ -46,7 +46,7 @@ const services = [
   },
   {
     title: "Security & IT Solutions",
-    body: "Strengthen your property's security and technology infrastructure. Proofit Care+ provides CCTV systems, access control, intercom solutions, networking, computer maintenance, and IT support for housing societies, commercial buildings, and institutions—ensuring reliable operations and ongoing technical assistance.",
+    body: "Strengthen your property's security and technology infrastructure. Proofit Care+ provides CCTV systems, access control, intercom solutions, networking, computer maintenance, and IT support for housing societies, commercial buildings, and institutions - ensuring reliable operations and ongoing technical assistance.",
   },
   {
     title: "Landscape & Horticulture Maintenance",
@@ -119,9 +119,8 @@ export default function CarePlusPage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/92 via-ink/62 to-ink/20" aria-hidden />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/78 via-transparent to-ink/25" aria-hidden />
-        <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
+        <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">
             Proofit Care+
           </p>
@@ -129,7 +128,7 @@ export default function CarePlusPage() {
             From Inspection to Execution
           </h1>
           <p
-            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-semibold leading-[1.45] text-white/90 sm:text-base md:mt-6"
+            className="hero-rise mt-4 max-w-[620px] font-display text-sm font-normal leading-[1.55] text-white/90 sm:text-base md:mt-6"
             style={{ ["--rise-delay" as string]: "140ms" }}
           >
             Inspect. Verify. Trust. Repair. One professional partner from problem identification to final execution
@@ -139,7 +138,7 @@ export default function CarePlusPage() {
       </section>
 
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Proofit Care+</p>
             <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
@@ -163,7 +162,7 @@ export default function CarePlusPage() {
       <CareWhyCarousel reasons={whyChoose} />
 
       <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How We Work</p>
             <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -207,7 +206,7 @@ export default function CarePlusPage() {
       </section>
 
       <section className="border-t border-line bg-white py-20 md:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 sm:px-8 md:flex-row md:items-end md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 sm:px-6 lg:px-8 md:flex-row md:items-end md:justify-between">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Proofit Care+</p>
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">

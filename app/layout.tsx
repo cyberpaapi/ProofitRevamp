@@ -14,11 +14,11 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Proofit — Home & Water Inspection Experts | Mumbai",
+    default: "Proofit - Home & Water Inspection Experts | Mumbai & Nearby Cities",
     template: "%s | Proofit",
   },
   description:
-    "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, reports in 2–5 business working days. New flat snagging, water leakage detection, annual home care.",
+    "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2–5 business working days.",
   keywords: [
     "home inspection Mumbai",
     "property inspection",
@@ -30,10 +30,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Proofit",
-    title: "Proofit — Home & Water Inspection Experts | Mumbai",
+    title: "Proofit - Home & Water Inspection Experts | Mumbai & Nearby Cities",
     description:
-      "Independent, evidence-backed residential property inspections in Mumbai. Thermal imaging, international standards, reports in 2–5 business working days.",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Proofit — home inspection, proven" }],
+      "Independent, evidence-backed residential property inspections Mumbai-wide and in neighbouring cities on request. Thermal imaging, international standards, and reports in 2–5 business working days.",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Proofit - home inspection, proven" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -52,7 +52,7 @@ const jsonLd = {
   email: site.email,
   image: `${site.url}/og.jpg`,
   description:
-    "Independent residential property inspection company in Mumbai — thermal imaging led home and water inspections with evidence-backed reports.",
+    "Independent residential property inspections Mumbai-wide and in neighbouring cities on request, using thermal imaging and evidence-backed reporting.",
   areaServed: ["Mumbai", "Navi Mumbai", "Thane"],
   address: { "@type": "PostalAddress", addressLocality: "Mumbai", addressRegion: "MH", addressCountry: "IN" },
   founder: [

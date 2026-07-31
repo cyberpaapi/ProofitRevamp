@@ -17,6 +17,7 @@ import { site } from "@/lib/site";
 
 const serviceSlides: ServiceSlide[] = [
   {
+    anchor: "service-pre-possession",
     title: "Pre Possession Inspection",
     desc: "A detailed inspection before you take possession of your new flat to identify construction defects, incomplete work, finishing issues, and quality concerns so they can be rectified by the builder.",
     benefits: [
@@ -30,8 +31,9 @@ const serviceSlides: ServiceSlide[] = [
     mediaAlt: "Proofit inspector checking a damp wall while homeowners observe",
   },
   {
+    anchor: "service-resale",
     title: "Resale Property Inspection",
-    desc: "An independent condition assessment of an older property before you commit — surfacing hidden dampness, ageing plumbing and electrical systems, and structural wear that a walkthrough can't reveal.",
+    desc: "An independent condition assessment of an older property before you commit - surfacing hidden dampness, ageing plumbing and electrical systems, and structural wear that a walkthrough can't reveal.",
     benefits: [
       "Negotiate with facts, not impressions",
       "Uncover hidden dampness and seepage",
@@ -43,8 +45,9 @@ const serviceSlides: ServiceSlide[] = [
     mediaAlt: "Proofit inspector examining the condition of a resale apartment",
   },
   {
-    title: "Rental Move In / Move Out Inspection",
-    desc: "Documented condition reports at the start and end of a tenancy that protect deposits and prevent disputes — for tenants and owners alike.",
+    anchor: "service-rental",
+    title: "Rental Move-In / Move-Out Inspection",
+    desc: "Documented condition reports at the start and end of a tenancy that protect deposits and prevent disputes - for tenants and owners alike.",
     benefits: [
       "Deposit-protecting photo evidence",
       "Neutral third-party documentation",
@@ -56,8 +59,9 @@ const serviceSlides: ServiceSlide[] = [
     mediaAlt: "Proofit inspector documenting a rental property handover",
   },
   {
+    anchor: "service-thermal",
     title: "Water Leakage & Dampness Inspection",
-    desc: "AI-enabled thermal imaging and calibrated moisture meters trace leakage and dampness to its true source — non-destructively, without breaking a single tile.",
+    desc: "AI-enabled thermal imaging and calibrated moisture meters trace leakage and dampness to its true source - non-destructively, without breaking a single tile.",
     benefits: [
       "Find the source, not just the stain",
       "100% non-destructive methods",
@@ -69,8 +73,9 @@ const serviceSlides: ServiceSlide[] = [
     mediaAlt: "Proofit inspector checking moisture beside a kitchen sink",
   },
   {
-    title: "Pre / Post Renovation Inspection",
-    desc: "Verify contractor workmanship before final payments — finishes, civil work, electrical and plumbing checked against what was promised.",
+    anchor: "service-renovation",
+    title: "Pre-Renovation / Post-Renovation Inspection",
+    desc: "Verify contractor workmanship before final payments - finishes, civil work, electrical and plumbing checked against what was promised.",
     benefits: [
       "Hold contractors to specification",
       "Catch defects before final payment",
@@ -82,8 +87,9 @@ const serviceSlides: ServiceSlide[] = [
     mediaAlt: "Proofit inspector checking finishes after renovation work",
   },
   {
+    anchor: "service-builder-audit",
     title: "Builder Quality Audit",
-    desc: "Independent, evidence-backed quality audits for developers and societies — standardized pre-handover checks that reduce escalations and strengthen buyer confidence.",
+    desc: "Independent, evidence-backed quality audits for developers and societies - standardized pre-handover checks that reduce escalations and strengthen buyer confidence.",
     benefits: [
       "Standardized pre-handover audits",
       "Reduced warranty claims & escalations",
@@ -186,9 +192,9 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
         {/* ------------------------------- HERO ------------------------------- */}
         <ThermalHero>
           <div className="absolute inset-x-0 top-0 z-10 pt-28 sm:pt-32 lg:pt-[9.5rem]">
-            <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h1
-                className="hero-rise max-w-[620px] font-display text-[2.45rem] font-semibold leading-[1.08] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-[3.4rem]"
+                className="banner-copy-scrim hero-rise max-w-[620px] font-display text-[2.45rem] font-semibold leading-[1.08] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-[3.4rem]"
                 style={{ ["--rise-delay" as string]: "80ms" }}
               >
                 <span className="lg:hidden">India&apos;s First and Most Trusted AI Led Home Health Assessment</span>
@@ -203,9 +209,9 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
             </div>
           </div>
           <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12 lg:pb-32">
-            <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-5 sm:px-8 md:items-end">
+            <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 sm:px-6 md:items-end lg:px-8">
               <p
-                className="hero-rise max-w-[500px] font-display text-sm font-semibold leading-[1.45] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-base md:text-left"
+                className="banner-copy-scrim hero-rise max-w-[500px] font-display text-sm font-normal leading-[1.55] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-base md:text-left"
                 style={{ ["--rise-delay" as string]: "220ms" }}
               >
                 For homeowners who value informed long-term decisions, PROOFIT delivers structured,
@@ -251,7 +257,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
                   From Inspection to Execution
                 </h2>
                 <p className="mt-4 max-w-xl leading-relaxed text-ink-soft/80">
-                  Waterproofing, civil repair, facility management, HVAC, pest control and more — one professional
+                  Waterproofing, civil repair, facility management, HVAC, pest control and more - one professional
                   partner from problem identification to final execution and long-term maintenance. Inspect. Verify.
                   Trust. Repair.
                 </p>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Proofit ref theme — charcoal + white + brand orange, gold-orange CTAs */
+  /* Proofit ref theme - charcoal + white + brand orange, gold-orange CTAs */
   --color-brand: #f7941d;
   --color-brand-deep: #e07e0c;
   --color-brand-soft: #fdf3e3;
@@ -20,7 +20,7 @@
 
 html {
   scroll-behavior: smooth;
-  /* iOS ignores overflow clipping set only on body — required on both to stop
+  /* iOS ignores overflow clipping set only on body - required on both to stop
      horizontal panning exposing off-canvas reveal animations. */
   overflow-x: clip;
 }
@@ -68,6 +68,21 @@ h1, h2, h3, h4, .font-display {
   color: #fff;
 }
 
+/* Protect banner copy without dimming the full photograph. */
+.banner-copy-scrim {
+  position: relative;
+  isolation: isolate;
+}
+.banner-copy-scrim::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1.5rem -2.5rem;
+  border-radius: 2rem;
+  background: radial-gradient(ellipse at 30% 50%, rgba(17, 17, 18, 0.58), rgba(17, 17, 18, 0.22) 58%, transparent 78%);
+  pointer-events: none;
+}
+
 /* ---------- Cards ---------- */
 .tile {
   border-radius: 1rem;
@@ -78,6 +93,9 @@ h1, h2, h3, h4, .font-display {
 .tile-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 22px 44px -22px rgba(17, 17, 18, 0.28);
+}
+.tile-hover:active {
+  transform: translateY(-1px) scale(0.99);
 }
 .tile-orange {
   border-radius: 1rem;

@@ -136,7 +136,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
           id="message"
           name="message"
           rows={4}
-          placeholder="Describe your concern — a leak, an upcoming possession, a purchase decision…"
+          placeholder="Describe your concern - a leak, an upcoming possession, a purchase decision…"
           className="w-full resize-y rounded-lg border border-line bg-paper px-4 py-3 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/25"
         />
       </div>
@@ -150,7 +150,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
       <button
         type="submit"
         disabled={status === "sending"}
-        className="cursor-pointer rounded-full bg-brand px-8 py-3.5 font-bold text-white shadow-[0_6px_20px_-6px_rgba(247,148,29,0.6)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+        className="cursor-pointer touch-manipulation rounded-full bg-brand px-8 py-3.5 font-bold text-white shadow-[0_6px_20px_-6px_rgba(247,148,29,0.6)] transition-[transform,background-color,color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-ink active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
       >
         {status === "sending" ? "Sending…" : "Send Enquiry"}
       </button>

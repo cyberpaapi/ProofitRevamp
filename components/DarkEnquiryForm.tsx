@@ -100,7 +100,7 @@ export default function DarkEnquiryForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex h-11 shrink-0 cursor-pointer items-center self-start rounded-full bg-brand text-white transition-all hover:-translate-y-0.5 hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 lg:self-auto"
+          className="group inline-flex h-11 shrink-0 cursor-pointer touch-manipulation items-center self-start rounded-full bg-brand text-white transition-[transform,background-color,color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:text-ink active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 lg:self-auto"
         >
           <span className="pl-5 font-display text-sm font-semibold">{status === "sending" ? "Sending…" : "Enquire Now"}</span>
           <span className="mx-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white text-brand-deep transition-transform duration-300 group-hover:translate-x-0.5">

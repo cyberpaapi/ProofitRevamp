@@ -6,6 +6,7 @@ import ArrowBtn from "./ArrowBtn";
 import ProofitCheck from "./ProofitCheck";
 
 export type ServiceSlide = {
+  anchor: string;
   title: string;
   desc: string;
   benefits: string[];
@@ -21,6 +22,19 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
   const [isVisible, setIsVisible] = useState(false);
   const stageRef = useRef<HTMLElement>(null);
   const slide = slides[index];
+
+  useEffect(() => {
+    const showLinkedService = () => {
+      const anchor = window.location.hash.slice(1);
+      const linkedIndex = slides.findIndex((service) => service.anchor === anchor);
+      if (linkedIndex < 0) return;
+      setIndex(linkedIndex);
+      window.requestAnimationFrame(() => stageRef.current?.scrollIntoView({ block: "start" }));
+    };
+    showLinkedService();
+    window.addEventListener("hashchange", showLinkedService);
+    return () => window.removeEventListener("hashchange", showLinkedService);
+  }, [slides]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -60,7 +74,10 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
   };
 
   return (
-    <section ref={stageRef} className="relative bg-ink">
+    <section ref={stageRef} id="services" className="relative scroll-mt-16 bg-ink lg:scroll-mt-[72px]">
+      {slides.map((service) => (
+        <span key={service.anchor} id={service.anchor} className="pointer-events-none absolute left-0 top-0" aria-hidden />
+      ))}
       <div
         className="grid min-h-[calc(100svh-4rem)] touch-pan-y gap-3 bg-ink text-white sm:gap-4 lg:min-h-[calc(100svh-72px)] lg:grid-cols-2 lg:gap-0"
         onTouchStart={onTouchStart}
@@ -106,7 +123,7 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
           <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-brand sm:text-sm">Our Services</p>
           <p className="mt-2 font-display text-base text-white/60 lg:mt-8 lg:text-lg">
             {String(index + 1).padStart(2, "0")}
-            <span className="text-white/35">/{String(slides.length).padStart(2, "0")}</span>
+            <span className="text-white/35"> / {String(slides.length).padStart(2, "0")}</span>
           </p>
           <h3 className="mt-1 font-display text-2xl font-semibold leading-tight md:text-3xl lg:mt-2 lg:text-4xl">{slide.title}</h3>
           <p className="mt-2 max-w-lg text-sm leading-relaxed text-white/75 lg:mt-4 lg:text-base">{slide.desc}</p>

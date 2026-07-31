@@ -150,10 +150,8 @@ export default function ThermalHero({ children }: { children: React.ReactNode })
           style={{ backgroundImage: "url(/images/hero-house-thermal-v2.png)" }}
         />
       </div>
-      {/* scrims for text legibility */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-black/20" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-ink/55 via-transparent to-transparent" aria-hidden />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-1/2 bg-gradient-to-t from-ink/65 to-transparent" aria-hidden />
+      {/* Keep the photograph clear; local copy scrims provide targeted legibility. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-28 bg-gradient-to-b from-ink/35 to-transparent" aria-hidden />
       <div className="pointer-events-none absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 font-display text-xs font-medium text-white backdrop-blur-md lg:flex">
         <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />
         Move your cursor across the image to explore the thermal scan

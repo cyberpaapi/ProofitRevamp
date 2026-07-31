@@ -7,7 +7,7 @@ import { openings } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Careers — Join the Proofit Team",
+  title: "Careers - Join the Proofit Team",
   description:
     "Build a career in India's emerging home inspection industry. Open roles at Proofit Mumbai: Home Inspector, Trainee Inspector, Operations Coordinator.",
 };
@@ -31,8 +31,8 @@ export default function CareersPage() {
             <SectionHeading eyebrow="Why Proofit" title="Craft, instruments" accent="and honest work." />
             <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
               <p>
-                You&apos;ll train in international-standard inspection methodology — thermal imaging, moisture
-                diagnostics, structured reporting — with founders who learned the trade in Canada and practice it
+                You&apos;ll train in international-standard inspection methodology - thermal imaging, moisture
+                diagnostics, structured reporting - with founders who learned the trade in Canada and practice it
                 daily in Mumbai.
               </p>
               <p>
