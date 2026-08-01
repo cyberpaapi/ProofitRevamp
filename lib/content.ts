@@ -365,6 +365,11 @@ export const openings = [
     type: "Full-time · Mumbai",
     desc: "Own the schedule: bookings, inspector routing, report dispatch and client follow-up. You keep the machine running so inspectors can focus on inspecting. Strong communication in English and Hindi/Marathi.",
   },
+  {
+    title: "Plumber",
+    type: "Full-time · Mumbai",
+    desc: "Join our field team to investigate plumbing faults, trace leakage sources and support non-destructive property inspections. You should be confident with residential water-supply and drainage systems, communicate findings clearly, and take pride in accurate diagnosis instead of temporary patchwork. 3+ years of hands-on plumbing experience preferred.",
+  },
 ];
 
 /* ------------------------------- Testimonials ------------------------------ */

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { posts, services } from "@/lib/content";
+import { caseStudies, posts, services } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
+    })),
+    ...caseStudies.map((study) => ({
+      url: `${site.url}/case-studies/${study.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
     })),
     ...posts.map((p) => ({
       url: `${site.url}/blog/${p.slug}`,

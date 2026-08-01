@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
@@ -28,21 +29,32 @@ export default function CaseStudiesPage() {
           {caseStudies.map((cs, i) => (
             <article key={cs.slug} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
               <Reveal from={i % 2 ? "right" : "left"}>
-                <div className="relative aspect-[16/11] overflow-hidden rounded-2xl">
+                <Link
+                  href={`/case-studies/${cs.slug}`}
+                  className="group relative block aspect-[16/11] overflow-hidden rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                  aria-label={`Read case study: ${cs.title}`}
+                >
                   <Image
                     src={cs.image}
                     alt={cs.title}
                     fill
                     sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-[1.025]"
                   />
                   <span className="absolute left-5 top-5 rounded-full bg-ink/80 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
                     {cs.service} · {cs.location}
                   </span>
-                </div>
+                </Link>
               </Reveal>
               <Reveal delay={120}>
-                <h2 className="mb-5 text-2xl font-bold leading-snug md:text-3xl">{cs.title}</h2>
+                <p className="mb-3 font-display text-sm font-semibold uppercase tracking-[0.16em] text-brand">
+                  Case study {String(i + 1).padStart(2, "0")}
+                </p>
+                <h2 className="mb-5 text-2xl font-bold leading-snug md:text-3xl">
+                  <Link href={`/case-studies/${cs.slug}`} className="transition-colors hover:text-brand-deep">
+                    {cs.title}
+                  </Link>
+                </h2>
                 <dl className="space-y-4 leading-relaxed">
                   <div>
                     <dt className="text-sm font-bold uppercase tracking-wider text-brand">The problem</dt>
@@ -65,6 +77,12 @@ export default function CaseStudiesPage() {
                     </div>
                   ))}
                 </div>
+                <Link
+                  href={`/case-studies/${cs.slug}`}
+                  className="mt-7 inline-flex min-h-11 items-center rounded-full bg-ink px-6 py-3 font-display text-sm font-semibold text-white transition-colors duration-200 hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                >
+                  Read full case study
+                </Link>
               </Reveal>
             </article>
           ))}

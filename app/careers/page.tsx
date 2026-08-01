@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Careers - Join the Proofit Team",
   description:
-    "Build a career in India's emerging home inspection industry. Open roles at Proofit Mumbai: Home Inspector, Trainee Inspector, Operations Coordinator.",
+    "Build a career in India's emerging home inspection industry. Explore inspection, plumbing and operations roles at Proofit.",
 };
 
 export default function CareersPage() {
