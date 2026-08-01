@@ -106,48 +106,33 @@ const howSteps = [
   {
     title: "Stage-Based Assessment",
     body: [
-      "Risk is different at every stage of ownership.",
-      "A newly handed-over home may have construction defects. A lived-in home may develop seepage, plumbing inefficiencies, or electrical stress over time.",
-      "We begin by understanding the age, usage pattern, and current concerns to define the inspection scope.",
+      "Every property has different risks depending on its age and usage.",
+      "We assess your home's condition to define the right inspection scope.",
     ],
     image: "/images/process-1.webp",
   },
   {
     title: "System-Level Evaluation",
-    intro: "We do not conduct a surface walkthrough.",
-    body: ["We evaluate core performance areas including:"],
-    points: [
-      "Bathroom and balcony drainage slopes",
-      "Moisture intrusion and dampness mapping",
-      "Waterproofing effectiveness",
-      "Plumbing pressure and leakage indicators",
-      "Electrical load and safety checks",
+    body: [
+      "We inspect structure, waterproofing, plumbing, drainage, and electrical systems - not just visible surfaces.",
+      "AI-powered diagnostics help identify hidden risks.",
     ],
-    outro: "AI-supported diagnostics strengthen pattern recognition and risk identification.",
     image: "/images/process-2.webp",
   },
   {
     title: "Early Risk Identification",
-    points: [
-      "Incorrect slopes causing water stagnation",
-      "Waterproofing gaps leading to seepage",
-      "Hidden moisture damaging woodwork and paint",
-      "Plumbing inconsistencies increasing leakage risk",
-      "Electrical irregularities creating safety hazards",
+    body: [
+      "Small issues often become expensive repairs.",
+      "We detect hidden moisture, leakage, drainage, plumbing, and electrical risks before they worsen.",
     ],
     image: "/images/thermal-camera-screen.webp",
   },
   {
     title: "Structured Reporting",
-    intro: "Every finding is documented with:",
-    points: [
-      "Photographic evidence",
-      "Location tagging",
-      "Severity grading",
-      "Clear technical observations",
-      "Actionable recommendations",
+    body: [
+      "Every finding is documented with photos, severity ratings, technical observations, and clear recommendations.",
+      "You'll receive a structured digital report to help you take the right action.",
     ],
-    outro: "You receive a structured digital report that helps you prioritize corrective action, negotiate with builders, or plan preventive maintenance.",
     image: "/images/process-5.webp",
   },
 ];
