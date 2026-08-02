@@ -132,7 +132,7 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
           <ul className="mt-2 grid max-w-lg grid-cols-2 gap-x-4 gap-y-2 lg:mt-4 lg:gap-x-8 lg:gap-y-4">
             {slide.benefits.map((benefit) => (
               <li key={benefit} className="flex items-start gap-2 text-xs text-white/85 sm:text-sm lg:gap-3">
-                <ProofitCheck inverse />
+                <ProofitCheck />
                 {benefit}
               </li>
             ))}
