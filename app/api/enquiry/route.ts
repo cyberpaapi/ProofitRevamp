@@ -13,12 +13,22 @@ type Enquiry = {
   message?: string;
 };
 
+type StoredEnquiry = {
+  id: string;
+  receivedAt: string;
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  property: string;
+  message: string;
+};
+
 /**
  * Enquiry pipeline:
  *  1. Validate.
- *  2. Persist to the local database file (data/enquiries.json). Swap `saveEnquiry`
- *     for a hosted DB (Postgres/Supabase/etc.) at deploy time - it's the only
- *     storage touchpoint.
+ *  2. Persist to Supabase when configured. Local development falls back to
+ *     data/enquiries.json so the form remains testable without cloud secrets.
  *  3. If RESEND_API_KEY is set: email an acknowledgement to the enquirer and a
  *     notification to the team. Without the key (local demo), emails are skipped
  *     and logged instead - the form still works end-to-end.
@@ -56,15 +66,12 @@ export async function POST(req: Request) {
     message: (body.message || "").slice(0, 5000),
   };
 
-  // File storage works locally / on a VPS; on serverless hosts (Vercel etc.)
-  // the filesystem is read-only, so storage becomes best-effort and the email
-  // notification carries the lead. Swap saveEnquiry for a hosted DB in prod.
   let stored = false;
   try {
     await saveEnquiry(enquiry);
     stored = true;
   } catch (err) {
-    console.error("Could not write enquiry to file storage:", err);
+    console.error("Could not persist enquiry:", err);
   }
 
   let emailed = false;
@@ -76,7 +83,7 @@ export async function POST(req: Request) {
 
   if (!stored && !emailed) {
     // Nowhere to put the lead - surface the failure honestly.
-    console.error("Enquiry lost - no storage and no email channel:", enquiry);
+    console.error(`Enquiry ${enquiry.id} could not be stored or emailed.`);
     return NextResponse.json(
       { error: "Could not submit your enquiry right now. Please WhatsApp or call us instead." },
       { status: 500 }
@@ -86,7 +93,49 @@ export async function POST(req: Request) {
   return NextResponse.json({ ok: true });
 }
 
-async function saveEnquiry(enquiry: Record<string, string>) {
+async function saveEnquiry(enquiry: StoredEnquiry) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (supabaseUrl && supabaseSecretKey) {
+    await saveEnquiryToSupabase(enquiry, supabaseUrl, supabaseSecretKey);
+    return;
+  }
+
+  // Vercel's function filesystem is not durable. Refuse to report a database
+  // save there unless Supabase is configured; Resend can still carry the lead.
+  if (process.env.VERCEL) {
+    throw new Error("Supabase storage is not configured for this deployment.");
+  }
+
+  await saveEnquiryToLocalFile(enquiry);
+}
+
+async function saveEnquiryToSupabase(enquiry: StoredEnquiry, url: string, secretKey: string) {
+  const { createClient } = await import("@supabase/supabase-js");
+  const supabase = createClient(url, secretKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });
+
+  const { error } = await supabase.from("enquiries").insert({
+    id: enquiry.id,
+    received_at: enquiry.receivedAt,
+    name: enquiry.name,
+    email: enquiry.email,
+    phone: enquiry.phone,
+    service: enquiry.service || null,
+    property: enquiry.property || null,
+    message: enquiry.message || null,
+  });
+
+  if (error) throw new Error(`Supabase insert failed: ${error.message}`);
+}
+
+async function saveEnquiryToLocalFile(enquiry: StoredEnquiry) {
   const dir = path.join(process.cwd(), "data");
   const file = path.join(dir, "enquiries.json");
   await fs.mkdir(dir, { recursive: true });
@@ -100,7 +149,7 @@ async function saveEnquiry(enquiry: Record<string, string>) {
   await fs.writeFile(file, JSON.stringify(all, null, 2), "utf8");
 }
 
-async function sendEmails(enquiry: Record<string, string>): Promise<boolean> {
+async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.log(`[enquiry] RESEND_API_KEY not set - skipping emails. Enquiry ${enquiry.id} from ${enquiry.email}`);
