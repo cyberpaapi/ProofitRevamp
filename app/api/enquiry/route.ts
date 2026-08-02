@@ -160,53 +160,116 @@ async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
   const resend = new Resend(apiKey);
   const from = process.env.RESEND_FROM || "Proofit <onboarding@resend.dev>";
   const teamInbox = process.env.ENQUIRY_INBOX || "info@proofitcompany.com";
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.proofitcompany.com").replace(/\/$/, "");
+  const logoAttachment = {
+    path: `${siteUrl}/images/email-logo.png`,
+    filename: "proofit-logo.png",
+    contentType: "image/png",
+    inlineContentId: "proofit-logo",
+  };
 
-  // Acknowledgement to the enquirer
-  await resend.emails.send({
+  const customerEmail = await resend.emails.send({
     from,
     to: enquiry.email,
     subject: "We've received your enquiry - Proofit",
+    text: `Thank you, ${enquiry.name}. We have received your enquiry${enquiry.service ? ` about ${enquiry.service}` : ""} and a Proofit team member will contact you shortly. For urgent assistance, call +91 98337 79955 or WhatsApp +91 95940 13666.`,
+    attachments: [logoAttachment],
     html: `
-      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#17181A">
-        <div style="background:#17181A;padding:24px;text-align:center">
-          <span style="color:#fff;font-size:24px;font-weight:bold">proof<span style="color:#F7941D">it</span></span>
-        </div>
-        <div style="padding:28px 24px">
-          <h2 style="margin:0 0 12px">Thank you, ${escapeHtml(enquiry.name)}.</h2>
-          <p style="line-height:1.6">We've received your enquiry${enquiry.service ? ` about <strong>${escapeHtml(enquiry.service)}</strong>` : ""} and will get back to you within one working day.</p>
-          <p style="line-height:1.6">If it's urgent, call us on <a href="tel:+919594013666" style="color:#F7941D">+91-9594013666</a> or message us on WhatsApp.</p>
-          <p style="margin-top:24px;line-height:1.6">- Team Proofit<br/><span style="color:#888;font-size:13px">Residential property inspection · Mumbai</span></p>
-        </div>
-      </div>`,
+      <!doctype html>
+      <html lang="en">
+        <body style="margin:0;background:#f3f1ed;font-family:Arial,Helvetica,sans-serif;color:#17181a">
+          <div style="display:none;max-height:0;overflow:hidden;opacity:0">Your Proofit enquiry has been received.</div>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f1ed;padding:24px 12px">
+            <tr>
+              <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background:#ffffff;border:1px solid #e7e2dc;border-radius:16px;overflow:hidden">
+                  <tr>
+                    <td align="center" style="padding:24px 28px 20px;border-bottom:6px solid #f7941d">
+                      <img src="cid:proofit-logo" width="220" alt="Proofit" style="display:block;width:220px;max-width:72%;height:auto;border:0" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:36px 32px 32px">
+                      <p style="margin:0 0 10px;color:#f7941d;font-size:12px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase">Enquiry received</p>
+                      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.25;color:#17181a">Thank you, ${escapeHtml(enquiry.name)}.</h1>
+                      <p style="margin:0 0 18px;font-size:16px;line-height:1.7;color:#4f4f4f">We have received your enquiry${enquiry.service ? ` about <strong style="color:#17181a">${escapeHtml(enquiry.service)}</strong>` : ""}. A member of the Proofit team will contact you shortly.</p>
+                      ${enquiry.message ? `<div style="margin:22px 0;padding:18px 20px;background:#f7f5f2;border-left:4px solid #f7941d;border-radius:8px"><p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#777">Your message</p><p style="margin:0;font-size:14px;line-height:1.6;color:#333">${escapeHtml(enquiry.message)}</p></div>` : ""}
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 22px">
+                        <tr>
+                          <td style="border-radius:999px;background:#17181a">
+                            <a href="https://wa.me/919594013666" style="display:inline-block;padding:13px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">Message us on WhatsApp</a>
+                          </td>
+                        </tr>
+                      </table>
+                      <p style="margin:0;font-size:14px;line-height:1.7;color:#666">For urgent assistance, call <a href="tel:+919833779955" style="color:#f07f00;font-weight:700;text-decoration:none">+91 98337 79955</a>.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:22px 32px;background:#17181a;color:#ffffff">
+                      <p style="margin:0 0 6px;font-size:14px;font-weight:700">Team Proofit</p>
+                      <p style="margin:0;font-size:12px;line-height:1.6;color:#bdbdbd">Property inspections and technical assessments across Mumbai and neighbouring cities on request.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>`,
   });
+  if (customerEmail.error) throw new Error(`Customer email failed: ${customerEmail.error.message}`);
 
-  // Notification to the team
-  await resend.emails.send({
+  const teamEmail = await resend.emails.send({
     from,
     to: teamInbox,
     replyTo: enquiry.email,
     subject: `New enquiry: ${enquiry.service || "General"} - ${enquiry.name}`,
+    text: `New website enquiry\n\nName: ${enquiry.name}\nEmail: ${enquiry.email}\nPhone: ${enquiry.phone}\nService: ${enquiry.service || "Not provided"}\nProperty: ${enquiry.property || "Not provided"}\nMessage: ${enquiry.message || "Not provided"}\nReceived: ${enquiry.receivedAt}`,
+    attachments: [logoAttachment],
     html: `
-      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto">
-        <h2>New website enquiry</h2>
-        <table style="border-collapse:collapse;width:100%">
-          ${row("Name", enquiry.name)}
-          ${row("Email", enquiry.email)}
-          ${row("Phone", enquiry.phone)}
-          ${row("Service", enquiry.service)}
-          ${row("Property", enquiry.property)}
-          ${row("Message", enquiry.message)}
-          ${row("Received", enquiry.receivedAt)}
-        </table>
-      </div>`,
+      <!doctype html>
+      <html lang="en">
+        <body style="margin:0;background:#f3f1ed;font-family:Arial,Helvetica,sans-serif;color:#17181a">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f1ed;padding:24px 12px">
+            <tr>
+              <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:620px;background:#ffffff;border:1px solid #e7e2dc;border-radius:16px;overflow:hidden">
+                  <tr>
+                    <td style="padding:20px 28px;border-bottom:6px solid #f7941d">
+                      <img src="cid:proofit-logo" width="180" alt="Proofit" style="display:block;width:180px;max-width:64%;height:auto;border:0" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:30px 28px">
+                      <p style="margin:0 0 8px;color:#f7941d;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase">New website lead</p>
+                      <h1 style="margin:0 0 22px;font-size:25px;line-height:1.3">${escapeHtml(enquiry.name)}</h1>
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse">
+                        ${row("Name", enquiry.name)}
+                        ${row("Email", enquiry.email)}
+                        ${row("Phone", enquiry.phone)}
+                        ${row("Service", enquiry.service)}
+                        ${row("Property", enquiry.property)}
+                        ${row("Message", enquiry.message)}
+                        ${row("Received", enquiry.receivedAt)}
+                      </table>
+                      <p style="margin:22px 0 0;font-size:13px;line-height:1.6;color:#777">Reply directly to this email to respond to ${escapeHtml(enquiry.name)}.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>`,
   });
+  if (teamEmail.error) throw new Error(`Team email failed: ${teamEmail.error.message}`);
 
   return true;
 }
 
 function row(label: string, value: string) {
   if (!value) return "";
-  return `<tr><td style="padding:8px;border:1px solid #eee;font-weight:bold;width:110px">${label}</td><td style="padding:8px;border:1px solid #eee">${escapeHtml(value)}</td></tr>`;
+  return `<tr><td style="padding:11px 12px;border:1px solid #e8e4df;background:#f8f6f3;font-size:13px;font-weight:bold;width:110px;vertical-align:top">${label}</td><td style="padding:11px 12px;border:1px solid #e8e4df;font-size:13px;line-height:1.55;vertical-align:top">${escapeHtml(value)}</td></tr>`;
 }
 
 function escapeHtml(s: string) {
