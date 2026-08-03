@@ -438,6 +438,106 @@ h1, h2, h3, h4, .font-display {
   background: #f7941d;
 }
 
+/* ---------- Proofy assistant ---------- */
+@keyframes proofy-panel-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes proofy-message-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes proofy-nudge-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes proofy-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(247, 148, 29, 0); }
+}
+
+@keyframes proofy-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+@keyframes proofy-mascot-thinking {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-2px) rotate(-2deg); }
+}
+
+@keyframes proofy-mascot-talk-a {
+  0%, 48%, 100% { opacity: 1; }
+  50%, 98% { opacity: 0; }
+}
+
+@keyframes proofy-mascot-talk-b {
+  0%, 48%, 100% { opacity: 0; }
+  50%, 98% { opacity: 1; }
+}
+
+@keyframes proofy-mascot-happy {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  70% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.proofy-panel {
+  transform-origin: right bottom;
+  animation: proofy-panel-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.proofy-message {
+  animation: proofy-message-in 220ms ease-out both;
+}
+
+.proofy-nudge {
+  transform-origin: right bottom;
+  animation: proofy-nudge-in 240ms ease-out both;
+}
+
+.proofy-status {
+  animation: proofy-pulse 1.8s ease-in-out infinite;
+}
+
+.proofy-dot {
+  animation: proofy-dot 900ms ease-in-out infinite;
+}
+
+.proofy-dot:nth-child(2) { animation-delay: 120ms; }
+.proofy-dot:nth-child(3) { animation-delay: 240ms; }
+
+.proofy-mascot-thinking {
+  animation: proofy-mascot-thinking 1.2s ease-in-out infinite;
+}
+
+.proofy-mascot-talk-a {
+  animation: proofy-mascot-talk-a 520ms steps(1, end) 3 both;
+}
+
+.proofy-mascot-talk-b {
+  animation: proofy-mascot-talk-b 520ms steps(1, end) 3 both;
+}
+
+.proofy-mascot-happy {
+  animation: proofy-mascot-happy 320ms ease-out both;
+}
+
+.proofy-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(247, 148, 29, 0.8) transparent;
+}
+
+.proofy-scrollbar::-webkit-scrollbar { width: 6px; }
+.proofy-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.proofy-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(247, 148, 29, 0.8);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .hero-rise {
@@ -455,6 +555,20 @@ h1, h2, h3, h4, .font-display {
     transform: none !important;
   }
   .thermal-lens { display: none; }
+  .proofy-panel,
+  .proofy-message,
+  .proofy-nudge,
+  .proofy-status,
+  .proofy-dot,
+  .proofy-mascot-thinking,
+  .proofy-mascot-talk-a,
+  .proofy-mascot-talk-b,
+  .proofy-mascot-happy {
+    animation: none !important;
+  }
+  .proofy-launcher {
+    transition: none !important;
+  }
   .about-cta,
   .about-cta > span,
   [class*="will-change-"] {

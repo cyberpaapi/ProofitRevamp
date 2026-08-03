@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSiteChrome";
+import ProofyChatbot from "@/components/ProofyChatbot";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <ConditionalFooter />
+        <ProofyChatbot />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

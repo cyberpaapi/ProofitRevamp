@@ -35,6 +35,8 @@ Copy `.env.example` to `.env.local` and fill in:
 | `RESEND_FROM` | Verified sender, e.g. `Proofit <hello@proofitcompany.com>` (use `onboarding@resend.dev` while testing) |
 | `ENQUIRY_INBOX` | Team inbox that receives new-enquiry notifications |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL for sitemap/OG tags |
+| `GEMINI_API_KEY` | Server-only Google Gemini API key used by the Proofy AI assistant |
+| `GEMINI_MODEL` | Optional Proofy model override; defaults to `gemini-3.6-flash` |
 
 Run [`supabase/migrations/20260802000000_create_enquiries.sql`](supabase/migrations/20260802000000_create_enquiries.sql)
 once in the Supabase SQL Editor before enabling the production variables. The
