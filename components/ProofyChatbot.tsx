@@ -289,11 +289,11 @@ export default function ProofyChatbot() {
       )}
 
       {!open && showNudge && (
-        <button type="button" onClick={openProofy} className="proofy-nudge pointer-events-auto absolute bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need a quick answer? Ask Proofy.</button>
+        <button type="button" onClick={openProofy} className="proofy-nudge pointer-events-auto fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need a quick answer? Ask Proofy.</button>
       )}
 
       {!open && (
-        <button type="button" onClick={openProofy} className="proofy-launcher group pointer-events-auto absolute bottom-4 right-20 flex min-h-14 w-[7.5rem] max-w-[calc(100vw-6rem)] translate-y-[15%] touch-manipulation cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-ink px-2 py-1.5 text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] transition hover:-translate-y-0.5 hover:border-brand focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:bottom-0 sm:right-24 sm:min-h-[72px] sm:w-[15.875rem] sm:translate-y-0 sm:items-start sm:rounded-b-none sm:rounded-t-[2rem] sm:border-b-0 sm:pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:pl-2.5 sm:pr-3 sm:pt-2.5 sm:shadow-[0_-10px_30px_rgba(0,0,0,0.22)]" aria-expanded="false" aria-label="Open Proofy AI assistant">
+        <button type="button" onClick={openProofy} className="proofy-launcher group pointer-events-auto fixed bottom-4 right-20 flex min-h-14 w-[7.5rem] max-w-[calc(100vw-6rem)] touch-manipulation cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-ink px-2 py-1.5 text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:bottom-6 sm:right-24 sm:w-[15.875rem]" aria-expanded="false" aria-label="Open Proofy AI assistant">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-black"><ProofyMascot state="happy" size={44} priority className="scale-[1.25] transition duration-200 group-hover:-rotate-3 group-hover:scale-[1.35]" /></span>
           <span className="min-w-0 flex-1 self-center text-left font-display text-sm font-bold">Proofy</span>
         </button>
