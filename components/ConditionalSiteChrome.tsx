@@ -14,7 +14,9 @@ export function ConditionalHeader() {
 
 export function ConditionalFooter() {
   const pathname = usePathname();
-  if (campaignRoutes.has(pathname)) return null;
+  if (campaignRoutes.has(pathname)) {
+    return pathname === "/thank-you" ? null : <WhatsAppFloat />;
+  }
   return (
     <>
       <Footer />

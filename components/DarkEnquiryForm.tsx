@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 import ThemedSelect from "@/components/ThemedSelect";
 
@@ -13,6 +13,19 @@ const field =
 export default function DarkEnquiryForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status !== "success") return;
+
+    const frame = requestAnimationFrame(() => {
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+      successRef.current?.scrollIntoView({ behavior, block: "center" });
+      successRef.current?.focus({ preventScroll: true });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [status]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,7 +51,7 @@ export default function DarkEnquiryForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-white/15 p-8 text-left sm:p-10" role="status">
+      <div ref={successRef} tabIndex={-1} className="rounded-2xl border border-white/15 p-8 text-left outline-none sm:p-10" role="status">
         <svg className="draw-check mx-auto mb-5" width="64" height="64" viewBox="0 0 72 72" fill="none" aria-hidden>
           <circle cx="36" cy="36" r="34" stroke="#F7941D" strokeWidth="3" />
           <path d="M22 37 L32 47 L52 26" stroke="#F7941D" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />

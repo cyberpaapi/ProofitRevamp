@@ -34,7 +34,7 @@ export default function LandingLeadForm({
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Could not submit your request.");
-      window.location.assign("/thank-you");
+      window.location.assign("/thank-you#confirmation");
     } catch (submitError) {
       setStatus("error");
       setError(submitError instanceof Error ? submitError.message : "Please try again.");

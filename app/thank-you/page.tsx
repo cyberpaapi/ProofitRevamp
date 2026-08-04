@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <section className="flex min-h-dvh items-center justify-center bg-brand px-5 py-16 text-white">
+    <section id="confirmation" className="flex min-h-dvh scroll-mt-0 items-center justify-center bg-brand px-5 py-16 text-white">
       <div className="w-full max-w-2xl text-center">
         <Image
           src="/images/logo.svg"
