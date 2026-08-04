@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSiteChrome";
 import ProofyChatbot from "@/components/ProofyChatbot";
 import { site } from "@/lib/site";
 import "./globals.css";
+
+const googleTagManagerId = "GTM-KJDFFFPM";
+const googleAnalyticsId = "G-LNGB605MKR";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -65,7 +69,36 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={montserrat.variable}>
+      <head>
+        <Script id="google-tag-manager" strategy="beforeInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${googleTagManagerId}');`}
+        </Script>
+        <Script
+          id="google-analytics-loader"
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');`}
+        </Script>
+      </head>
       <body className="flex min-h-dvh flex-col">
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-brand focus:px-4 focus:py-2 focus:font-bold focus:text-white"
