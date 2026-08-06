@@ -20,7 +20,10 @@ export default function ScrollToEnquiryButton({
   return (
     <button
       type="button"
-      onClick={() => document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "center" })}
+      onClick={() => {
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        document.getElementById(targetId)?.scrollIntoView({ behavior, block: "center" });
+      }}
       className={`group inline-flex h-11 cursor-pointer touch-manipulation items-center gap-2 rounded-full transition-[transform,background-color,color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${colors} ${className}`}
     >
       <span className="whitespace-nowrap pl-5 font-display text-sm font-semibold">{children}</span>
