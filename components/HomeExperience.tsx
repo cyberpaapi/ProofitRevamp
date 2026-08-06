@@ -285,8 +285,8 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       </section>
 
       {/* -------------------------- ONE PLATFORM, TWO MODELS ------------------ */}
-      <ModelsReveal b2b={b2b} b2c={b2c} />
-      <ModelsRevealMobile b2b={b2b} b2c={b2c} />
+      <ModelsReveal b2b={b2b} b2c={b2c} hideSampleReportLink={campaignMode} />
+      <ModelsRevealMobile b2b={b2b} b2c={b2c} hideSampleReportLink={campaignMode} />
 
       {/* ----------------------------- SERVING MUMBAI ------------------------- */}
       <MumbaiTestimonials />

@@ -39,7 +39,7 @@ function ModelCard({ model, className = "" }: { model: InspectionModel; classNam
   );
 }
 
-function SampleReportPrompt({ className = "" }: { className?: string }) {
+function SampleReportPrompt({ className = "", hideLink = false }: { className?: string; hideLink?: boolean }) {
   return (
     <div className={`flex flex-col items-center ${className}`}>
       <Image
@@ -50,19 +50,21 @@ function SampleReportPrompt({ className = "" }: { className?: string }) {
         sizes="(min-width: 1024px) 180px, 168px"
         className="h-auto w-[10.5rem] object-contain lg:w-[11.25rem]"
       />
-      <ArrowBtn
-        href={site.whatsappSampleReport}
-        external
-        variant="dark"
-        className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-      >
-        Ask for Sample Report
-      </ArrowBtn>
+      {!hideLink && (
+        <ArrowBtn
+          href={site.whatsappSampleReport}
+          external
+          variant="dark"
+          className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+        >
+          Ask for Sample Report
+        </ArrowBtn>
+      )}
     </div>
   );
 }
 
-export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
+export default function ModelsReveal({ b2b, b2c, hideSampleReportLink = false }: { b2b: InspectionModel; b2c: InspectionModel; hideSampleReportLink?: boolean }) {
   const stageRef = useRef<HTMLElement>(null);
   const movingCardRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
@@ -113,7 +115,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
             Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
             delivers structured, AI-led home health assessments designed for your context.
           </p>
-          <SampleReportPrompt className="mt-7" />
+          <SampleReportPrompt className="mt-7" hideLink={hideSampleReportLink} />
         </div>
 
         <div ref={deckRef} className="relative h-full min-h-0 overflow-visible">
@@ -129,7 +131,7 @@ export default function ModelsReveal({ b2b, b2c }: { b2b: InspectionModel; b2c: 
   );
 }
 
-export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: InspectionModel }) {
+export function ModelsRevealMobile({ b2b, b2c, hideSampleReportLink = false }: { b2b: InspectionModel; b2c: InspectionModel; hideSampleReportLink?: boolean }) {
   return (
     <section className="px-5 pb-10 sm:px-8 lg:hidden">
       <h2 className="font-display text-4xl font-semibold leading-tight">
@@ -141,7 +143,7 @@ export function ModelsRevealMobile({ b2b, b2c }: { b2b: InspectionModel; b2c: In
         Choose Your Inspection Approach. Whether you manage properties at scale or own a single home, PROOFIT
         delivers structured, AI-led home health assessments designed for your context.
       </p>
-      <SampleReportPrompt className="mt-7" />
+      <SampleReportPrompt className="mt-7" hideLink={hideSampleReportLink} />
       <div className="mt-8 grid gap-6">
         <ModelCard model={b2b} />
         <ModelCard model={b2c} />
