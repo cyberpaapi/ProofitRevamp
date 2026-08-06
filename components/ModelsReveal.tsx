@@ -56,7 +56,7 @@ function SampleReportPrompt({ className = "", formHref }: { className?: string; 
           variant="dark"
           className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
-          Jump to Form
+          Ask for Sample Report
         </ArrowBtn>
       ) : (
         <ArrowBtn

@@ -347,9 +347,6 @@ export default function InspectionBubbles() {
           <BubblePanel title="When should you get an inspection" bubbles={whenBubbles} />
           <BubblePanel title="Why it’s not optional" bubbles={whyBubbles} />
         </div>
-        <p className="mt-3 text-center text-[11px] font-medium text-ink-soft/55">
-          The labels fall into place as this section enters. Drag one to explore.
-        </p>
       </div>
     </section>
   );
