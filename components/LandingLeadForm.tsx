@@ -44,7 +44,7 @@ export default function LandingLeadForm({
   const isCard = variant === "card";
   const isHorizontal = variant === "horizontal";
   const shellClass = isCard
-    ? "rounded-[28px] bg-white p-6 shadow-[0_28px_80px_-38px_rgba(17,17,18,0.55)] sm:p-8"
+    ? "rounded-[28px] bg-white p-6 text-ink shadow-[0_28px_80px_-38px_rgba(17,17,18,0.55)] sm:p-8"
     : variant === "popup"
       ? "bg-white"
       : "";
@@ -59,11 +59,17 @@ export default function LandingLeadForm({
           <div className="inline-flex rounded-full bg-brand-soft px-3 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.14em] text-brand-deep">
             Limited-period Monsoon Offer
           </div>
-          <h2 className="mt-4 font-display text-2xl font-semibold leading-tight sm:text-3xl">Claim ₹1,000 off your inspection</h2>
+          <h2 className="mt-4 font-display text-2xl font-semibold leading-tight text-ink sm:text-3xl">Claim ₹1,000 off your inspection</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft/65">
             Tell us about the property. We will recommend the right inspection.
           </p>
         </>
+      )}
+
+      {isHorizontal && (
+        <div className="mb-5 inline-flex rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.14em] text-brand">
+          Limited-period Monsoon Offer
+        </div>
       )}
 
       <div className={`${isCard ? "mt-6" : ""} ${gridClass}`}>
