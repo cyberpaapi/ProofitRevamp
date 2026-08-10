@@ -172,7 +172,7 @@ async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
     from,
     to: enquiry.email,
     subject: "We've received your enquiry - Proofit",
-    text: `Thank you, ${enquiry.name}. We have received your enquiry${enquiry.service ? ` about ${enquiry.service}` : ""} and a Proofit team member will contact you shortly. For urgent assistance, call +91 98337 79955 or WhatsApp +91 95940 13666.`,
+    text: `Thank you, ${enquiry.name}. We have received your enquiry${enquiry.service ? ` about ${enquiry.service}` : ""} and a Proofit team member will contact you shortly. For urgent assistance, call or WhatsApp +91 98337 79955.`,
     attachments: [logoAttachment],
     html: `
       <!doctype html>
@@ -197,7 +197,7 @@ async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 22px">
                         <tr>
                           <td style="border-radius:999px;background:#17181a">
-                            <a href="https://wa.me/919594013666" style="display:inline-block;padding:13px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">Message us on WhatsApp</a>
+                            <a href="https://wa.me/919833779955" style="display:inline-block;padding:13px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">Message us on WhatsApp</a>
                           </td>
                         </tr>
                       </table>

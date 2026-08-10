@@ -332,7 +332,7 @@ function QuickReply({ children, onClick, primary = false }: { children: ReactNod
 }
 
 function WhatsAppLink() {
-  return <a href="https://wa.me/919594013666" target="_blank" rel="noreferrer" className="flex min-h-11 items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:border-brand hover:text-brand-deep focus:outline-none focus:ring-2 focus:ring-brand/40">Talk to the team on WhatsApp<ArrowIcon /></a>;
+  return <a href="https://wa.me/919833779955" target="_blank" rel="noreferrer" className="flex min-h-11 items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:border-brand hover:text-brand-deep focus:outline-none focus:ring-2 focus:ring-brand/40">Talk to the team on WhatsApp<ArrowIcon /></a>;
 }
 
 function Field({ label, children, className = "" }: { label: string; children: ReactNode; className?: string }) {
