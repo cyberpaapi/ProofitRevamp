@@ -3,7 +3,7 @@ import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
-import { openings } from "@/lib/content";
+import { getPublicCareers } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
     "Build a career in India's emerging home inspection industry. Explore inspection, plumbing and operations roles at Proofit.",
 };
 
-export default function CareersPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CareersPage() {
+  const openings = await getPublicCareers();
   return (
     <>
       <PageHero

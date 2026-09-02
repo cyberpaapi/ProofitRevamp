@@ -9,11 +9,12 @@ const campaignRoutes = new Set(["/landing-page", "/landing-page2", "/thank-you"]
 
 export function ConditionalHeader() {
   const pathname = usePathname();
-  return campaignRoutes.has(pathname) ? null : <Header />;
+  return campaignRoutes.has(pathname) || pathname.startsWith("/admin") ? null : <Header />;
 }
 
 export function ConditionalFooter() {
   const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   if (campaignRoutes.has(pathname)) {
     return pathname === "/thank-you" ? null : <WhatsAppFloat />;
   }

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const testimonials = [
+const fallbackTestimonials = [
   {
     name: "Rahul Mehta",
     image: "/images/testimonials/rahul-mehta.webp",
@@ -48,11 +48,14 @@ const testimonials = [
   },
 ];
 
-export default function MumbaiTestimonials() {
+type ManagedTestimonial = typeof fallbackTestimonials[number];
+
+export default function MumbaiTestimonials({ testimonials = fallbackTestimonials }: { testimonials?: ManagedTestimonial[] }) {
   const [index, setIndex] = useState(0);
-  const testimonial = testimonials[index];
+  const available = testimonials.length ? testimonials : fallbackTestimonials;
+  const testimonial = available[Math.min(index, available.length - 1)];
   const move = (direction: number) => {
-    setIndex((current) => (current + direction + testimonials.length) % testimonials.length);
+    setIndex((current) => (current + direction + available.length) % available.length);
   };
 
   return (
@@ -105,8 +108,8 @@ export default function MumbaiTestimonials() {
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M19 12H5m6 6-6-6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
               <div className="flex items-center gap-2">
-                <span className="sr-only">Testimonial {index + 1} of {testimonials.length}</span>
-                {testimonials.map((item, itemIndex) => (
+                <span className="sr-only">Testimonial {index + 1} of {available.length}</span>
+                {available.map((item, itemIndex) => (
                   <span key={item.author} aria-hidden className={`h-1.5 rounded-full transition-all ${itemIndex === index ? "w-5 bg-brand" : "w-1.5 bg-white/30"}`} />
                 ))}
               </div>

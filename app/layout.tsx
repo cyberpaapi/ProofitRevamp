@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSiteChrome";
 import ProofyChatbot from "@/components/ProofyChatbot";
+import SiteCopyRuntime from "@/components/SiteCopyRuntime";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -111,6 +112,7 @@ gtag('config', '${googleAnalyticsId}');`}
         </main>
         <ConditionalFooter />
         <ProofyChatbot />
+        <SiteCopyRuntime />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>
