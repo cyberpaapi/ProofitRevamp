@@ -5,17 +5,21 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
-import { caseStudies } from "@/lib/content";
+import { getPublicCaseStudies } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const caseStudies = await getPublicCaseStudies();
   return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
+  const caseStudies = await getPublicCaseStudies();
   const study = caseStudies.find((item) => item.slug === slug);
 
   if (!study) return {};
@@ -34,6 +38,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function CaseStudyPage({ params }: Params) {
   const { slug } = await params;
+  const caseStudies = await getPublicCaseStudies();
   const studyIndex = caseStudies.findIndex((item) => item.slug === slug);
   const study = caseStudies[studyIndex];
 

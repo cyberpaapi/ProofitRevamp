@@ -1,8 +1,12 @@
 import type { MetadataRoute } from "next";
-import { caseStudies, posts, services } from "@/lib/content";
+import { services } from "@/lib/content";
+import { getPublicCaseStudies, getPublicPosts } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, caseStudies] = await Promise.all([getPublicPosts(), getPublicCaseStudies()]);
   const staticPages = ["", "/about", "/process", "/services", "/care-plus", "/blog", "/careers", "/case-studies", "/contact"];
 
   return [

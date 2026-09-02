@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 
@@ -9,7 +10,7 @@ type Screen = "home" | "chat" | "appointment" | "success";
 type ChatMessage = { id: number; role: "user" | "assistant"; text: string; suggestAppointment?: boolean };
 type MascotState = "thinking" | "talking" | "happy" | "curious";
 
-const quickQuestions = [
+const fallbackQuickQuestions = [
   "Which inspection service do I need?",
   "How does a Proofit inspection work?",
   "When will I receive my report?",
@@ -33,6 +34,7 @@ function localDateValue(date: Date) {
 }
 
 export default function ProofyChatbot() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
   const [screen, setScreen] = useState<Screen>("home");
@@ -42,9 +44,22 @@ export default function ProofyChatbot() {
   const [thinking, setThinking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [welcomeMessage, setWelcomeMessage] = useState("Hi, I'm Proofy. Ask me a quick question about inspections, or I can help request an appointment.");
+  const [quickQuestions, setQuickQuestions] = useState(fallbackQuickQuestions);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const nextMessageId = useRef(1);
+  const conversationIdRef = useRef("");
+
+  useEffect(() => {
+    fetch("/api/public/site-copy", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (typeof data.proofySettings?.welcomeMessage === "string") setWelcomeMessage(data.proofySettings.welcomeMessage);
+        if (Array.isArray(data.proofySettings?.quickReplies)) setQuickQuestions(data.proofySettings.quickReplies.slice(0, 3));
+      })
+      .catch(() => undefined);
+  }, []);
 
   const minimumDate = useMemo(() => {
     const tomorrow = new Date();
@@ -88,6 +103,7 @@ export default function ProofyChatbot() {
     setInteractionId(undefined);
     setQuestion("");
     setScreen("home");
+    conversationIdRef.current = "";
   };
 
   const sendQuestion = async (text: string, addUserMessage = true) => {
@@ -102,15 +118,17 @@ export default function ProofyChatbot() {
     setScreen("chat");
 
     try {
+      if (!conversationIdRef.current) conversationIdRef.current = crypto.randomUUID();
       const response = await fetch("/api/proofy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: cleanQuestion, previousInteractionId: interactionId }),
+        body: JSON.stringify({ message: cleanQuestion, previousInteractionId: interactionId, conversationId: conversationIdRef.current, page: pathname }),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Proofy could not answer right now.");
 
       setInteractionId(result.interactionId);
+      if (typeof result.conversationId === "string") conversationIdRef.current = result.conversationId;
       setMessages((current) => [
         ...current,
         {
@@ -158,6 +176,14 @@ export default function ProofyChatbot() {
           service: data.get("service"),
           property: data.get("property"),
           message: appointmentDetails,
+          source: "Proofy appointment form",
+          conversationId: conversationIdRef.current,
+          appointment: {
+            preferredDate: data.get("preferredDate"),
+            preferredTime: data.get("preferredTime"),
+            area: data.get("area"),
+            concern: data.get("concern"),
+          },
         }),
       });
       const result = await response.json().catch(() => ({}));
@@ -170,6 +196,8 @@ export default function ProofyChatbot() {
       setSubmitting(false);
     }
   };
+
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[90]" aria-live="polite">
@@ -202,7 +230,7 @@ export default function ProofyChatbot() {
           <div className="proofy-scrollbar min-h-0 flex-1 overflow-y-auto p-4 sm:p-5">
             {screen === "home" && (
               <div className="proofy-message space-y-4">
-                <BotMessage state="happy">Hi, I&apos;m Proofy. Ask me a quick question about inspections, or I can help request an appointment.</BotMessage>
+                <BotMessage state="happy">{welcomeMessage}</BotMessage>
                 <div className="grid gap-2" aria-label="Conversation starters">
                   <QuickReply primary onClick={startAppointment}>Request an appointment</QuickReply>
                   {quickQuestions.map((item) => <QuickReply key={item} onClick={() => void sendQuestion(item)}>{item}</QuickReply>)}

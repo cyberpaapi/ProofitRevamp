@@ -4,7 +4,7 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
-import { caseStudies } from "@/lib/content";
+import { getPublicCaseStudies } from "@/lib/admin/public-content";
 
 export const metadata: Metadata = {
   title: "Case Studies - Real Inspections, Real Outcomes",
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
     "How Proofit inspections played out in the field: possession snag lists builders acted on, leak mysteries solved without demolition, and neighbour disputes settled with evidence.",
 };
 
-export default function CaseStudiesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CaseStudiesPage() {
+  const caseStudies = await getPublicCaseStudies();
   return (
     <>
       <PageHero

@@ -5,17 +5,21 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { posts } from "@/lib/content";
+import { getPublicPosts } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const posts = await getPublicPosts();
   return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
+  const posts = await getPublicPosts();
   const post = posts.find((p) => p.slug === slug);
   if (!post) return {};
   return {
@@ -35,6 +39,7 @@ const fmt = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", ye
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
+  const posts = await getPublicPosts();
   const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 

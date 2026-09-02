@@ -1,6 +1,6 @@
 # Proofit Website
 
-Marketing + enquiry site for Proofit (proofitcompany.com) - Next.js 15 (App Router), Tailwind CSS v4, TypeScript.
+Marketing, enquiry and single-admin CMS for Proofit (proofitcompany.com) - Next.js 16 (App Router), Tailwind CSS v4, TypeScript.
 
 ## Run locally (no keys needed)
 
@@ -11,10 +11,11 @@ npm run dev        # http://localhost:3000
 
 Everything works without environment variables:
 - Enquiry form submissions are validated and stored in `data/enquiries.json`.
+- Admin content is stored in `data/admin-store.json`.
+- Image replacements write to `public/images`.
 - Email sending is skipped (a console log notes it) until a Resend key is provided.
 
-The local JSON file is only a development fallback. Production deployments on
-Vercel must use Supabase for durable enquiry storage.
+These files are localhost fallbacks only. Production uses two Vercel Blob stores.
 
 ## Production
 
@@ -29,8 +30,10 @@ Copy `.env.example` to `.env.local` and fill in:
 
 | Variable | Purpose |
 |---|---|
-| `SUPABASE_URL` | Supabase project URL used by the server-side enquiry API |
-| `SUPABASE_SECRET_KEY` | Server-only Supabase secret key used to insert enquiries (never expose with a `NEXT_PUBLIC_` prefix) |
+| `ADMIN_BLOB_READ_WRITE_TOKEN` or `ADMIN_READ_WRITE_TOKEN` | Token for the **private** Vercel Blob store containing CMS data, enquiries, appointments and Proofy conversations |
+| `MEDIA_BLOB_READ_WRITE_TOKEN`, `MEDIA_READ_WRITE_TOKEN` or `BLOB_READ_WRITE_TOKEN` | Token for the **public** Vercel Blob store containing uploaded replacement images |
+| `ADMIN_PASSWORD` | Fixed password for the single `/admin` account |
+| `ADMIN_SESSION_SECRET` | Long random value used to sign the administrator session cookie |
 | `RESEND_API_KEY` | Enables acknowledgement email to the enquirer + notification email to the team ([resend.com/api-keys](https://resend.com/api-keys)) |
 | `RESEND_FROM` | Verified sender, e.g. `Proofit <hello@proofitcompany.com>` (use `onboarding@resend.dev` while testing) |
 | `ENQUIRY_INBOX` | Team inbox that receives new-enquiry notifications |
@@ -38,13 +41,11 @@ Copy `.env.example` to `.env.local` and fill in:
 | `GEMINI_API_KEY` | Server-only Google Gemini API key used by the Proofy AI assistant |
 | `GEMINI_MODEL` | Optional Proofy model override; defaults to `gemini-3.6-flash` |
 
-Run [`supabase/migrations/20260802000000_create_enquiries.sql`](supabase/migrations/20260802000000_create_enquiries.sql)
-once in the Supabase SQL Editor before enabling the production variables. The
-table denies browser roles and is written only through the server-side API.
+See [`ADMIN_README.md`](ADMIN_README.md) for the complete deployment checklist.
 
 ## Editing content
 
-All copy lives in two files - no component changes needed for routine updates:
+Seed copy lives in two files; deployed content can be managed at `/admin`:
 
 - [lib/content.ts](lib/content.ts) - services, process steps, FAQs, blog posts, case studies, careers, testimonials, stats, founder bios
 - [lib/site.ts](lib/site.ts) - phone, email, WhatsApp link, service area

@@ -4,7 +4,7 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
-import { posts } from "@/lib/content";
+import { getPublicPosts } from "@/lib/admin/public-content";
 
 export const metadata: Metadata = {
   title: "Blog - Home Care, Inspection & Waterproofing Insights",
@@ -14,8 +14,15 @@ export const metadata: Metadata = {
 
 const fmt = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric" });
 
-export default function BlogPage() {
+export const dynamic = "force-dynamic";
+
+export default async function BlogPage() {
+  const posts = await getPublicPosts();
   const [lead, ...rest] = posts;
+
+  if (!lead) {
+    return <><PageHero eyebrow="Blog" title="Field notes from" accent="the inspectors." lede="New inspection insights are coming soon." /><section className="py-24 text-center"><p className="text-ink-soft/70">No published articles yet.</p></section></>;
+  }
 
   return (
     <>

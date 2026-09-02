@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { appendProofyExchange } from "@/lib/admin/store";
 
 export const runtime = "nodejs";
 
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { message?: unknown; previousInteractionId?: unknown };
+  let body: { message?: unknown; previousInteractionId?: unknown; conversationId?: unknown; page?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -126,7 +127,17 @@ export async function POST(request: Request) {
     const suggestAppointment = rawAnswer.includes("[SHOW_APPOINTMENT]");
     const answer = rawAnswer.replaceAll("[SHOW_APPOINTMENT]", "").trim();
 
-    return NextResponse.json({ answer, interactionId: data.id, suggestAppointment });
+    const conversationId = typeof body.conversationId === "string" && /^[A-Za-z0-9_-]{8,100}$/.test(body.conversationId)
+      ? body.conversationId
+      : crypto.randomUUID();
+    const page = typeof body.page === "string" && body.page.startsWith("/") ? body.page.slice(0, 200) : "/";
+    try {
+      await appendProofyExchange({ conversationId, interactionId: data.id, page, userMessage: message, assistantMessage: answer });
+    } catch (storeError) {
+      console.error("[proofy] Could not save conversation", storeError);
+    }
+
+    return NextResponse.json({ answer, interactionId: data.id, conversationId, suggestAppointment });
   } catch (error) {
     console.error("[proofy] Gemini request error", error instanceof Error ? error.message : error);
     return NextResponse.json(

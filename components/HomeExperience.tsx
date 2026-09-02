@@ -12,6 +12,7 @@ import MumbaiTestimonials from "@/components/MumbaiTestimonials";
 import LandingLeadForm from "@/components/LandingLeadForm";
 import ScrollToEnquiryButton from "@/components/ScrollToEnquiryButton";
 import { site } from "@/lib/site";
+import { getPublicTestimonials } from "@/lib/admin/public-content";
 
 /* ------------------------------ Content (per client refs) ------------------------------ */
 
@@ -168,7 +169,8 @@ const b2c = {
   outcome: "Clarity before payment. Confidence before possession. Protection before monsoon.",
 };
 
-export default function HomeExperience({ campaignMode = false }: { campaignMode?: boolean }) {
+export default async function HomeExperience({ campaignMode = false }: { campaignMode?: boolean }) {
+  const managedTestimonials = await getPublicTestimonials();
   return (
     <>
       <div className="relative">
@@ -289,7 +291,7 @@ export default function HomeExperience({ campaignMode = false }: { campaignMode?
       <ModelsRevealMobile b2b={b2b} b2c={b2c} formHref={campaignMode ? "#landing2-enquiry" : undefined} />
 
       {/* ----------------------------- SERVING MUMBAI ------------------------- */}
-      <MumbaiTestimonials />
+      <MumbaiTestimonials testimonials={managedTestimonials} />
 
       {/* ------------------------------ FINAL CTA ----------------------------- */}
       <section className="border-t border-white/10 bg-[#101010] pb-20 pt-16 text-white md:pb-24">

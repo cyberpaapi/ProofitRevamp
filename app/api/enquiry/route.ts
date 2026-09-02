@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { appendAppointment, appendEnquiry, setEnquiryMeta } from "@/lib/admin/store";
 
 export const runtime = "nodejs";
 
@@ -11,6 +10,14 @@ type Enquiry = {
   service?: string;
   property?: string;
   message?: string;
+  source?: string;
+  conversationId?: string;
+  appointment?: {
+    preferredDate?: string;
+    preferredTime?: string;
+    area?: string;
+    concern?: string;
+  };
 };
 
 type StoredEnquiry = {
@@ -27,7 +34,7 @@ type StoredEnquiry = {
 /**
  * Enquiry pipeline:
  *  1. Validate.
- *  2. Persist to Supabase when configured. Local development falls back to
+ *  2. Persist to private Vercel Blob storage when configured. Local development falls back to
  *     data/enquiries.json so the form remains testable without cloud secrets.
  *  3. If RESEND_API_KEY is set: email an acknowledgement to the enquirer and a
  *     notification to the team. Without the key (local demo), emails are skipped
@@ -44,6 +51,11 @@ export async function POST(req: Request) {
   const name = (body.name || "").trim();
   const email = (body.email || "").trim();
   const phone = (body.phone || "").trim();
+  const referrer = req.headers.get("referer");
+  let formSource = body.source || "Website enquiry form";
+  if (!body.source && referrer) {
+    try { formSource = `Website form: ${new URL(referrer).pathname}`; } catch { formSource = "Website enquiry form"; }
+  }
 
   if (!name || name.length > 200) {
     return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
@@ -69,6 +81,32 @@ export async function POST(req: Request) {
   let stored = false;
   try {
     await saveEnquiry(enquiry);
+    await setEnquiryMeta(enquiry.id, {
+      status: "new",
+      assignee: "",
+      notes: "",
+      source: formSource.slice(0, 200),
+    });
+    if (body.appointment?.preferredDate) {
+      await appendAppointment({
+        id: crypto.randomUUID(),
+        enquiryId: enquiry.id,
+        conversationId: body.conversationId?.slice(0, 100),
+        name: enquiry.name,
+        email: enquiry.email,
+        phone: enquiry.phone,
+        service: enquiry.service,
+        property: enquiry.property,
+        area: (body.appointment.area || "").slice(0, 300),
+        concern: (body.appointment.concern || "").slice(0, 3000),
+        date: body.appointment.preferredDate.slice(0, 10),
+        time: (body.appointment.preferredTime || "10:00").slice(0, 20),
+        inspector: "",
+        notes: "Requested through Proofy",
+        status: "scheduled",
+        createdAt: new Date().toISOString(),
+      });
+    }
     stored = true;
   } catch (err) {
     console.error("Could not persist enquiry:", err);
@@ -94,59 +132,7 @@ export async function POST(req: Request) {
 }
 
 async function saveEnquiry(enquiry: StoredEnquiry) {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (supabaseUrl && supabaseSecretKey) {
-    await saveEnquiryToSupabase(enquiry, supabaseUrl, supabaseSecretKey);
-    return;
-  }
-
-  // Vercel's function filesystem is not durable. Refuse to report a database
-  // save there unless Supabase is configured; Resend can still carry the lead.
-  if (process.env.VERCEL) {
-    throw new Error("Supabase storage is not configured for this deployment.");
-  }
-
-  await saveEnquiryToLocalFile(enquiry);
-}
-
-async function saveEnquiryToSupabase(enquiry: StoredEnquiry, url: string, secretKey: string) {
-  const { createClient } = await import("@supabase/supabase-js");
-  const supabase = createClient(url, secretKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false,
-    },
-  });
-
-  const { error } = await supabase.from("enquiries").insert({
-    id: enquiry.id,
-    received_at: enquiry.receivedAt,
-    name: enquiry.name,
-    email: enquiry.email,
-    phone: enquiry.phone,
-    service: enquiry.service || null,
-    property: enquiry.property || null,
-    message: enquiry.message || null,
-  });
-
-  if (error) throw new Error(`Supabase insert failed: ${error.message}`);
-}
-
-async function saveEnquiryToLocalFile(enquiry: StoredEnquiry) {
-  const dir = path.join(process.cwd(), "data");
-  const file = path.join(dir, "enquiries.json");
-  await fs.mkdir(dir, { recursive: true });
-  let all: unknown[] = [];
-  try {
-    all = JSON.parse(await fs.readFile(file, "utf8"));
-  } catch {
-    // first enquiry - file doesn't exist yet
-  }
-  all.push(enquiry);
-  await fs.writeFile(file, JSON.stringify(all, null, 2), "utf8");
+  await appendEnquiry(enquiry);
 }
 
 async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
