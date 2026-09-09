@@ -37,6 +37,58 @@
   --container-7xl: 88rem;
 }
 
+/* Shared public-page geometry: responsive banners, containers and spacing.
+   Full-bleed media and readable article measures
+   are intentional exceptions; admin screens keep their own layout. */
+:root {
+  --site-gutter: 1.25rem;
+  --site-section-space: 4rem;
+  --site-heading-gap: 2rem;
+  --site-copy-gap: 1rem;
+  --site-banner-height: clamp(700px, 215.957447vw, 900px);
+}
+.site-container {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: var(--site-gutter);
+  min-width: 0;
+}
+.site-section { padding-block: var(--site-section-space); }
+.section-heading { margin-bottom: var(--site-heading-gap); }
+.section-content { margin-top: var(--site-heading-gap); }
+.section-copy { margin-top: var(--site-copy-gap); }
+.section-heading h2 { margin-top: .75rem; }
+.section-heading h2 + p,
+.site-section h2 + p { margin-top: var(--site-copy-gap); }
+.site-section h2, .section-heading h2 { line-height: 1.15; }
+.site-banner {
+  min-height: var(--site-banner-height);
+  padding-block: 7rem 6rem;
+}
+.site-banner h1 { line-height: 1.12; overflow-wrap: break-word; }
+.site-banner h1 + p { margin-top: var(--site-copy-gap); font-weight: 400; line-height: 1.6; }
+.site-banner--thermal { height: var(--site-banner-height); padding: 0; }
+.site-banner--campaign { padding: 0; }
+.campaign-banner-image { position: absolute; inset-block: 0; inset-inline: calc(-1 * var(--site-gutter)); }
+.site-banner--campaign .campaign-banner-form { margin-inline: calc(-1 * var(--site-gutter)); }
+.site-banner--campaign .campaign-banner-copy { min-height: var(--site-banner-height); padding-block: 7rem 6rem; }
+.site-banner--campaign .campaign-banner-copy h1 { font-size: clamp(2rem, 3.6vw, 3.25rem); }
+@media (min-width: 640px) {
+  :root { --site-gutter: 1.5rem; --site-banner-height: max(640px, 56.25vw); }
+}
+@media (min-width: 768px) {
+  :root { --site-section-space: 6rem; --site-heading-gap: 3rem; --site-copy-gap: 1.5rem; }
+  .site-banner:not(.site-banner--thermal):not(.site-banner--campaign) { padding-block: 8rem 4rem; }
+}
+@media (min-width: 1024px) {
+  :root { --site-gutter: 2rem; }
+  .site-banner--campaign .campaign-banner-copy { min-height: 0; padding-block: 8rem 4rem; }
+  .campaign-banner-image { right: 0; }
+  .site-banner--campaign .campaign-banner-form { margin-inline: 0; }
+  .site-banner--campaign > .site-container { min-height: var(--site-banner-height); }
+}
+
 html {
   scroll-behavior: smooth;
   /* iOS ignores overflow clipping set only on body - required on both to stop

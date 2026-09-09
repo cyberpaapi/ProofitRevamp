@@ -34,7 +34,7 @@ export default function ProcessJourney({ steps }: { steps: {title:string;desc:st
     const ro=new ResizeObserver(measure);ro.observe(container);measure();window.addEventListener('scroll',schedule,{passive:true});
     return()=>{ro.disconnect();cancelAnimationFrame(raf);window.removeEventListener('scroll',schedule);};
   },[steps.length]);
-  return <section className="py-16 md:py-20"><div ref={root} className="relative mx-auto max-w-6xl px-4">
+  return <section className="site-section"><div ref={root} className="site-container relative">
     <svg ref={svg} className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden><defs><marker id={arrowId} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#f7941d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></marker></defs><path ref={path} fill="none" stroke="#f7941d" strokeWidth="2" strokeDasharray="7 6" markerMid={`url(#${arrowId})`} markerEnd={`url(#${arrowId})`} /></svg>
     <div ref={marker} className="pointer-events-none absolute left-0 top-0 z-20 h-14 w-14 overflow-hidden rounded-full border-4 border-brand bg-ink shadow-lg" aria-hidden><Image src="/images/thermal-camera-screen.webp" alt="" fill sizes="56px" className="object-cover" /></div>
     <ol className="space-y-14 md:space-y-20">{steps.map((step,i)=><Reveal as="li" key={step.title} className={`relative ml-9 rounded-2xl border border-brand/25 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg motion-reduce:transform-none md:ml-0 md:w-[44%] ${i%2 ? 'md:!ml-auto' : ''}`}>

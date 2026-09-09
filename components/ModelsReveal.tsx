@@ -111,8 +111,8 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
   }, []);
 
   return (
-    <section ref={stageRef} data-models-section className="relative mb-8 hidden min-h-[calc(100svh-72px)] lg:block">
-      <div className="mx-auto grid max-w-[1280px] grid-cols-[minmax(260px,340px)_minmax(0,1fr)] items-stretch gap-8 px-8 py-6">
+    <section ref={stageRef} data-models-section className="site-section relative hidden min-h-[calc(100svh-72px)] lg:block">
+      <div className="site-container grid grid-cols-[minmax(260px,340px)_minmax(0,1fr)] items-stretch gap-8">
         <div className="flex min-h-0 flex-col">
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">
             One Platform.
@@ -141,7 +141,7 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
 
 export function ModelsRevealMobile({ b2b, b2c, formHref }: { b2b: InspectionModel; b2c: InspectionModel; formHref?: string }) {
   return (
-    <section className="px-5 pb-10 sm:px-8 lg:hidden">
+    <section className="site-section site-container lg:hidden">
       <h2 className="font-display text-4xl font-semibold leading-tight">
         One Platform.
         <br />

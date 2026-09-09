@@ -11,7 +11,7 @@ type Props = {
 
 export default function SectionHeading({ eyebrow, title, accent, lede, center, dark }: Props) {
   return (
-    <Reveal className={`mb-10 max-w-3xl md:mb-12 ${center ? "mx-auto text-center" : ""}`}>
+    <Reveal className={`section-heading max-w-3xl ${center ? "mx-auto text-center" : ""}`}>
       <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">{eyebrow}</p>
       <h2 className={`mt-3 font-display text-3xl font-semibold leading-[1.12] md:text-5xl ${dark ? "text-white" : "text-ink"}`}>
         {title} {accent && <span className="text-brand">{accent}</span>}

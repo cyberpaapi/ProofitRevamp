@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
+import { proofyWelcomeMessage, publicProofyWelcome } from "@/lib/proofy-copy";
 
 type Screen = "home" | "chat" | "appointment" | "success";
 type ChatMessage = { id: number; role: "user" | "assistant"; text: string; suggestAppointment?: boolean };
@@ -53,7 +54,7 @@ export default function ProofyChatbot() {
   const [thinking, setThinking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [welcomeMessage, setWelcomeMessage] = useState("Hi, I'm Proofy. Ask me a quick question about inspections, or I can help request an appointment.");
+  const [welcomeMessage, setWelcomeMessage] = useState(proofyWelcomeMessage);
   const [quickQuestions, setQuickQuestions] = useState(fallbackQuickQuestions);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const messageEndRef = useRef<HTMLDivElement>(null);
@@ -64,7 +65,7 @@ export default function ProofyChatbot() {
     fetch("/api/public/site-copy", { cache: "no-store" })
       .then((response) => response.json())
       .then((data) => {
-        if (typeof data.proofySettings?.welcomeMessage === "string") setWelcomeMessage(data.proofySettings.welcomeMessage);
+        if (typeof data.proofySettings?.welcomeMessage === "string") setWelcomeMessage(publicProofyWelcome(data.proofySettings.welcomeMessage));
         if (Array.isArray(data.proofySettings?.quickReplies)) setQuickQuestions(data.proofySettings.quickReplies.slice(0, 3));
       })
       .catch(() => undefined);
@@ -239,7 +240,7 @@ export default function ProofyChatbot() {
           <div className="proofy-scrollbar min-h-0 flex-1 overflow-y-auto p-4 sm:p-5">
             {screen === "home" && (
               <div className="proofy-message space-y-4">
-                <BotMessage state="happy">{welcomeMessage}</BotMessage>
+                <BotMessage state="happy"><span className="whitespace-pre-line">{welcomeMessage === proofyWelcomeMessage ? <><strong className="mb-2 block text-base font-semibold leading-snug">Not sure which Proofit service you need?</strong>Proofy can help you find the right inspection for your property.</> : welcomeMessage}</span></BotMessage>
                 <div className="grid gap-2" aria-label="Conversation starters">
                   <QuickReply primary onClick={startAppointment}>Request an appointment</QuickReply>
                   {quickQuestions.map((item) => <QuickReply key={item} onClick={() => void sendQuestion(item)}>{item}</QuickReply>)}
@@ -326,7 +327,7 @@ export default function ProofyChatbot() {
       )}
 
       {!open && showNudge && (
-        <button type="button" onClick={openProofy} className="proofy-nudge pointer-events-auto fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need a quick answer? Ask Proofy.</button>
+        <button type="button" onClick={openProofy} className="proofy-nudge pointer-events-auto fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need help navigating? Ask Proofy!</button>
       )}
 
       {!open && (

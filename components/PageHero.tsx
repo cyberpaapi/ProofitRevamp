@@ -37,11 +37,7 @@ export default function PageHero({
 
   return (
     <section
-      className={`relative overflow-hidden bg-ink text-white ${
-        image
-          ? "flex min-h-[700px] items-end pb-12 pt-28 md:min-h-[540px] md:pb-14 md:pt-32"
-          : "flex min-h-[700px] items-end pb-12 pt-28 md:min-h-[540px] md:pb-14 md:pt-32"
-      }`}
+      className="site-banner relative flex items-end overflow-hidden bg-ink text-white"
     >
       {image && (
         <>
@@ -52,7 +48,7 @@ export default function PageHero({
           <div className="absolute inset-y-0 left-0 w-[min(92%,58rem)] bg-gradient-to-r from-ink/68 via-ink/35 to-transparent" aria-hidden />
         </>
       )}
-      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="site-container relative">
         <Breadcrumbs items={breadcrumbItems} className="hero-rise mb-5" />
         <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand" style={{ ["--rise-delay" as string]: "0ms" }}>
           {eyebrow}

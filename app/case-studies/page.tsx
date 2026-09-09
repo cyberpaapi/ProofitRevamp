@@ -27,8 +27,8 @@ export default async function CaseStudiesPage() {
         imageAlt="Split view of a room showing water damage and its thermal signature"
       />
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl space-y-16 px-4 sm:px-6 md:space-y-24 lg:px-8">
+      <section className="site-section">
+        <div className="site-container space-y-16 md:space-y-24">
           {caseStudies.map((cs, i) => (
             <article key={cs.slug} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
               <Reveal from={i % 2 ? "right" : "left"}>

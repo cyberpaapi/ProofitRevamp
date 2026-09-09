@@ -21,7 +21,7 @@ export default async function BlogPage() {
   const [lead, ...rest] = posts;
 
   if (!lead) {
-    return <><PageHero eyebrow="Blog" title="Field notes from" accent="the inspectors." lede="New inspection insights are coming soon." /><section className="py-24 text-center"><p className="text-ink-soft/70">No published articles yet.</p></section></>;
+    return <><PageHero eyebrow="Blog" title="Field notes from" accent="the inspectors." lede="New inspection insights are coming soon." image="/images/hero-house.webp" imageAlt="A bright home interior with a kitchen and living space" /><section className="site-section text-center"><p className="text-ink-soft/70">No published articles yet.</p></section></>;
   }
 
   return (
@@ -30,11 +30,14 @@ export default async function BlogPage() {
         eyebrow="Blog"
         title="Field notes from"
         accent="the inspectors."
+        image="/images/hero-house.webp"
+        imageAlt="A bright home interior with a kitchen and living space"
+        imagePosition="center"
         lede="What we learn inside Mumbai's homes, written up so you can use it - before you need us."
       />
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container ">
           {/* Featured post */}
           <Reveal className="mb-12">
             <Link href={`/blog/${lead.slug}`} className="tile tile-hover group grid overflow-hidden lg:grid-cols-2">
@@ -67,8 +70,8 @@ export default async function BlogPage() {
           <div className="grid gap-6 md:grid-cols-3">
             {rest.map((p, i) => (
               <Reveal key={p.slug} delay={i * 100}>
-                <Link href={`/blog/${p.slug}`} className="tile tile-hover group block h-full overflow-hidden">
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                <Link href={`/blog/${p.slug}`} className="tile tile-hover group flex h-full flex-col overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+                  <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
                     <Image
                       src={p.image}
                       alt={p.title}
@@ -78,12 +81,13 @@ export default async function BlogPage() {
                     />
                     <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{p.tag}</span>
                   </div>
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <p className="mb-2 text-xs text-ink-soft/60">
                       {fmt.format(new Date(p.date))} · {p.readMins} min read
                     </p>
                     <h3 className="mb-2 font-bold leading-snug transition-colors group-hover:text-brand-deep">{p.title}</h3>
                     <p className="text-sm leading-relaxed text-ink-soft/70">{p.excerpt}</p>
+                    <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-brand-deep">Read more <span aria-hidden className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none">→</span></span>
                   </div>
                 </Link>
               </Reveal>

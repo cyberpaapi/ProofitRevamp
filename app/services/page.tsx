@@ -24,8 +24,8 @@ export default function ServicesPage() {
         imageAlt="Proofit inspector documenting snags in a new apartment"
       />
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl space-y-10 px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container space-y-10">
           {services.map((s, i) => (
             <Reveal key={s.slug} delay={80}>
               <Link

@@ -1,6 +1,7 @@
 import "server-only";
 import { seedTeam, seedOfferings } from "./offering-seeds";
 import { site } from "@/lib/site";
+import { proofyWelcomeMessage } from "@/lib/proofy-copy";
 
 import { promises as fs } from "fs";
 import path from "path";
@@ -128,7 +129,7 @@ function createSeedStore(): AdminStore {
     enquiryMeta: {},
     proofyConversations: [],
     proofySettings: {
-      welcomeMessage: "Hi, I'm Proofy. Ask me a quick question about inspections, or I can help request an appointment.",
+      welcomeMessage: proofyWelcomeMessage,
       quickReplies: [
         "Which inspection service do I need?",
         "How does a Proofit inspection work?",

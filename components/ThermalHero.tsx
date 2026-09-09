@@ -134,13 +134,19 @@ export default function ThermalHero({ children }: { children: React.ReactNode })
   }, []);
 
   return (
-    <section ref={frameRef} className="sticky top-0 z-0 h-[100svh] min-h-[600px] w-full overflow-hidden bg-ink">
+    <section ref={frameRef} className="site-banner site-banner--thermal sticky top-0 z-0 w-full overflow-hidden bg-ink">
       {/* base photograph */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center md:hidden"
         style={{ backgroundImage: "url(/images/hero-house-clean-v2.png)" }}
         role="img"
         aria-label="Bright modern home interior; a roaming thermal scanner reveals the infrared view of whatever it passes over"
+      />
+      <div
+        className="absolute inset-0 hidden bg-cover bg-center md:block"
+        style={{ backgroundImage: "url(/images/home-banner-desktop-client.webp)" }}
+        role="img"
+        aria-label="Bright modern kitchen and living room; a roaming thermal scanner reveals the infrared view of whatever it passes over"
       />
       <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[85%] bg-gradient-to-r from-black/60 via-black/20 to-transparent md:w-[65%]" aria-hidden />
       {/* roaming thermal lens */}

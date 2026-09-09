@@ -32,8 +32,8 @@ export default async function AboutPage() {
 
   return (
     <>
-      {/* Responsive banner: 480×700 mobile / 1440×540 desktop */}
-      <section className="relative flex min-h-[700px] items-end overflow-hidden bg-ink pb-12 pt-28 text-white md:min-h-[540px] md:pb-14 md:pt-32">
+      {/* Shared banner geometry: 376×812 mobile / 1440×810 desktop. */}
+      <section className="site-banner relative flex items-end overflow-hidden bg-ink text-white">
         <Image
           src="/images/about-hero-mobile.webp"
           alt="Proofit inspection team at a residential property"
@@ -43,15 +43,15 @@ export default async function AboutPage() {
           className="object-cover md:hidden"
         />
         <Image
-          src="/images/about-hero-desktop.webp"
-          alt="Proofit inspection team at a residential property"
+          src="/images/about-banner-desktop-client.webp"
+          alt="Proofit office with branded wall signage, thermal imaging equipment and inspection reports"
           fill
           priority
           sizes="100vw"
           className="hidden object-cover md:block"
         />
         <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="site-container relative">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About Us" }]} className="hero-rise mb-5" />
           <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">About Us</p>
           <h1 className="hero-rise mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl">
@@ -68,14 +68,14 @@ export default async function AboutPage() {
       </section>
 
       {/* Who We Are */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Who We Are</p>
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
               Built on Engineering. Powered by AI.
             </h2>
-            <div className="mt-4 max-w-2xl space-y-5 leading-relaxed text-ink-soft/82 md:mt-7">
+            <div className="section-copy max-w-2xl space-y-5 leading-relaxed text-ink-soft/82">
               <p>
                 Proofit is India’s first AI-led home, thermal and commercial inspection company, bringing together
                 engineering expertise, advanced inspection technology, and globally inspired methodologies to help
@@ -103,8 +103,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Story - retained */}
-      <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2 lg:gap-20">
+      <section className="site-section bg-cream">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
@@ -118,7 +118,7 @@ export default async function AboutPage() {
           </Reveal>
           <div>
             <SectionHeading eyebrow="Our Story" title="Why India needed" accent="a Proofit." />
-            <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
+            <Reveal delay={100} className="space-y-4 leading-relaxed text-ink-soft/85">
               <p>
                 In North America, no serious property deal closes without an independent inspection. In India -
                 where a home is usually the single largest purchase of a lifetime - buyers routinely sign on trust,
@@ -139,8 +139,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Inspection Framework */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
@@ -157,7 +157,7 @@ export default async function AboutPage() {
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
               Our Inspection Framework
             </h2>
-            <div className="mt-4 space-y-5 text-lg leading-relaxed text-ink-soft/82 md:mt-7">
+            <div className="section-copy space-y-5 text-lg leading-relaxed text-ink-soft/82">
               <p>
                 Our inspection framework draws inspiration from internationally recognised Canadian inspection
                 practices while being specifically adapted for Mumbai’s unique environmental conditions.
@@ -172,8 +172,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Mission / Vision */}
-      <section className="bg-ink py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:px-8 md:grid-cols-2">
+      <section className="site-section bg-ink text-white">
+        <div className="site-container grid gap-6 md:grid-cols-2">
           <Reveal className="rounded-2xl bg-brand p-8 md:p-10">
             <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/75">Our Mission</p>
             <p className="mt-3 text-xl font-medium leading-relaxed md:mt-5">
@@ -192,8 +192,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container ">
           <SectionHeading
             eyebrow="Leadership"
             title="The team behind Proofit"
@@ -226,8 +226,8 @@ export default async function AboutPage() {
       </section>
 
       {/* How We Work */}
-      <section className="bg-ink py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+      <section className="site-section bg-ink text-white">
+        <div className="site-container grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How We Work</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.12] md:text-5xl">
@@ -240,7 +240,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-cream py-16 md:py-20"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section bg-cream"><div className="site-container ">
         <SectionHeading eyebrow="FAQs" title="Straight answers, no jargon." lede="Everything people usually ask us before booking their first inspection." />
         <FaqGrid faqs={faqs} />
       </div></section>

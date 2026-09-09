@@ -86,7 +86,7 @@ function Distinction() {
 
 function SavingsStatement() {
   return (
-    <div className="mt-12 border-t border-ink/10 pt-9">
+    <div className="mt-8 border-t border-ink/10 pt-6">
       <h2 className="max-w-2xl font-display text-3xl font-semibold leading-[1.12] xl:text-[2.65rem]">
         Delivering Up to 30% Greater Cost Savings Than Conventional Vendors
       </h2>
@@ -174,7 +174,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
     <>
       <section ref={desktopStageRef} className="about-texture relative z-10 hidden h-[190svh] bg-[#fbfaf7] lg:block">
         <div className="sticky top-[72px] h-[calc(100svh-72px)] overflow-hidden">
-          <div className="mx-auto grid h-full max-w-7xl grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-12 px-8 xl:gap-16">
+          <div className="site-container grid h-full grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-12 xl:gap-16">
             <div className="relative min-h-0">
               <h2 className="absolute left-0 top-[12vh] z-[2] max-w-[30%] font-display text-4xl font-semibold xl:text-5xl">
                 About Us
@@ -207,7 +207,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
       </section>
 
       <section className="about-texture relative z-10 bg-[#fbfaf7] lg:hidden">
-        <div ref={mobileIntroRef} className="min-h-[calc(100svh-4rem)] px-5 pb-12 pt-10 sm:px-8">
+        <div ref={mobileIntroRef} className="site-section site-container min-h-[calc(100svh-4rem)]">
           <h2 className="font-display text-4xl font-semibold sm:text-5xl">About Us</h2>
           <div ref={mobileMediaRef} className="mt-6 aspect-[4/3] origin-center will-change-transform sm:mt-8">
             <AboutVideo className="h-full w-full" />
@@ -217,7 +217,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
           </div>
         </div>
 
-        <div className="flex min-h-[calc(100svh-4rem)] items-center px-5 py-16 sm:px-8">
+        <div className="site-section site-container flex min-h-[calc(100svh-4rem)] items-center">
           <Reveal from="up" className="w-full">
             <Distinction />
             <SavingsStatement />

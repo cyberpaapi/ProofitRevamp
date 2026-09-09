@@ -16,8 +16,9 @@ export default function LandingPageTwo() {
     <>
       <CampaignHeader />
       <HomeExperience campaignMode />
-      <section className="overflow-hidden bg-brand px-4 py-14 text-white sm:px-6 md:py-18 lg:px-8">
-        <div className="relative mx-auto grid max-w-7xl items-center gap-8 overflow-hidden rounded-[28px] border border-white/20 bg-ink px-6 py-10 shadow-[0_24px_70px_-34px_rgba(0,0,0,0.55)] sm:px-10 md:grid-cols-[1fr_auto] md:py-12 lg:px-14">
+      <section className="site-section overflow-hidden bg-brand text-white">
+        <div className="site-container">
+        <div className="relative grid items-center gap-8 overflow-hidden rounded-[28px] border border-white/20 bg-ink px-6 py-10 shadow-[0_24px_70px_-34px_rgba(0,0,0,0.55)] md:grid-cols-[1fr_auto] md:p-12">
           <div className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full border-[38px] border-brand/25" aria-hidden="true" />
           <div className="relative max-w-3xl">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-brand">
@@ -35,6 +36,7 @@ export default function LandingPageTwo() {
               Claim ₹1,000 Off
             </ScrollToEnquiryButton>
           </div>
+        </div>
         </div>
       </section>
       <CampaignFooter idPrefix="landing2-footer-enquiry" />

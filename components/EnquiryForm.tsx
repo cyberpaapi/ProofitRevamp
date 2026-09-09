@@ -6,7 +6,7 @@ import ThemedSelect from "@/components/ThemedSelect";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export default function EnquiryForm({ defaultService }: { defaultService?: string }) {
+export default function EnquiryForm({ defaultService, serviceOptions = enquiryServiceOptions, propertyOptions = propertyTypeOptions }: { defaultService?: string; serviceOptions?: string[]; propertyOptions?: string[] }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const successRef = useRef<HTMLDivElement>(null);
@@ -116,8 +116,8 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
           <ThemedSelect
             id="service"
             name="service"
-            defaultValue={defaultService || enquiryServiceOptions[0]}
-            options={enquiryServiceOptions}
+            defaultValue={defaultService || serviceOptions[0]}
+            options={serviceOptions}
             className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 hover:border-brand focus-visible:border-brand"
           />
         </div>
@@ -131,7 +131,7 @@ export default function EnquiryForm({ defaultService }: { defaultService?: strin
           id="property"
           name="property"
           defaultValue={propertyTypeOptions[0]}
-          options={propertyTypeOptions}
+          options={propertyOptions}
           className="w-full cursor-pointer rounded-lg border border-line bg-paper px-4 py-3 hover:border-brand focus-visible:border-brand"
         />
       </div>

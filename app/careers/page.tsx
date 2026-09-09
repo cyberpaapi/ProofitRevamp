@@ -30,8 +30,8 @@ export default async function CareersPage() {
       />
 
       {/* Why join */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading eyebrow="Why Proofit" title="Craft, instruments" accent="and honest work." />
             <Reveal delay={100} className="-mt-6 space-y-4 leading-relaxed text-ink-soft/85">
@@ -59,8 +59,8 @@ export default async function CareersPage() {
           <Reveal from="right">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/images/team/field-team-back.webp"
-                alt="Proofit field team member wearing the branded orange uniform"
+                src="/images/careers-why-proofit-client.webp"
+                alt="Proofit inspection equipment, thermal camera, safety helmet and building plans"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
@@ -70,10 +70,10 @@ export default async function CareersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-8"><CareProcess steps={["Learn international methodology", "Practise with inspection instruments", "Apply your skills on site", "Document clear, evidence-backed reports"]} /></section>
+      <section className="site-section site-container"><CareProcess steps={["Learn international methodology", "Practise with inspection instruments", "Apply your skills on site", "Document clear, evidence-backed reports"]} /></section>
       {/* Openings */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container ">
           <SectionHeading eyebrow="Open roles" title="Current" accent="openings." center />
           <div className="grid gap-5 md:grid-cols-2">
             {openings.map((o, i) => (

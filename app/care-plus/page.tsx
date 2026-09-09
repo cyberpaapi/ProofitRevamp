@@ -66,7 +66,7 @@ export default async function CarePlusPage() {
   const services = (await getPublicOfferings()).filter(item => item.category === "care-plus").map(item => ({title:item.title, body:item.description, slug:item.slug}));
   return (
     <>
-      <section className="relative flex min-h-[700px] items-end overflow-hidden bg-ink pb-12 pt-28 text-white md:min-h-[540px] md:pb-14 md:pt-32">
+      <section className="site-banner relative flex items-end overflow-hidden bg-ink text-white">
         <Image
           src="/images/careplus-hero-mobile.webp"
           alt="Technician executing waterproofing repair on a rooftop terrace"
@@ -84,7 +84,7 @@ export default async function CarePlusPage() {
           className="hidden object-cover md:block"
         />
         <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="site-container relative">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Proofit Care+" }]} className="hero-rise mb-5" />
           <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">
             Proofit Care+
@@ -102,8 +102,8 @@ export default async function CarePlusPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container ">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Proofit Care+</p>
             <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
@@ -126,8 +126,8 @@ export default async function CarePlusPage() {
 
       <CareWhyCarousel reasons={whyChoose} />
 
-      <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section bg-cream">
+        <div className="site-container ">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How We Work</p>
             <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">

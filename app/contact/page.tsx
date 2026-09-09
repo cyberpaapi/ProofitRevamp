@@ -54,13 +54,12 @@ export default async function ContactPage() {
         title="Ready to"
         accent="Proofit?"
         lede="From inspections to solutions, our experts are here to help every step of the way."
-        image="/images/about-hero-desktop.webp"
-        imageMobile="/images/about-hero-mobile.webp"
-        imageAlt="Proofit inspection team at a residential property"
+        image="/images/contact-banner-client.webp"
+        imageAlt="Proofit workspace with a laptop, branded inspection kit and thermal camera"
       />
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="site-section">
+        <div className="site-container grid gap-x-10 gap-y-8 lg:grid-cols-2">
           <div className="lg:col-start-1">
             <Reveal>
               <h2 className="mb-6 text-2xl font-bold md:text-3xl">Reach us directly</h2>

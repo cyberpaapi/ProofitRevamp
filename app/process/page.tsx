@@ -35,8 +35,8 @@ export default function ProcessPage() {
       <ProcessJourney steps={processSteps} />
 
       {/* Toolkit */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-2">
           <Reveal from="left">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
@@ -51,7 +51,7 @@ export default function ProcessPage() {
           </Reveal>
           <div>
             <SectionHeading eyebrow="The toolkit" title="Instruments don't" accent="have opinions." />
-            <div className="-mt-4 space-y-5">
+            <div className="space-y-5">
               {tools.map((t, i) => (
                 <Reveal key={t.title} delay={i * 90} className="flex gap-4">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="mt-1 shrink-0" aria-hidden>

@@ -92,7 +92,7 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
         {/* ------------------------------- HERO ------------------------------- */}
         <ThermalHero>
           <div className="absolute inset-x-0 top-0 z-10 pt-28 sm:pt-32 lg:pt-[9.5rem]">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="site-container ">
               <h1
                 className="banner-copy-scrim hero-rise max-w-[620px] font-display text-[2.45rem] font-semibold leading-[1.08] text-white sm:text-5xl lg:text-[3.4rem]"
                 style={{ ["--rise-delay" as string]: "80ms" }}
@@ -109,7 +109,7 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
             </div>
           </div>
           <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12 lg:pb-32">
-            <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 sm:px-6 md:items-end lg:px-8">
+            <div className="site-container flex flex-col items-start gap-6 md:items-end">
               <p
                 className="banner-copy-scrim hero-rise max-w-[500px] font-display text-sm font-normal leading-[1.55] text-white sm:text-base md:text-left"
                 style={{ ["--rise-delay" as string]: "220ms" }}
@@ -147,8 +147,8 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
       </section>
 
       {/* ----------------------------- PROOFIT CARE+ -------------------------- */}
-      <section className="about-texture pb-20 pt-20 md:pb-28 md:pt-28">
-        <div className="mx-auto w-[calc(100%-2rem)] max-w-[1500px] sm:w-[calc(100%-3rem)]">
+      <section className="site-section about-texture">
+        <div className="site-container">
           <Reveal>
             <div className="flex flex-col items-start gap-8 overflow-visible rounded-2xl border border-brand bg-cream p-8 md:flex-row md:items-center md:justify-between md:px-14 md:py-12 xl:px-20">
               <div>
@@ -177,9 +177,9 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
       <InspectionBubbles />
 
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
-      <section className="about-texture pb-20 pt-24 md:pb-28 md:pt-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 grid gap-4 md:grid-cols-2 md:items-end md:gap-6">
+      <section className="site-section about-texture">
+        <div className="site-container ">
+          <div className="section-heading grid gap-4 md:grid-cols-2 md:items-end md:gap-6">
             <Reveal>
               <h2 className="font-display text-4xl font-semibold md:text-5xl">
                 How PROOFIT
@@ -209,8 +209,8 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
       <MumbaiTestimonials testimonials={managedTestimonials} />
 
       {/* ------------------------------ FINAL CTA ----------------------------- */}
-      <section className="border-t border-white/10 bg-[#101010] pb-20 pt-16 text-white md:pb-24">
-        <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
+      <section className="site-section border-t border-white/10 bg-[#101010] text-white">
+        <div className="site-container grid gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
               Don&apos;t Just Buy a

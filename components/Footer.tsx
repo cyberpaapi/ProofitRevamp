@@ -38,7 +38,7 @@ export default function Footer() {
   const site = useSiteSettings();
   return (
     <footer data-site-footer className="bg-[#121212] text-white">
-      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-6 py-12 sm:px-10 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
+      <div className="site-container grid gap-x-10 gap-y-10 py-12 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)]">
         {/* Brand */}
         <div>
           <ProofitLogo className="mb-6 w-[230px]" imageClassName="brightness-0 invert" />
@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-5 text-xs text-white/45 sm:px-6 md:flex-row lg:px-8">
+        <div className="site-container flex flex-col items-center justify-between gap-4 py-5 text-xs text-white/45 md:flex-row">
           <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-2.5 md:justify-end">
             {socials.map((s) => (

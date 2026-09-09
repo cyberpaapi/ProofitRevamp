@@ -119,10 +119,11 @@ export default function LandingPage() {
   return (
     <>
       <CampaignHeader />
-      <section className="relative overflow-hidden bg-[#f2efe8] px-4 pb-14 pt-28 sm:px-6 md:pb-20 md:pt-32 lg:px-8">
+      <section className="site-banner site-banner--campaign relative overflow-hidden bg-ink">
         <div className="pointer-events-none absolute -left-24 top-28 h-72 w-72 rounded-full bg-brand/12 blur-3xl" aria-hidden />
-        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[32px] bg-ink shadow-[0_40px_100px_-55px_rgba(17,17,18,0.7)] lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="relative flex min-h-[610px] items-end overflow-hidden p-7 text-white sm:p-10 lg:min-h-[720px] lg:p-14">
+        <div className="site-container grid bg-ink lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="campaign-banner-copy relative flex items-end text-white lg:pr-12">
+            <div className="campaign-banner-image">
             <Image
               src="/images/thermal-technician.webp"
               alt="Proofit technician in orange uniform scanning a property wall with a thermal camera"
@@ -131,6 +132,7 @@ export default function LandingPage() {
               sizes="(min-width: 1024px) 58vw, 100vw"
               className="object-cover object-[48%_center]"
             />
+            </div>
             <div className="absolute inset-y-0 left-0 w-[min(94%,58rem)] bg-gradient-to-r from-ink/65 via-ink/28 to-transparent" aria-hidden />
 
             <div className="relative max-w-3xl">
@@ -160,14 +162,14 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="flex items-center bg-brand p-4 sm:p-8 lg:p-10">
-            <LandingLeadForm />
+          <div className="campaign-banner-form relative flex items-center bg-brand p-4 sm:p-8 lg:mb-8 lg:mt-24 lg:rounded-2xl lg:p-4">
+            <LandingLeadForm variant="banner" />
           </div>
         </div>
       </section>
 
       <section className="border-y border-line bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 px-4 sm:px-6 lg:px-8 lg:grid-cols-4">
+        <div className="site-container grid grid-cols-2 lg:grid-cols-4">
           {[
             ["5,000+", "Inspections completed"],
             ["AI + IR", "Technology-backed checks"],
@@ -182,8 +184,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-ink">
               <Image
@@ -218,8 +220,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section bg-cream">
+        <div className="site-container ">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Inspection Solutions</p>
             <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -240,8 +242,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-ink py-20 text-white md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section bg-ink text-white">
+        <div className="site-container ">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Built for Local Properties</p>
             <h2 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -262,8 +264,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2 lg:gap-20">
+      <section className="site-section">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">The Proofit Report</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
@@ -293,8 +295,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#f2efe8] py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section bg-[#f2efe8]">
+        <div className="site-container ">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">How It Works</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Four steps from concern to clarity.</h2>
@@ -318,8 +320,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <section className="site-section">
+        <div className="site-container grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Questions</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">Before you book.</h2>
@@ -344,8 +346,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-brand py-16 text-white md:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 lg:px-8 lg:flex-row lg:items-center">
+      <section className="site-section bg-brand text-white">
+        <div className="site-container flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
           <Reveal>
             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-white/65">Monsoon Inspection Offer</p>
             <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">

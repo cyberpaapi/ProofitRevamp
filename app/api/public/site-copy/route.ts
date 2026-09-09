@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminStore } from "@/lib/admin/store";
+import { publicProofyWelcome } from "@/lib/proofy-copy";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ export async function GET() {
   );
   return NextResponse.json({
     siteCopy: store.siteCopy.filter((item) => item.enabled),
-    proofySettings: store.proofySettings,
+    proofySettings: { ...store.proofySettings, welcomeMessage: publicProofyWelcome(store.proofySettings.welcomeMessage) },
     imageOverrides,
   });
 }

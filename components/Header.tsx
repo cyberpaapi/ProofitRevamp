@@ -66,7 +66,7 @@ export default function Header() {
             : "bg-white/75 text-ink shadow-[0_1px_0_rgba(17,17,18,0.08)] backdrop-blur-xl"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
+        <div className="site-container flex items-center justify-between gap-2 py-3 sm:gap-4">
           <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit - home" className="shrink-0">
               <ProofitLogo
@@ -186,7 +186,7 @@ export default function Header() {
         aria-modal="true"
         aria-label="Site menu"
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+        <div className="site-container flex items-center justify-between py-2">
           <ProofitLogo
             className="w-[110px] md:w-[128px]"
             imageClassName="brightness-0 invert"
@@ -202,7 +202,7 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <nav aria-label="Site" className="mx-auto grid h-[calc(100dvh-80px)] max-w-7xl content-start gap-1 overflow-y-auto px-4 py-5 sm:px-6 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16 lg:px-8">
+        <nav aria-label="Site" className="site-container grid h-[calc(100dvh-80px)] content-start gap-1 overflow-y-auto py-5 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16">
           {menuLinks.map((l, i) => {
             const index = i + 1;
             const isCaseStudies = l.href === "/case-studies";

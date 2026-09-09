@@ -5,7 +5,7 @@ import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 import ThemedSelect from "@/components/ThemedSelect";
 
 type Status = "idle" | "sending" | "error";
-type Variant = "card" | "horizontal" | "popup";
+type Variant = "card" | "horizontal" | "popup" | "banner";
 
 const inputClass =
   "h-12 w-full rounded-xl border border-ink/15 bg-white px-4 text-sm text-ink outline-none transition-colors placeholder:text-ink/35 focus:border-brand focus:ring-2 focus:ring-brand/15";
@@ -41,16 +41,17 @@ export default function LandingLeadForm({
     }
   }
 
-  const isCard = variant === "card";
+  const isBanner = variant === "banner";
+  const isCard = variant === "card" || isBanner;
   const isHorizontal = variant === "horizontal";
   const shellClass = isCard
-    ? "rounded-[28px] bg-white p-6 text-ink shadow-[0_28px_80px_-38px_rgba(17,17,18,0.55)] sm:p-8"
+    ? `w-full rounded-[28px] bg-white p-6 text-ink shadow-[0_28px_80px_-38px_rgba(17,17,18,0.55)] ${isBanner ? "" : "sm:p-8"}`
     : variant === "popup"
       ? "bg-white"
       : "";
   const gridClass = isHorizontal
     ? "grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
-    : "grid gap-4";
+    : isBanner ? "grid gap-4 lg:grid-cols-2" : "grid gap-4";
 
   return (
     <form id={idPrefix} onSubmit={submit} className={shellClass} noValidate>
@@ -59,7 +60,7 @@ export default function LandingLeadForm({
           <div className="inline-flex rounded-full bg-brand-soft px-3 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.14em] text-brand-deep">
             Limited-period Monsoon Offer
           </div>
-          <h2 className="mt-4 font-display text-2xl font-semibold leading-tight text-ink sm:text-3xl">Claim ₹1,000 off your inspection</h2>
+          <h2 className={`mt-4 font-display text-2xl font-semibold leading-tight text-ink ${isBanner ? "" : "sm:text-3xl"}`}>Claim ₹1,000 off your inspection</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft/65">
             Tell us about the property. We will recommend the right inspection.
           </p>
@@ -110,7 +111,7 @@ export default function LandingLeadForm({
           <textarea
             id={`${idPrefix}-message`}
             name="message"
-            rows={isHorizontal ? 1 : 3}
+            rows={isHorizontal || isBanner ? 1 : 3}
             placeholder="Damp patch, seepage, visible defects..."
             className={`${inputClass} h-auto min-h-12 resize-y py-3`}
           />

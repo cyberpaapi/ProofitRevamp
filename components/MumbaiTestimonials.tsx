@@ -63,8 +63,8 @@ export default function MumbaiTestimonials({ testimonials = fallbackTestimonials
   };
 
   return (
-    <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-10 text-white md:py-10 lg:min-h-[max(620px,calc(100svh-72px))] lg:scroll-mt-[72px] lg:py-12">
-      <div className="relative mx-auto flex h-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
+    <section className="site-section relative isolate scroll-mt-16 overflow-hidden bg-[#101010] text-white lg:min-h-[max(620px,calc(100svh-72px))] lg:scroll-mt-[72px]">
+      <div className="site-container relative flex h-full flex-col">
         <h2 className="mumbai-heading font-display text-[2rem] font-semibold leading-[1.2] sm:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)]">
           Serving Mumbai-Wide &amp; Neighbouring Cities on Request
         </h2>

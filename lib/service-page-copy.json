@@ -1,0 +1,306 @@
+{
+  "water-inspection": {
+    "hero": "Find the leak - before it finds three walls to ruin.",
+    "lede": "AI-assisted thermal imaging and moisture mapping trace leakage, seepage and dampness to their real source - the way an X-ray shows what's happening inside a wall, without breaking it open.",
+    "meta": "AI-led thermal imaging and moisture mapping to detect leakage, seepage and dampness - without breaking a single tile. Serving Mumbai-wide.",
+    "highlights": [
+      "0 tiles broken to find your leak",
+      "2-5 business working days to your report",
+      "Independent of any builder"
+    ],
+    "overview": {
+      "title": "What a water inspection actually is",
+      "body": "It's a non-destructive check-up for your home, done with two instruments: a thermal camera that reads surface temperature to spot hidden moisture, and a moisture meter that confirms and measures it - no drilling, no broken tiles.",
+      "terms": [
+        {
+          "title": "Leakage",
+          "body": "Water actively coming from a broken pipe, a failed joint, or a crack - usually the most urgent, since it's a live source."
+        },
+        {
+          "title": "Seepage",
+          "body": "Water slowly passing through porous concrete or weak waterproofing - most often from a bathroom, terrace, or the flat above."
+        },
+        {
+          "title": "Dampness",
+          "body": "Moisture that has settled into a wall or floor and isn't drying out - the visible result of leakage, seepage or condensation."
+        }
+      ],
+      "tools": [
+        {
+          "title": "The thermal camera",
+          "body": "Wet material loses heat differently from dry material, so moisture shows up as a distinct patch on camera - often weeks before a stain is visible to the eye."
+        },
+        {
+          "title": "The moisture meter",
+          "body": "Pinless meters glide over a surface to read moisture underneath without touching it. Pin meters confirm the exact figure at one spot. We use both to be sure."
+        }
+      ]
+    },
+    "why": {
+      "title": "Water is the most expensive problem a home can hide",
+      "paragraphs": [
+        "By the time a stain appears on your ceiling, moisture has usually been travelling inside the structure for months - quietly damaging plaster, wiring conduits and the slab itself.",
+        "Proofit traces it to the true source - bathrooms, terraces, external walls, concealed plumbing - non-destructively, with thermal and photographic evidence for every finding."
+      ],
+      "listHeading": "This inspection is built for you if you're dealing with -",
+      "items": [
+        "Recurring damp patches, peeling paint or a musty odour",
+        "Ceiling leakage from the flat or terrace above",
+        "A pre-monsoon check of terraces and external walls",
+        "A dispute needing neutral, third-party evidence"
+      ]
+    },
+    "process": {
+      "title": "How the inspection runs",
+      "lede": "Four steps, in this order, on a single visit.",
+      "steps": [
+        {
+          "title": "Thermal survey",
+          "body": "A full scan of the affected area and every adjoining wall, ceiling or floor it touches."
+        },
+        {
+          "title": "Moisture mapping",
+          "body": "Readings across flagged zones, to separate an active leak from an old, drying stain."
+        },
+        {
+          "title": "Source tracing",
+          "body": "Root-cause analysis - concealed plumbing, waterproofing failure, ingress, or condensation."
+        },
+        {
+          "title": "Evidence report",
+          "body": "Thermal- and photo-documented, with severity grading and rectification guidance."
+        }
+      ]
+    },
+    "details": {
+      "title": "When a thermal inspection is the answer",
+      "lede": "One focused service - a fast, thermal-imaging led answer to exactly where the water is coming from.",
+      "items": [
+        {
+          "id": "service-thermal",
+          "title": "Thermal Inspection",
+          "when": "When you already have a stain, a smell, or a dispute - and one question",
+          "body": "This is the technique on its own, without a full property check around it - a fast, focused answer to exactly where the water is coming from, without opening up the wall to look.",
+          "benefits": [
+            "Full thermal scan of the affected surface",
+            "Every adjoining wall, ceiling or floor it touches",
+            "Cross-checked with moisture readings to confirm it's water"
+          ]
+        }
+      ]
+    },
+    "serving": {
+      "title": "Serving Mumbai-wide & neighbouring cities on request",
+      "body": "We inspect homes and properties across Mumbai, and also take on jobs in Mumbai's neighbouring cities when asked - same equipment, same evidence-backed report, wherever the job is."
+    },
+    "report": {
+      "title": "A report that settles the argument, not starts one",
+      "body": "Every finding is backed by a thermal image and a photo, graded by severity, with plain-language guidance on what to do next - so nobody has to take your word for it, including the contractor who has to fix it."
+    },
+    "faqs": [
+      {
+        "q": "Will this damage my walls or tiles?",
+        "a": "No. The pin-type meter leaves two tiny needle marks, invisible once painted over - nothing else is drilled, cut or opened."
+      },
+      {
+        "q": "How long does it take, and how soon do I get the report?",
+        "a": "Usually half a day on-site depending on property size, with the report delivered 2-5 business working days after the visit."
+      },
+      {
+        "q": "Can I use this report with my builder or society?",
+        "a": "Yes. Because Proofit is independent of any builder, developer or society, the report is neutral, evidence-backed documentation you can present to whoever needs to act on it."
+      },
+      {
+        "q": "What's the difference between this and a full Home Inspection?",
+        "a": "Water Inspection focuses specifically on leakage, seepage and dampness. Home Inspection is broader and also covers civil finishes, electrical, doors, windows and fittings - book Water Inspection on its own when water is your only concern."
+      },
+      {
+        "q": "Worth doing before the monsoon even with no visible problem?",
+        "a": "Yes - that's when it's most useful. Most seepage starts invisibly, and catching it before the monsoon is far cheaper than repairing water damage after it."
+      }
+    ],
+    "enquiry": {
+      "title": "Tell us about the property.",
+      "body": "Share your configuration and concern - we'll respond with a quote and available slots the same day.",
+      "facts": [
+        "No obligation - a quote is free",
+        "Same-day response",
+        "Report in 2-5 business working days after inspection"
+      ]
+    }
+  },
+  "home-inspection": {
+    "hero": "Know your home's actual condition - before handover, purchase or renovation.",
+    "lede": "Engineering-driven snag inspection, checked room by room against a structured, international-standard checklist adapted to Indian construction - with thermal imaging built in.",
+    "meta": "Engineering-driven snag inspection for new possession, resale purchase, rentals, renovation and builder quality audits. Serving Mumbai-wide.",
+    "highlights": [
+      "Every room checked, not just the obvious ones",
+      "2-5 business working days to your report",
+      "Independent of any builder"
+    ],
+    "overview": {
+      "title": "What a home inspection actually is",
+      "body": "It's a structured, room-by-room check-up of everything in your flat - civil finishes, electrical, plumbing, doors and windows, waterproofing, fittings - against a checklist, so defects are documented while there's still someone accountable to fix them.",
+      "terms": [
+        {
+          "title": "Snag",
+          "body": "A defect or incomplete item - a chipped tile, a misaligned door, a switch that doesn't work - flagged before you take ownership."
+        },
+        {
+          "title": "Checklist audit",
+          "body": "A structured walkthrough against an international-standard checklist, adapted to Indian apartment construction, so nothing is left to memory."
+        },
+        {
+          "title": "Rectification",
+          "body": "The builder or contractor fixing flagged snags, verified again before you sign off on possession or release final payment."
+        }
+      ],
+      "tools": [
+        {
+          "title": "Structured on-site evaluation",
+          "body": "Every room, surface and system checked against the same checklist, so the result depends on the property - not on which inspector shows up."
+        },
+        {
+          "title": "Thermal imaging cross-check",
+          "body": "Wet areas and electrical points get an added thermal pass, catching hidden dampness or hot-spots the eye alone would miss - without opening anything up."
+        }
+      ]
+    },
+    "why": {
+      "title": "A flat that looks finished isn't necessarily built right",
+      "paragraphs": [
+        "Our inspectors evaluate every room, surface and system against a structured checklist adapted to Indian construction and apartment layouts - not a quick walkthrough.",
+        "Each inspection combines expert on-site evaluation with thermal imaging, and concludes with a detailed, photo-backed snag report - so builders rectify before you sign, and you negotiate with facts."
+      ],
+      "listHeading": "This inspection is built for you if you're -",
+      "items": [
+        "Taking possession of a new flat",
+        "Buying a resale property",
+        "A tenant or landlord at move-in or move-out",
+        "Auditing renovation or builder workmanship, even at scale"
+      ]
+    },
+    "process": {
+      "title": "How the inspection runs",
+      "lede": "Four steps, in this order, on a single visit.",
+      "steps": [
+        {
+          "title": "Room-by-room walkthrough",
+          "body": "Civil finishes, electrical, plumbing, doors, windows and fittings, checked against the standard checklist."
+        },
+        {
+          "title": "Thermal cross-check",
+          "body": "Wet areas and electrical panels scanned for dampness or hot-spots invisible to the eye."
+        },
+        {
+          "title": "Snag documentation",
+          "body": "Every defect logged with a photo, exact location, and a severity grade."
+        },
+        {
+          "title": "Evidence-backed report",
+          "body": "A detailed, photo-backed report you can hand straight to the builder, landlord or contractor."
+        }
+      ]
+    },
+    "details": {
+      "title": "Five moments a home inspection pays for itself",
+      "lede": "Same checklist, same rigour - what changes is what's at stake.",
+      "items": [
+        {
+          "id": "service-pre-possession",
+          "title": "Pre-Possession Inspection",
+          "when": "Before you sign the possession letter on a new flat",
+          "body": "Complete snagging before you take handover - civil finishes, doors and windows, electrical, plumbing, waterproofing, fittings - so the builder rectifies at their cost, not yours after you've moved in.",
+          "benefits": [
+            "Civil finishes and fittings against the checklist",
+            "Electrical, plumbing and waterproofing",
+            "Doors, windows and every fitting promised on paper"
+          ]
+        },
+        {
+          "id": "service-resale",
+          "title": "Resale Property Inspection",
+          "when": "Before you commit to buying an older flat",
+          "body": "A condition assessment before you commit - including hidden dampness and ageing systems a normal viewing won't show you. You negotiate on facts, not on trust alone.",
+          "benefits": [
+            "Structural and finish condition, room by room",
+            "Ageing electrical and plumbing systems",
+            "Hidden dampness behind fresh paint or repairs"
+          ]
+        },
+        {
+          "id": "service-rental",
+          "title": "Rental Move-In / Move-Out Inspection",
+          "when": "At the start or end of a tenancy",
+          "body": "A documented condition report that protects deposits for both tenants and owners - so nobody's guessing what damage was already there versus what happened during the tenancy.",
+          "benefits": [
+            "Room-by-room condition report, photo-backed",
+            "Dated record for comparison at move-out",
+            "Neutral evidence both tenant and owner can rely on"
+          ]
+        },
+        {
+          "id": "service-renovation",
+          "title": "Pre-Renovation / Post-Renovation Inspection",
+          "when": "Before work begins, or right after it's finished",
+          "body": "Pre: know the real condition you're starting from, before you design around a hidden problem. Post: verify your contractor's workmanship independently, while you can still hold them to it - ideally before final payment.",
+          "benefits": [
+            "Pre: existing condition and structural risk",
+            "Post: workmanship against the original scope",
+            "Best done before final payment or retention is released"
+          ]
+        },
+        {
+          "id": "service-builder-audit",
+          "title": "Builder Quality Audit",
+          "when": "For developers, builders and facility managers overseeing multiple units or a whole project",
+          "body": "A standardized, independent audit across units before handover - not just the one flat somebody complained about. Catching gaps systematically means fewer post-handover complaints, fewer warranty claims, and a stronger handover for every buyer.",
+          "benefits": [
+            "Sample or full-unit audits against one standard checklist",
+            "Civil, electrical, plumbing and waterproofing risk evaluation",
+            "Data-backed quality benchmarking across the project"
+          ]
+        }
+      ]
+    },
+    "serving": {
+      "title": "Serving Mumbai-wide & neighbouring cities on request",
+      "body": "We inspect homes and projects across Mumbai, and also take on jobs in Mumbai's neighbouring cities when asked - same checklist, same evidence-backed report, wherever the job is."
+    },
+    "report": {
+      "title": "A report that settles the argument, not starts one",
+      "body": "Every snag is backed by a photo, graded by severity, with plain-language rectification guidance - so nobody has to take your word for it, including the builder or contractor who has to fix it."
+    },
+    "faqs": [
+      {
+        "q": "Will this delay my possession or renovation timeline?",
+        "a": "No - the visit itself typically takes half a day to a full day depending on the property, and strengthens your position before you sign, rather than holding anything up."
+      },
+      {
+        "q": "Does this cover electrical and plumbing, or just visible finishes?",
+        "a": "All of it in one visit - civil finishes, electrical, plumbing, doors and windows, waterproofing, and fittings, plus a thermal cross-check on wet areas and electrical points."
+      },
+      {
+        "q": "How soon do I get the report?",
+        "a": "2-5 business working days after the inspection visit, with every finding photo-backed and graded by severity."
+      },
+      {
+        "q": "Can I use this report with my builder, landlord or society?",
+        "a": "Yes. Proofit is independent of any builder, developer or society, so the report is neutral, evidence-backed documentation you can hand to whoever needs to act on it."
+      },
+      {
+        "q": "I'm a developer with multiple units - can this scale?",
+        "a": "Yes - that's exactly what Builder Quality Audit is for: sample or full-unit audits against one standard checklist, with benchmarking data across the whole project."
+      }
+    ],
+    "enquiry": {
+      "title": "Tell us about the property.",
+      "body": "Share your configuration and concern - we'll respond with a quote and available slots the same day.",
+      "facts": [
+        "No obligation - a quote is free",
+        "Same-day response",
+        "Report in 2-5 business working days after inspection"
+      ]
+    }
+  }
+}

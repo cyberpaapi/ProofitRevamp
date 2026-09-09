@@ -58,14 +58,14 @@ const toneClasses: Record<Tone, string> = {
 
 export default function InspectionBubbles() {
   return (
-    <section className="bg-[#f5f5f5] py-10 md:py-14">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+    <section className="site-section bg-[#f5f5f5]">
+      <div className="site-container">
         <h2 className="text-center font-display text-3xl font-semibold leading-[1.05] sm:text-4xl lg:text-[2.75rem]">
           You Bought the Home.
           <br />
           Now Verify It
         </h2>
-        <div className="mt-7 grid gap-4 md:grid-cols-2">
+        <div className="section-content grid gap-4 md:grid-cols-2">
           <BubblePanel title="When should you get an inspection" bubbles={whenBubbles} />
           <BubblePanel title="Why it’s not optional" bubbles={whyBubbles} />
         </div>

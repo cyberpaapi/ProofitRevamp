@@ -57,10 +57,10 @@ export default async function PostPage({ params }: Params) {
   return (
     <>
       <article>
-        <header className="relative overflow-hidden bg-ink pb-20 pt-36 text-white md:pb-24 md:pt-44">
-          <Image src={post.image} alt="" fill priority sizes="100vw" className="object-cover opacity-25" aria-hidden />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" aria-hidden />
-          <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <header className="site-banner relative flex items-end overflow-hidden bg-ink text-white">
+          <Image src={post.image} alt="" fill priority sizes="100vw" className="object-cover" aria-hidden />
+          <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/80 via-ink/55 to-transparent" aria-hidden />
+          <div className="site-container relative">
             <Breadcrumbs
               items={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post.title }]}
               className="hero-rise mb-5"
@@ -72,13 +72,13 @@ export default async function PostPage({ params }: Params) {
                 {fmt.format(new Date(post.date))} · {post.readMins} min read
               </span>
             </p>
-            <h1 className="hero-rise text-3xl font-bold leading-tight md:text-5xl" style={{ ["--rise-delay" as string]: "120ms" }}>
+            <h1 className="hero-rise max-w-4xl text-4xl font-semibold leading-tight md:text-6xl" style={{ ["--rise-delay" as string]: "120ms" }}>
               {post.title}
             </h1>
           </div>
         </header>
 
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="site-section mx-auto max-w-3xl px-5 sm:px-6 lg:px-8">
           <Reveal className="relative mb-12 aspect-[16/9] overflow-hidden rounded-2xl">
             <Image src={post.image} alt={post.title} fill sizes="(min-width: 768px) 720px, 100vw" className="object-cover" />
           </Reveal>
@@ -104,8 +104,8 @@ export default async function PostPage({ params }: Params) {
         </div>
       </article>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="site-section">
+        <div className="site-container ">
           <h2 className="mb-8 text-2xl font-bold">Keep reading</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {others.map((p) => (
@@ -116,6 +116,7 @@ export default async function PostPage({ params }: Params) {
                 <div>
                   <h3 className="font-bold leading-snug transition-colors group-hover:text-brand-deep">{p.title}</h3>
                   <p className="mt-1 text-xs text-ink-soft/60">{p.readMins} min read</p>
+                  <span className="mt-3 inline-block text-sm font-semibold text-brand-deep">Read more <span aria-hidden>→</span></span>
                 </div>
               </Link>
             ))}

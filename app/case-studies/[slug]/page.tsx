@@ -58,10 +58,10 @@ export default async function CaseStudyPage({ params }: Params) {
   return (
     <>
       <article>
-        <header className="relative flex min-h-[620px] items-end overflow-hidden bg-ink pb-14 pt-32 text-white md:min-h-[570px] md:pb-20">
+        <header className="site-banner relative flex items-end overflow-hidden bg-ink text-white">
           <Image src={study.image} alt={study.title} fill priority sizes="100vw" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/55 to-ink/10" aria-hidden />
-          <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="site-container relative">
             <Breadcrumbs
               items={[
                 { label: "Home", href: "/" },
@@ -82,8 +82,8 @@ export default async function CaseStudyPage({ params }: Params) {
           </div>
         </header>
 
-        <section className="py-16 md:py-24">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <section className="site-section">
+          <div className="site-container">
             <Reveal className="grid gap-3 sm:grid-cols-3">
               {study.stats.map((stat) => (
                 <div key={stat.label} className="rounded-2xl border border-line bg-white p-6 text-center">
