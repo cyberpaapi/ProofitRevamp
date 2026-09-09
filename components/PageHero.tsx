@@ -39,8 +39,8 @@ export default function PageHero({
     <section
       className={`relative overflow-hidden bg-ink text-white ${
         image
-          ? "flex h-[700px] items-end pb-12 pt-28 md:h-[540px] md:pb-14 md:pt-32"
-          : "flex h-[700px] items-end pb-12 pt-28 md:h-[540px] md:pb-14 md:pt-32"
+          ? "flex min-h-[700px] items-end pb-12 pt-28 md:min-h-[540px] md:pb-14 md:pt-32"
+          : "flex min-h-[700px] items-end pb-12 pt-28 md:min-h-[540px] md:pb-14 md:pt-32"
       }`}
     >
       {image && (

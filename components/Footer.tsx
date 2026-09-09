@@ -15,7 +15,6 @@ const serviceLinks = [
 
 const quickLinks = [
   {href:"/", label:"Home"},
-  {href:"/services",label:"Services"},
   {href:"/case-studies",label:"Case Studies"},
   {href:"/blog",label:"Blogs"},
   { href: "/about", label: "About" },
@@ -23,6 +22,7 @@ const quickLinks = [
   { href: "/contact", label: "Contact Us" },
   { href: "/process", label: "Methodology" },
   { href: "/care-plus", label: "Proofit Care+" },
+  { href: "/services", label: "Services" },
 ];
 
 const socials = [

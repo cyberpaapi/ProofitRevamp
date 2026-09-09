@@ -50,44 +50,54 @@ const fallbackTestimonials = [
 
 type ManagedTestimonial = typeof fallbackTestimonials[number];
 
+// Illustration coordinates, not geographic locations of the reviewers. Every
+// point has clearance for the full pulse inside the island's coastline.
+const mapPoints = [[430, 900], [490, 580], [370, 440], [560, 270], [570, 770], [650, 450]];
+
 export default function MumbaiTestimonials({ testimonials = fallbackTestimonials }: { testimonials?: ManagedTestimonial[] }) {
   const [index, setIndex] = useState(0);
   const available = testimonials.length ? testimonials : fallbackTestimonials;
-  const testimonial = available[Math.min(index, available.length - 1)];
+  const [mapX, mapY] = mapPoints[index % mapPoints.length];
   const move = (direction: number) => {
     setIndex((current) => (current + direction + available.length) % available.length);
   };
 
   return (
-    <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-10 text-white md:py-10 lg:h-[calc(100svh-72px)] lg:min-h-[620px] lg:scroll-mt-[72px] lg:py-12">
+    <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-10 text-white md:py-10 lg:min-h-[max(620px,calc(100svh-72px))] lg:scroll-mt-[72px] lg:py-12">
       <div className="relative mx-auto flex h-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
-        <h2 className="max-w-[17rem] font-display text-[2rem] font-semibold leading-[1.2] sm:max-w-none sm:text-4xl md:text-5xl">
+        <h2 className="mumbai-heading font-display text-[2rem] font-semibold leading-[1.2] sm:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)]">
           Serving Mumbai-Wide &amp; Neighbouring Cities on Request
         </h2>
         <div className="mt-5 grid min-h-0 flex-1 items-center gap-7 md:grid-cols-[minmax(190px,0.7fr)_1.3fr] md:gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="relative mx-auto aspect-[666/956] w-full max-w-[18rem] md:mx-0 md:aspect-auto md:h-full md:max-h-[70svh] md:max-w-sm">
+          <div className="relative mx-auto aspect-[1047/1502] w-full max-w-[18rem] self-center md:mx-0 md:max-w-[min(24rem,48.79svh)]" data-mumbai-map>
             <Image
-              src="/images/mumbai-map-orange.png"
+              src="/images/mumbai-map-clean.webp"
               alt="Orange outline map of Mumbai"
               fill
               sizes="(min-width: 1024px) 384px, (min-width: 768px) 30vw, 288px"
               className="h-full w-full object-contain"
             />
-            <span key={index} className="map-review-dot absolute h-3 w-3 rounded-full bg-brand" style={{left:`${[44,52,38,58,46,61][index%6]}%`,top:`${[70,38,52,27,62,45][index%6]}%`}} aria-hidden />
+            <svg className="pointer-events-none absolute inset-0 h-full w-full text-brand" viewBox="0 0 1047 1502" aria-hidden="true">
+              <g key={index} transform={`translate(${mapX} ${mapY})`}>
+                <circle className="map-review-pulse" r="18" fill="currentColor" />
+                <circle data-map-dot r="12" fill="currentColor" />
+              </g>
+            </svg>
           </div>
           <div className="flex w-full min-w-0 flex-col justify-center md:max-w-[42rem] md:justify-self-stretch">
             <p className="max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
               We serve homeowners, buyers, and businesses Mumbai-wide, and also offer services to Mumbai&apos;s
               neighbouring cities on request.
             </p>
-            <article className="mt-3 flex h-[25rem] w-full flex-col sm:h-[22rem] md:mt-4 md:h-[20rem] lg:h-[18rem]" aria-live="polite" aria-atomic="true">
-              <svg className="h-6 w-8 sm:h-8 sm:w-11" viewBox="0 0 32 24" fill="none" aria-hidden>
+            <div className="mt-3 grid md:mt-4" aria-live="polite" aria-atomic="true">
+            {available.map((testimonial, itemIndex) => <article key={`${testimonial.name}-${itemIndex}`} inert={itemIndex !== Math.min(index, available.length - 1)} aria-hidden={itemIndex !== Math.min(index, available.length - 1)} className={`col-start-1 row-start-1 flex min-w-0 flex-col [overflow-wrap:anywhere] ${itemIndex === Math.min(index, available.length - 1) ? '' : 'invisible'}`}>
+              <svg className="h-6 w-8 shrink-0 sm:h-8 sm:w-11" viewBox="0 0 32 24" fill="none" aria-hidden>
                 <path d="M0 24V14.4C0 6.4 4.8 1.6 12.8 0l1.6 4c-4.8 1.6-7.2 4.27-7.2 8h6.4v12H0Zm18.4 0V14.4c0-8 4.8-12.8 12.8-14.4l1.6 4c-4.8 1.6-7.2 4.27-7.2 8H32v12H18.4Z" fill="#F7941D" />
               </svg>
               <p className="mt-2 max-w-2xl font-display text-sm font-semibold leading-[1.55] md:mt-3 sm:text-base lg:text-lg">
                 {testimonial.quote}
               </p>
-              <div className="mt-auto flex items-center gap-3 border-t border-white/15 pt-3 md:pt-4">
+              <div className="mt-auto pt-5"><div className="flex items-center gap-3 border-t border-white/15 pt-3 md:pt-4">
                 <Image
                   src={testimonial.image}
                   alt={`${testimonial.name}, ${testimonial.author}`}
@@ -102,8 +112,9 @@ export default function MumbaiTestimonials({ testimonials = fallbackTestimonials
                     <p className="mt-0.5 text-xs text-white/60 sm:text-sm">{testimonial.organisation}</p>
                   )}
                 </div>
-              </div>
-            </article>
+              </div></div>
+            </article>)}
+            </div>
             <div className="mt-3 flex w-full items-center gap-3 md:mt-4">
               <button type="button" onClick={() => move(-1)} aria-label="Previous testimonial" className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/25 transition-colors hover:border-brand hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M19 12H5m6 6-6-6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>

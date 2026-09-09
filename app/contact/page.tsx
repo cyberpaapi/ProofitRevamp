@@ -119,7 +119,7 @@ export default async function ContactPage() {
                 <span className="absolute bottom-3 left-3 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white shadow-lg transition-colors group-hover:bg-brand-deep">Open in Google Maps</span>
               </a>
             </Reveal>
-            <Reveal delay={300} className="tile-black flex flex-col justify-center p-7 lg:col-start-2 lg:row-start-3">
+            <Reveal delay={300} className="tile-black flex flex-col justify-center p-7 lg:col-span-2 lg:col-start-1 lg:row-start-3">
               <h3 className="mb-2 font-bold text-brand">Hours</h3>
               <p className="text-white/80">Monday - Saturday, 9:00 - 19:00 IST. Emergency leak calls answered on Sundays too.</p>
             </Reveal>

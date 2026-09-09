@@ -15,7 +15,7 @@ export type InspectionModel = {
 
 function ModelCard({ model, className = "" }: { model: InspectionModel; className?: string }) {
   return (
-    <article className={`card-outline flex h-full flex-col p-6 md:p-7 ${className}`}>
+    <article className={`card-outline flex h-full min-w-0 flex-col p-6 [overflow-wrap:anywhere] md:p-7 ${className}`}>
       <h3 className="font-display text-xl font-semibold">{model.title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-ink-soft/75">{model.tagline}</p>
       <div className="mt-5 rounded-xl bg-cream p-4">
@@ -90,7 +90,7 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
       // Use the entire visible journey so the reveal finishes as the sticky stage releases.
       const revealDistance = Math.max(1, stage.offsetHeight);
       const progress = Math.min(1, Math.max(0, (window.innerHeight - bounds.top) / revealDistance));
-      const eased = progress < 0.5
+      const eased = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : progress < 0.5
         ? 2 * progress * progress
         : 1 - Math.pow(-2 * progress + 2, 2) / 2;
       const distance = movingCard.offsetWidth + 24;
@@ -111,8 +111,8 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
   }, []);
 
   return (
-    <section ref={stageRef} className="relative mb-8 hidden h-[100vh] lg:block">
-      <div className="sticky top-[72px] mx-auto grid h-[min(720px,calc(100vh-72px))] max-w-[1280px] grid-cols-[minmax(260px,340px)_1fr] gap-8 px-8 py-6">
+    <section ref={stageRef} data-models-section className="relative mb-8 hidden min-h-[calc(100svh-72px)] lg:block">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-[minmax(260px,340px)_minmax(0,1fr)] items-stretch gap-8 px-8 py-6">
         <div className="flex min-h-0 flex-col">
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">
             One Platform.
@@ -126,11 +126,11 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
           <SampleReportPrompt className="mt-7" formHref={formHref} />
         </div>
 
-        <div ref={deckRef} className="relative h-full min-h-0 overflow-visible">
-          <div ref={movingCardRef} className="absolute inset-y-0 left-0 z-[1] w-[calc(50%-12px)] will-change-transform">
+        <div ref={deckRef} className="relative grid min-w-0 grid-cols-2 gap-x-6">
+          <div ref={movingCardRef} className="relative col-start-1 row-start-1 z-[1] min-w-0 will-change-transform">
             <ModelCard model={b2c} />
           </div>
-          <div className="absolute inset-y-0 left-0 z-[2] w-[calc(50%-12px)]">
+          <div className="relative col-start-1 row-start-1 z-[2] min-w-0">
             <ModelCard model={b2b} />
           </div>
         </div>

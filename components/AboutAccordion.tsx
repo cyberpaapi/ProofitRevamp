@@ -47,7 +47,7 @@ export default function AboutAccordion() {
                 />
               </span>
             </button>
-            <div className={`grid transition-[grid-template-rows] duration-300 ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+            <div inert={!open} aria-hidden={!open} className={`grid transition-[grid-template-rows] duration-300 ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
               <div className="overflow-hidden">
                 <p className="max-w-3xl pb-7 leading-relaxed text-white/72">{item.body}</p>
               </div>

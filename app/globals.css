@@ -1,16 +1,23 @@
 @import "tailwindcss";
 
+.physics-pills[data-physics-ready="true"] { display: block; padding: 0; }
+.physics-pills:not([data-physics-ready="true"]) > button { width: min(100%, max(46%, 14rem)); }
+.physics-pills[data-physics-ready="true"] > button {
+  position: absolute; left: 0; top: 0; margin: 0;
+  cursor: grab; touch-action: none; will-change: transform;
+}
+.physics-pills[data-physics-ready="true"] > button:active { cursor: grabbing; }
+
 .works-card { min-height: 540px; height: min(68svh, 620px); }
 .works-image { min-height: 0; }
-.care-path .in-view .care-link { transform: scaleX(1); }
-.map-review-dot { box-shadow: 0 0 18px 6px #f7941d80; animation: review-beacon 1.8s ease-out infinite; }
-@keyframes review-beacon { 0%,100% { opacity:1; box-shadow:0 0 0 0 #f7941d80; } 60% { opacity:.7; box-shadow:0 0 0 18px #f7941d00; } }
+.map-review-pulse { transform-box: fill-box; transform-origin: center; animation: review-beacon 1.8s ease-out infinite; }
+@keyframes review-beacon { 0% { opacity:.45; transform:scale(1); } 100% { opacity:0; transform:scale(2); } }
 @media(max-width:767px) {
   .works-card { height:auto; min-height:0; grid-template-rows: min(32svh,250px) auto; }
   .works-copy { min-height:275px; }
 }
 @media(max-height:650px) and (min-width:768px) { .works-card { height:75svh; min-height:360px; } }
-@media(prefers-reduced-motion:reduce) { .map-review-dot { animation:none; } }
+@media(prefers-reduced-motion:reduce) { .map-review-pulse { animation:none; opacity:.2; } }
 
 @theme {
   /* Proofit ref theme - charcoal + white + brand orange, gold-orange CTAs */
