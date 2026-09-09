@@ -142,6 +142,7 @@ export default function ThermalHero({ children }: { children: React.ReactNode })
         role="img"
         aria-label="Bright modern home interior; a roaming thermal scanner reveals the infrared view of whatever it passes over"
       />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[85%] bg-gradient-to-r from-black/60 via-black/20 to-transparent md:w-[65%]" aria-hidden />
       {/* roaming thermal lens */}
       <div ref={lensRef} className="thermal-lens left-0 top-0 z-[2]" aria-hidden>
         <div

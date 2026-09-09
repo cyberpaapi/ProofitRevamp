@@ -10,3 +10,4 @@ data/admin-store.json
 next-env.d.ts
 .playwright-mcp/
 .claude/
+.review-deck/

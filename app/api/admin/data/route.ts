@@ -28,6 +28,32 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Missing store data." }, { status: 400 });
   }
   try {
+    const allowedImage = (value: string) => {
+      if (typeof value !== "string") return false;
+      if (/^\/images\/[A-Za-z0-9_./+()-]+\.(webp|png|jpe?g|avif|svg|gif)$/i.test(value) && !value.includes("..")) return true;
+      try { const url = new URL(value); return url.protocol === "https:" && url.hostname.endsWith(".public.blob.vercel-storage.com"); } catch { return false; }
+    };
+    if (body.store.team?.some(item=> !item.name.trim() || !Number.isFinite(item.order) || (item.visible && !allowedImage(item.image)))) {
+      return NextResponse.json({error:"Each team member needs a name, display order and a valid /images/ path or public Vercel Blob image URL."},{status:400});
+    }
+    if (body.store.offerings) {
+      const slugs = new Set<string>();
+      for (const item of body.store.offerings) {
+        if (!["home-inspection","water-inspection","care-plus"].includes(item.category) || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug) || !item.title.trim() || !Array.isArray(item.benefits) || !Number.isFinite(item.order)) {
+          return NextResponse.json({error:"Each service needs a valid category, unique lowercase anchor, title, benefits list and display order."},{status:400});
+        }
+        if (slugs.has(item.slug)) return NextResponse.json({error:`Duplicate service anchor: ${item.slug}. Choose a unique anchor.`},{status:400});
+        slugs.add(item.slug);
+        if (item.visible && item.homepage && !allowedImage(item.image)) return NextResponse.json({error:`Choose a valid website image or public Vercel Blob URL for ${item.title}.`},{status:400});
+      }
+    }
+    if (body.store.contact) {
+      body.store.contact.phones = body.store.contact.phones.map(item=>item.trim()).filter(Boolean);
+      body.store.contact.email = body.store.contact.email.trim();
+      if (!body.store.contact.phones.length || body.store.contact.phones.some(item=>!/^\+?[\d\s()-]{10,22}$/.test(item)) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.store.contact.email)) {
+        return NextResponse.json({error:"Enter at least one valid phone number with country code and a valid contact email."},{status:400});
+      }
+    }
     const saved = await writeAdminStore(body.store);
     return NextResponse.json({ ok: true, store: saved });
   } catch (error) {

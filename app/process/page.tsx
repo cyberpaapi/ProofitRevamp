@@ -1,3 +1,4 @@
+import ProcessJourney from "@/components/ProcessJourney";
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
@@ -31,38 +32,7 @@ export default function ProcessPage() {
         imageAlt="Proofit inspector checking a bathroom wall with a moisture meter"
       />
 
-      {/* Steps timeline */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <ol className="relative space-y-10 border-l-2 border-brand/30 pl-8 md:space-y-14 md:pl-12">
-            {processSteps.map((step, i) => (
-              <Reveal key={step.title} as="li" delay={i * 80} className="relative">
-                <span
-                  className="absolute -left-[51px] flex h-9 w-9 items-center justify-center rounded-full bg-brand font-display text-sm font-bold text-white md:-left-[69px] md:h-10 md:w-10"
-                  aria-hidden
-                >
-                  {i + 1}
-                </span>
-                <div className="grid items-center gap-6 overflow-hidden tile sm:grid-cols-[240px_1fr]">
-                  <div className="relative aspect-[4/3] sm:aspect-square">
-                    <Image
-                      src={`/images/process-${i + 1}.webp`}
-                      alt={step.title}
-                      fill
-                      sizes="(min-width: 640px) 240px, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6 pt-0 sm:py-6 sm:pl-0 sm:pr-8">
-                    <h2 className="mb-2 text-2xl font-bold">{step.title}</h2>
-                    <p className="leading-relaxed text-ink-soft/85">{step.desc}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <ProcessJourney steps={processSteps} />
 
       {/* Toolkit */}
       <section className="py-20 md:py-28">

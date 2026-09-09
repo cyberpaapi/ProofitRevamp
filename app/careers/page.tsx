@@ -1,9 +1,10 @@
+import CareProcess from "@/components/CareProcess";
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
-import { getPublicCareers } from "@/lib/admin/public-content";
+import { getPublicCareers, getPublicSite } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function CareersPage() {
-  const openings = await getPublicCareers();
+  const [openings, site] = await Promise.all([getPublicCareers(),getPublicSite()]);
   return (
     <>
       <PageHero
@@ -23,8 +24,9 @@ export default async function CareersPage() {
         title="Learn a profession"
         accent="India is just discovering."
         lede="Home inspection is a decades-old discipline in North America and a brand-new industry here. Join early, learn deeply, grow with it."
-        image="/images/careers-trainee.webp"
-        imageAlt="A trainee inspector learning to read a moisture meter beside a senior colleague"
+        image="/images/bathroom-moisture-check.webp"
+        imagePosition="center"
+        imageAlt="Proofit inspector performing a moisture check"
       />
 
       {/* Why join */}
@@ -57,8 +59,8 @@ export default async function CareersPage() {
           <Reveal from="right">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/images/team-inspectors.webp"
-                alt="The Proofit inspection team"
+                src="/images/team/field-team-back.webp"
+                alt="Proofit field team member wearing the branded orange uniform"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
@@ -68,18 +70,19 @@ export default async function CareersPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 pb-8"><CareProcess steps={["Learn international methodology", "Practise with inspection instruments", "Apply your skills on site", "Document clear, evidence-backed reports"]} /></section>
       {/* Openings */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="Open roles" title="Current" accent="openings." center />
-          <div className="space-y-5">
+          <div className="grid gap-5 md:grid-cols-2">
             {openings.map((o, i) => (
-              <Reveal key={o.title} delay={i * 100} className="tile tile-hover p-7 md:p-8">
+              <Reveal key={o.title} delay={i * 100} className="tile tile-hover flex h-full flex-col p-7 md:p-8">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                   <h3 className="text-xl font-bold">{o.title}</h3>
                   <span className="rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-deep">{o.type}</span>
                 </div>
-                <p className="mb-5 leading-relaxed text-ink-soft/80">{o.desc}</p>
+                <p className="mb-5 flex-1 leading-relaxed text-ink-soft/80">{o.desc}</p>
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(`Application: ${o.title}`)}`}
                   className="inline-block rounded-full bg-ink px-6 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-brand"

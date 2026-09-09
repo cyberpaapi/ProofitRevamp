@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
 import { site } from "@/lib/site";
+import { getPublicSite } from "@/lib/admin/public-content";
 
 export const metadata: Metadata = {
   title: "Contact Us - Book an Inspection",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     "Contact Proofit for expert property inspections and solutions Mumbai-wide, with neighbouring-city assignments available on request.",
 };
 
-const channels = [
+const makeChannels = (site: Awaited<ReturnType<typeof getPublicSite>>) => [
   {
     label: "Call us",
     phones: site.phones,
@@ -43,7 +44,9 @@ const channels = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await getPublicSite();
+  const channels = makeChannels(site);
   return (
     <>
       <PageHero
@@ -51,11 +54,14 @@ export default function ContactPage() {
         title="Ready to"
         accent="Proofit?"
         lede="From inspections to solutions, our experts are here to help every step of the way."
+        image="/images/about-hero-desktop.webp"
+        imageMobile="/images/about-hero-mobile.webp"
+        imageAlt="Proofit inspection team at a residential property"
       />
 
       <section className="py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
-          <div className="lg:col-span-2">
+        <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div className="lg:col-start-1">
             <Reveal>
               <h2 className="mb-6 text-2xl font-bold md:text-3xl">Reach us directly</h2>
             </Reveal>
@@ -89,11 +95,19 @@ export default function ContactPage() {
                 </Reveal>
               ))}
             </div>
-            <Reveal delay={300} className="mt-8 tile-black p-7">
-              <h3 className="mb-2 font-bold text-brand">Hours</h3>
-              <p className="text-white/80">Monday - Saturday, 9:00 - 19:00 IST. Emergency leak calls answered on Sundays too.</p>
+
+
+          </div>
+
+          <div className="flex flex-col lg:col-start-2 lg:row-span-2">
+            <Reveal>
+              <h2 className="mb-6 text-2xl font-bold md:text-3xl">Send an enquiry</h2>
             </Reveal>
-            <Reveal delay={360} className="mt-4">
+            <Reveal delay={100} className="flex-1 [&>form]:h-full">
+              <EnquiryForm />
+            </Reveal>
+          </div>
+            <Reveal delay={360} className="lg:col-start-1 lg:row-start-2">
               <a href="https://maps.app.goo.gl/xS3WCeqHxkms1j8q8?g_st=ic" target="_blank" rel="noopener" aria-label="Open Proofit in Google Maps for navigation" className="group relative block h-64 overflow-hidden rounded-2xl border border-line bg-cream shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
                 <iframe
                   title="Proofit office location on Google Maps"
@@ -105,16 +119,10 @@ export default function ContactPage() {
                 <span className="absolute bottom-3 left-3 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white shadow-lg transition-colors group-hover:bg-brand-deep">Open in Google Maps</span>
               </a>
             </Reveal>
-          </div>
-
-          <div className="lg:col-span-3">
-            <Reveal>
-              <h2 className="mb-6 text-2xl font-bold md:text-3xl">Send an enquiry</h2>
+            <Reveal delay={300} className="tile-black flex flex-col justify-center p-7 lg:col-start-2 lg:row-start-3">
+              <h3 className="mb-2 font-bold text-brand">Hours</h3>
+              <p className="text-white/80">Monday - Saturday, 9:00 - 19:00 IST. Emergency leak calls answered on Sundays too.</p>
             </Reveal>
-            <Reveal delay={100}>
-              <EnquiryForm />
-            </Reveal>
-          </div>
         </div>
       </section>
     </>

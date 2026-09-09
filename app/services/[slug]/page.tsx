@@ -7,6 +7,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import EnquiryForm from "@/components/EnquiryForm";
 import { services } from "@/lib/content";
+import { getPublicOfferings } from "@/lib/admin/public-content";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -39,6 +40,7 @@ export default async function ServicePage({ params }: Params) {
   if (!service) notFound();
 
   const others = services.filter((s) => s.slug !== slug);
+  const offerings = (await getPublicOfferings()).filter(item => item.category === slug);
 
   return (
     <>
@@ -81,15 +83,16 @@ export default async function ServicePage({ params }: Params) {
                 <h2 className="mb-6 text-2xl font-bold md:text-3xl">What&apos;s included</h2>
               </Reveal>
               <div className="grid gap-5 sm:grid-cols-2">
-                {service.includes.map((inc, i) => (
-                  <Reveal key={inc.title} delay={i * 90} className="tile tile-hover p-6">
+                {offerings.map((inc, i) => (
+                  <Reveal key={inc.id} delay={Math.min(i,4) * 90} className="tile tile-hover scroll-mt-28 p-6">
+                    <span id={inc.slug} className="block scroll-mt-28" />
                     <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-soft" aria-hidden>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M4 12.5 9.5 18 20 6.5" stroke="#F7941D" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </span>
                     <h3 className="mb-2 font-bold">{inc.title}</h3>
-                    <p className="text-sm leading-relaxed text-ink-soft/75">{inc.desc}</p>
+                    <p className="text-sm leading-relaxed text-ink-soft/75">{inc.description}</p>
                   </Reveal>
                 ))}
               </div>

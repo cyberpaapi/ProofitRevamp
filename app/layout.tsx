@@ -4,10 +4,13 @@ import Script from "next/script";
 import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSiteChrome";
 import ProofyChatbot from "@/components/ProofyChatbot";
 import SiteCopyRuntime from "@/components/SiteCopyRuntime";
+import SiteSettingsProvider from "@/components/SiteSettingsProvider";
+import { getPublicSite } from "@/lib/admin/public-content";
 import { site } from "@/lib/site";
 import "./globals.css";
 
 const googleTagManagerId = "GTM-KJDFFFPM";
+export const dynamic = "force-dynamic";
 const googleAnalyticsId = "G-LNGB605MKR";
 
 const montserrat = Montserrat({
@@ -67,7 +70,8 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const managedSite = await getPublicSite();
   return (
     <html lang="en" className={montserrat.variable}>
       <head>
@@ -106,6 +110,7 @@ gtag('config', '${googleAnalyticsId}');`}
         >
           Skip to content
         </a>
+        <SiteSettingsProvider value={managedSite}>
         <ConditionalHeader />
         <main id="main" className="flex-1">
           {children}
@@ -113,7 +118,8 @@ gtag('config', '${googleAnalyticsId}');`}
         <ConditionalFooter />
         <ProofyChatbot />
         <SiteCopyRuntime />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        </SiteSettingsProvider>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({...jsonLd,telephone:managedSite.phone,email:managedSite.email}).replace(/</g,"\\u003c") }} />
       </body>
     </html>
   );

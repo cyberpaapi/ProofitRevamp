@@ -59,20 +59,21 @@ export default function MumbaiTestimonials({ testimonials = fallbackTestimonials
   };
 
   return (
-    <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-5 text-white md:py-10 lg:h-[calc(100svh-72px)] lg:min-h-[620px] lg:scroll-mt-[72px] lg:py-8">
+    <section className="relative isolate scroll-mt-16 overflow-hidden bg-[#101010] py-10 text-white md:py-10 lg:h-[calc(100svh-72px)] lg:min-h-[620px] lg:scroll-mt-[72px] lg:py-12">
       <div className="relative mx-auto flex h-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
-        <h2 className="max-w-[17rem] font-display text-[2rem] font-semibold leading-[1.05] sm:max-w-none sm:text-4xl md:text-5xl">
+        <h2 className="max-w-[17rem] font-display text-[2rem] font-semibold leading-[1.2] sm:max-w-none sm:text-4xl md:text-5xl">
           Serving Mumbai-Wide &amp; Neighbouring Cities on Request
         </h2>
         <div className="mt-5 grid min-h-0 flex-1 items-center gap-7 md:grid-cols-[minmax(190px,0.7fr)_1.3fr] md:gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="relative mx-auto aspect-[666/956] w-full max-w-[18rem] md:mx-0 md:aspect-auto md:h-full md:max-h-[70svh] md:max-w-sm">
             <Image
               src="/images/mumbai-map-orange.png"
-              alt="Orange outline map of Mumbai with a glowing location marker"
+              alt="Orange outline map of Mumbai"
               fill
               sizes="(min-width: 1024px) 384px, (min-width: 768px) 30vw, 288px"
               className="h-full w-full object-contain"
             />
+            <span key={index} className="map-review-dot absolute h-3 w-3 rounded-full bg-brand" style={{left:`${[44,52,38,58,46,61][index%6]}%`,top:`${[70,38,52,27,62,45][index%6]}%`}} aria-hidden />
           </div>
           <div className="flex w-full min-w-0 flex-col justify-center md:max-w-[42rem] md:justify-self-stretch">
             <p className="max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">

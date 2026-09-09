@@ -130,13 +130,15 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
       const desktopTravel = Math.max(1, desktopStage.offsetHeight - window.innerHeight);
       const desktopTarget = clamp(-desktopBounds.top / desktopTravel);
       desktopCurrent = reducedMotion ? desktopTarget : desktopCurrent + (desktopTarget - desktopCurrent) * 0.16;
-      const reveal = smoothstep(clamp((desktopCurrent - 0.28) / 0.44));
-      const introFade = smoothstep(clamp((desktopCurrent - 0.2) / 0.32));
+      const reveal = smoothstep(clamp((desktopCurrent - 0.48) / 0.24));
+      const introFade = smoothstep(clamp((desktopCurrent - 0.24) / 0.2));
 
-      desktopMedia.style.transform = `translate3d(0, ${desktopCurrent * 34}px, 0) scale(${1 + desktopCurrent * 0.045})`;
+      desktopMedia.style.transform = `translate3d(0, ${reducedMotion ? 0 : desktopCurrent * 20}px, 0) scale(${1 + (reducedMotion ? 0 : desktopCurrent * 0.025)})`;
       desktopIntro.style.opacity = `${1 - introFade}`;
       desktopIntro.style.transform = `translate3d(0, ${-24 * introFade}px, 0)`;
       desktopIntro.style.pointerEvents = introFade > 0.75 ? "none" : "auto";
+      desktopIntro.inert = introFade > 0.75;
+      desktopDetail.inert = reveal < 0.5;
       desktopDetail.style.opacity = `${reveal}`;
       desktopDetail.style.transform = `translate3d(0, ${(1 - reveal) * 34}px, 0)`;
 
@@ -144,7 +146,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
       const mobileTravel = Math.max(1, mobileIntro.offsetHeight - window.innerHeight * 0.7);
       const mobileTarget = clamp(-mobileBounds.top / mobileTravel);
       mobileCurrent = reducedMotion ? mobileTarget : mobileCurrent + (mobileTarget - mobileCurrent) * 0.14;
-      mobileMedia.style.transform = `translate3d(0, ${mobileCurrent * 22}px, 0) scale(${1 + mobileCurrent * 0.035})`;
+      mobileMedia.style.transform = `translate3d(0, ${reducedMotion ? 0 : mobileCurrent * 16}px, 0) scale(${1 + (reducedMotion ? 0 : mobileCurrent * 0.025)})`;
 
       if (
         Math.abs(desktopTarget - desktopCurrent) > 0.001 ||
@@ -172,14 +174,14 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
     <>
       <section ref={desktopStageRef} className="about-texture relative z-10 hidden h-[190svh] bg-[#fbfaf7] lg:block">
         <div className="sticky top-[72px] h-[calc(100svh-72px)] overflow-hidden">
-          <div className="mx-auto grid h-full max-w-7xl grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] gap-16 px-8 xl:gap-24">
+          <div className="mx-auto grid h-full max-w-7xl grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-12 px-8 xl:gap-16">
             <div className="relative min-h-0">
-              <h2 className="absolute left-0 top-[8.5vh] z-[2] font-display text-5xl font-semibold xl:text-[3.4rem]">
+              <h2 className="absolute left-0 top-[12vh] z-[2] max-w-[30%] font-display text-4xl font-semibold xl:text-5xl">
                 About Us
               </h2>
               <div
                 ref={desktopMediaRef}
-                className="absolute left-0 top-[19vh] h-[58vh] max-h-[620px] min-h-[430px] w-[94%] origin-center will-change-transform"
+                className="absolute right-0 top-[12vh] h-[55vh] max-h-[560px] w-[61%] origin-center will-change-transform"
               >
                 <AboutVideo className="h-full w-full" />
               </div>
@@ -188,7 +190,7 @@ export default function HomeAboutSequence({ hideCta = false }: { hideCta?: boole
             <div className="relative h-full min-h-0">
               <div
                 ref={desktopIntroRef}
-                className="absolute inset-x-0 top-[9vh] will-change-[opacity,transform]"
+                className="absolute inset-x-0 top-[12vh] will-change-[opacity,transform]"
               >
                 <AboutCopy hideCta={hideCta} />
               </div>

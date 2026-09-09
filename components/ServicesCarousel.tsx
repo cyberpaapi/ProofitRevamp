@@ -73,6 +73,7 @@ export default function ServicesCarousel({ slides, hideLinks = false }: { slides
     if (Math.abs(dx) > 48) go(dx < 0 ? 1 : -1);
   };
 
+  if (!slide) return null;
   return (
     <section ref={stageRef} id="services" className="relative scroll-mt-16 bg-ink lg:scroll-mt-[72px]">
       {slides.map((service) => (

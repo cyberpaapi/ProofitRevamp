@@ -70,6 +70,7 @@ export async function POST(req: Request) {
   const enquiry = {
     id: crypto.randomUUID(),
     receivedAt: new Date().toISOString(),
+    source: formSource.slice(0, 200),
     name,
     email,
     phone,

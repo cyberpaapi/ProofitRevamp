@@ -1,163 +1,23 @@
 "use client";
-
-import { useRef, useState } from "react";
-
-type Service = {
-  title: string;
-  body: string;
-};
-
-type Reason = {
-  title: string;
-  desc: string;
-};
-
-function ArrowIcon({ direction }: { direction: "left" | "right" }) {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d={direction === "left" ? "M19 12H5m6 6-6-6 6-6" : "M5 12h14m-6-6 6 6-6 6"}
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+import { useState } from "react";
+export function CareServices({ services }: { services: { title: string; body: string; slug?: string }[] }) {
+  return <section className="bg-cream py-16 md:py-20"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p className="font-display text-sm font-semibold uppercase tracking-[.18em] text-brand">Our Services</p>
+    <h2 className="mt-4 font-display text-4xl font-semibold md:text-5xl">Complete care. One platform.</h2>
+    <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{services.map((service, index) => <article id={service.slug} key={service.slug || service.title} className="scroll-mt-28 rounded-2xl border border-ink/15 bg-white p-7 shadow-[0_6px_20px_rgba(0,0,0,.06)] transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg motion-reduce:transform-none">
+      <p className="text-sm font-semibold text-brand-deep">{String(index + 1).padStart(2, "0")}</p>
+      <h3 className="mt-4 font-display text-xl font-semibold">{service.title}</h3><p className="mt-4 text-sm leading-relaxed text-ink-soft">{service.body}</p>
+    </article>)}</div>
+  </div></section>;
 }
-
-function CarouselButton({
-  label,
-  direction,
-  onClick,
-}: {
-  label: string;
-  direction: "left" | "right";
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-white text-ink transition-colors hover:border-brand hover:bg-brand hover:text-white"
-    >
-      <ArrowIcon direction={direction} />
-    </button>
-  );
-}
-
-export function CareServices({ services }: { services: Service[] }) {
+export function CareWhyCarousel({ reasons }: { reasons: { title: string; desc: string }[] }) {
   const [index, setIndex] = useState(0);
-  const touchX = useRef<number | null>(null);
-  const go = (direction: 1 | -1) => {
-    setIndex((current) => (current + direction + services.length) % services.length);
-  };
-  const serviceCardColors = "border-ink/15 bg-white text-ink";
-
-  return (
-    <section className="bg-cream py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Our Services</p>
-        <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
-          Twelve Solutions. One Platform.
-        </h2>
-
-        <div className="mt-10 lg:hidden">
-          <div
-            className="overflow-hidden"
-            onTouchStart={(event) => {
-              touchX.current = event.touches[0].clientX;
-            }}
-            onTouchEnd={(event) => {
-              if (touchX.current === null) return;
-              const distance = event.changedTouches[0].clientX - touchX.current;
-              touchX.current = null;
-              if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
-            }}
-          >
-            <article key={services[index].title} className={`service-content-fade rounded-2xl border p-6 sm:p-8 ${serviceCardColors}`} aria-live="polite">
-              <p className="font-display text-sm font-semibold text-brand">
-                {String(index + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
-              </p>
-              <h3 className="mt-4 font-display text-2xl font-semibold leading-tight">{services[index].title}</h3>
-              <p className="mt-3 leading-relaxed text-ink-soft/80 md:mt-5">{services[index].body}</p>
-            </article>
-          </div>
-
-          <div className="mt-6 flex items-center gap-3">
-            <CarouselButton label="Previous service" direction="left" onClick={() => go(-1)} />
-            <CarouselButton label="Next service" direction="right" onClick={() => go(1)} />
-            <div className="ml-2 h-1.5 flex-1 overflow-hidden rounded-full bg-ink/10" aria-hidden>
-              <div
-                className="h-full rounded-full bg-brand transition-[width] duration-300"
-                style={{ width: `${((index + 1) / services.length) * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 hidden grid-cols-2 gap-5 lg:grid xl:grid-cols-3">
-          {services.map((service, serviceIndex) => (
-            <article key={service.title} className={`rounded-2xl border p-7 ${serviceCardColors}`}>
-              <p className="font-display text-sm font-semibold text-brand">{String(serviceIndex + 1).padStart(2, "0")}</p>
-              <h3 className="mt-4 font-display text-xl font-semibold leading-tight">{service.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft/80">{service.body}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function CareWhyCarousel({ reasons }: { reasons: Reason[] }) {
-  const [index, setIndex] = useState(0);
-  const touchX = useRef<number | null>(null);
-  const go = (direction: 1 | -1) => {
-    setIndex((current) => (current + direction + reasons.length) % reasons.length);
-  };
-
-  return (
-    <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-2xl bg-ink p-7 text-white md:p-12">
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">Why Proofit Care+</p>
-          <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.08] md:text-5xl">
-            Why property owners stay with us.
-          </h2>
-
-          <div
-            className="mt-10 h-[390px] sm:h-[300px] md:h-[230px]"
-            onTouchStart={(event) => {
-              touchX.current = event.touches[0].clientX;
-            }}
-            onTouchEnd={(event) => {
-              if (touchX.current === null) return;
-              const distance = event.changedTouches[0].clientX - touchX.current;
-              touchX.current = null;
-              if (Math.abs(distance) > 48) go(distance < 0 ? 1 : -1);
-            }}
-          >
-            <article key={reasons[index].title} className="service-content-fade grid h-full content-start gap-6 border-t border-white/15 pt-8 md:grid-cols-[160px_1fr] md:gap-12" aria-live="polite">
-              <p className="font-display text-lg font-semibold text-brand">
-                {String(index + 1).padStart(2, "0")} / {String(reasons.length).padStart(2, "0")}
-              </p>
-              <div>
-                <h3 className="max-w-2xl font-display text-2xl font-semibold leading-tight md:text-3xl">
-                  {reasons[index].title}
-                </h3>
-                <p className="mt-4 max-w-3xl leading-relaxed text-white/72">{reasons[index].desc}</p>
-              </div>
-            </article>
-          </div>
-
-          <div className="mt-9 flex justify-end gap-3">
-            <CarouselButton label="Previous reason" direction="left" onClick={() => go(-1)} />
-            <CarouselButton label="Next reason" direction="right" onClick={() => go(1)} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  const pages = Array.from({ length: Math.ceil(reasons.length / 4) }, (_, i) => reasons.slice(i * 4, i * 4 + 4));
+  return <section className="py-16 md:py-20"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p className="text-sm font-semibold uppercase tracking-[.18em] text-brand">Why Proofit Care+</p><h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold md:text-5xl">Why property owners stay with us.</h2>
+    <div className="mt-10 grid" aria-live="polite">{pages.map((page, pageIndex) => <div key={pageIndex} className={`col-start-1 row-start-1 grid grid-cols-1 gap-5 sm:grid-cols-2 transition-opacity duration-300 ${pageIndex === index ? "opacity-100" : "invisible opacity-0"}`} aria-hidden={pageIndex !== index}>
+      {page.map((reason, reasonIndex) => <article key={reason.title} className="rounded-2xl bg-ink p-7 text-white md:p-8"><p className="text-sm font-semibold text-brand">{String(pageIndex * 4 + reasonIndex + 1).padStart(2, "0")}</p><h3 className="mt-3 text-xl font-semibold">{reason.title}</h3><p className="mt-4 leading-relaxed text-white/80">{reason.desc}</p></article>)}
+    </div>)}</div>
+    <div className="mt-6 flex items-center justify-end gap-3"><span className="mr-2 text-sm">{index + 1} / {pages.length}</span>{[-1, 1].map(direction => <button key={direction} type="button" aria-label={direction < 0 ? "Previous reasons" : "Next reasons"} onClick={() => setIndex((index + direction + pages.length) % pages.length)} className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/20 bg-white text-xl transition-colors hover:bg-brand hover:text-white">{direction < 0 ? "←" : "→"}</button>)}</div>
+  </div></section>;
 }

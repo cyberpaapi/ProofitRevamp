@@ -1,4 +1,6 @@
 import "server-only";
+import { seedTeam, seedOfferings } from "./offering-seeds";
+import { site } from "@/lib/site";
 
 import { promises as fs } from "fs";
 import path from "path";
@@ -103,7 +105,10 @@ const seededTestimonials: AdminTestimonial[] = [
 function createSeedStore(): AdminStore {
   const now = new Date().toISOString();
   return {
-    version: 1,
+    version: 2,
+    team: seedTeam,
+    offerings: seedOfferings,
+    contact: { phones: site.phones.map(item => item.label), email: site.email },
     updatedAt: now,
     siteCopy: [],
     posts: posts.map<AdminPost>((post) => ({ ...post, id: `post-${post.slug}`, published: true })),
@@ -140,6 +145,9 @@ function normaliseStore(value: Partial<AdminStore>): AdminStore {
   return {
     ...seed,
     ...value,
+    team: Array.isArray(value.team) ? value.team : seed.team,
+    offerings: Array.isArray(value.offerings) ? value.offerings : seed.offerings,
+    contact: value.contact || seed.contact,
     siteCopy: Array.isArray(value.siteCopy) ? value.siteCopy : seed.siteCopy,
     posts: Array.isArray(value.posts) ? value.posts : seed.posts,
     careers: Array.isArray(value.careers) ? value.careers : seed.careers,
@@ -165,10 +173,10 @@ export async function getAdminStore(): Promise<AdminStore> {
   try {
     const parsed = JSON.parse(await fs.readFile(storeFile, "utf8")) as Partial<AdminStore>;
     return normaliseStore(parsed);
-  } catch {
-    const seed = createSeedStore();
-    await writeAdminStore(seed);
-    return seed;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    // Read-only local requests need not race to create the same seed file.
+    return createSeedStore();
   }
 }
 
@@ -187,7 +195,7 @@ export async function writeAdminStore(store: AdminStore): Promise<AdminStore> {
   }
   requireDurableStorage("admin");
   await fs.mkdir(dataDirectory, { recursive: true });
-  const temporaryFile = `${storeFile}.tmp`;
+  const temporaryFile = `${storeFile}.${crypto.randomUUID()}.tmp`;
   await fs.writeFile(temporaryFile, JSON.stringify(next, null, 2), "utf8");
   await fs.rename(temporaryFile, storeFile);
   return next;
@@ -232,10 +240,10 @@ export async function getEnquiries(): Promise<StoredEnquiryRecord[]> {
   return enquiries
     .map((enquiry) => ({
       ...enquiry,
-      status: store.enquiryMeta[enquiry.id]?.status || "new",
-      assignee: store.enquiryMeta[enquiry.id]?.assignee || "",
-      notes: store.enquiryMeta[enquiry.id]?.notes || "",
-      source: store.enquiryMeta[enquiry.id]?.source || inferSource(enquiry.message),
+      status: store.enquiryMeta[enquiry.id]?.status || enquiry.status || "new",
+      assignee: store.enquiryMeta[enquiry.id]?.assignee || enquiry.assignee || "",
+      notes: store.enquiryMeta[enquiry.id]?.notes || enquiry.notes || "",
+      source: store.enquiryMeta[enquiry.id]?.source || enquiry.source || inferSource(enquiry.message),
     }))
     .sort((a, b) => b.receivedAt.localeCompare(a.receivedAt));
 }

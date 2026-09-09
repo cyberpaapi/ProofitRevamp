@@ -117,6 +117,9 @@ export type ImageOverride = {
 };
 
 export type AdminStore = {
+  team: AdminTeamMember[];
+  offerings: AdminOffering[];
+  contact: AdminContact;
   version: number;
   updatedAt: string;
   siteCopy: SiteCopyOverride[];
@@ -130,6 +133,10 @@ export type AdminStore = {
   appointments: AdminAppointment[];
   imageOverrides: Record<string, ImageOverride>;
 };
+
+export type AdminTeamMember = { id: string; name: string; role: string; bio: string; image: string; visible: boolean; order: number };
+export type AdminOffering = { id: string; category: "home-inspection" | "water-inspection" | "care-plus"; slug: string; title: string; description: string; image: string; benefits: string[]; homepage: boolean; visible: boolean; order: number };
+export type AdminContact = { phones: string[]; email: string };
 
 export type StoredEnquiryRecord = {
   id: string;

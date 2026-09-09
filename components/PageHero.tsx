@@ -9,6 +9,7 @@ type Props = {
   image?: string;
   imageMobile?: string;
   imageAlt?: string;
+  imagePosition?: "top" | "center";
   breadcrumbLabel?: string;
   breadcrumbParent?: { label: string; href: string };
 };
@@ -22,6 +23,7 @@ export default function PageHero({
   image,
   imageMobile,
   imageAlt = "",
+  imagePosition = "top",
   breadcrumbLabel,
   breadcrumbParent,
 }: Props) {
@@ -38,7 +40,7 @@ export default function PageHero({
       className={`relative overflow-hidden bg-ink text-white ${
         image
           ? "flex h-[700px] items-end pb-12 pt-28 md:h-[540px] md:pb-14 md:pt-32"
-          : "pb-16 pt-32 md:pb-24 md:pt-40"
+          : "flex h-[700px] items-end pb-12 pt-28 md:h-[540px] md:pb-14 md:pt-32"
       }`}
     >
       {image && (
@@ -46,11 +48,11 @@ export default function PageHero({
           {imageMobile && (
             <Image src={imageMobile} alt={imageAlt} fill priority sizes="100vw" className="object-cover md:hidden" />
           )}
-          <Image src={image} alt={imageMobile ? "" : imageAlt} fill priority sizes="100vw" className={`${imageMobile ? "hidden md:block" : ""} object-cover`} />
+          <Image src={image} alt={imageMobile ? "" : imageAlt} fill priority quality={85} sizes="100vw" className={`${imageMobile ? "hidden md:block" : ""} ${imagePosition === "center" ? "origin-bottom scale-125 md:scale-100" : ""} object-cover`} style={{objectPosition:imagePosition}} />
           <div className="absolute inset-y-0 left-0 w-[min(92%,58rem)] bg-gradient-to-r from-ink/68 via-ink/35 to-transparent" aria-hidden />
         </>
       )}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={breadcrumbItems} className="hero-rise mb-5" />
         <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand" style={{ ["--rise-delay" as string]: "0ms" }}>
           {eyebrow}

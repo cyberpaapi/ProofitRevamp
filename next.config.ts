@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   // otherwise makes Next infer the wrong workspace root.
   outputFileTracingRoot: __dirname,
   images: {
+    qualities: [75, 85, 90],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {

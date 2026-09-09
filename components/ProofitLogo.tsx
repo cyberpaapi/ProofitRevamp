@@ -17,11 +17,11 @@ export default function ProofitLogo({ className = "", imageClassName = "", prior
         width={647}
         height={218}
         priority={priority}
-        className={`block h-auto w-full ${imageClassName}`}
+        className={`block h-auto w-[91%] ${imageClassName}`}
       />
       <span
         aria-hidden="true"
-        className="absolute -right-[7cqw] top-[9%] font-display text-[7cqw] font-medium leading-none tracking-[0.03em]"
+        className="absolute right-0 top-[9%] font-display text-[6cqw] font-medium leading-none tracking-[0.03em]"
       >
         TM
       </span>

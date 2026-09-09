@@ -1,17 +1,23 @@
+"use client";
 import Link from "next/link";
+import { useSiteSettings } from "./SiteSettingsProvider";
 import ProofitLogo from "@/components/ProofitLogo";
 import { site } from "@/lib/site";
 
 const serviceLinks = [
-  { href: "/#service-pre-possession", label: "Pre Possession Inspection" },
-  { href: "/#service-resale", label: "Resale Property Inspection" },
-  { href: "/#service-rental", label: "Rental Move-In / Move-Out Inspection" },
-  { href: "/#service-thermal", label: "Thermal Inspection" },
-  { href: "/#service-renovation", label: "Pre-Renovation / Post-Renovation Inspection" },
-  { href: "/#service-builder-audit", label: "Builder Quality Audit" },
+  { href: "/services/home-inspection#service-pre-possession", label: "Pre Possession Inspection" },
+  { href: "/services/home-inspection#service-resale", label: "Resale Property Inspection" },
+  { href: "/services/home-inspection#service-rental", label: "Rental Move-In / Move-Out Inspection" },
+  { href: "/services/water-inspection#service-thermal", label: "Thermal Inspection" },
+  { href: "/services/home-inspection#service-renovation", label: "Pre-Renovation / Post-Renovation Inspection" },
+  { href: "/services/home-inspection#service-builder-audit", label: "Builder Quality Audit" },
 ];
 
 const quickLinks = [
+  {href:"/", label:"Home"},
+  {href:"/services",label:"Services"},
+  {href:"/case-studies",label:"Case Studies"},
+  {href:"/blog",label:"Blogs"},
   { href: "/about", label: "About" },
   { href: "/careers", label: "Career" },
   { href: "/contact", label: "Contact Us" },
@@ -29,15 +35,15 @@ const socials = [
 ];
 
 export default function Footer() {
+  const site = useSiteSettings();
   return (
-    <footer className="bg-[#121212] text-white">
-      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-4 pb-12 pt-5 sm:px-6 md:pt-6 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
+    <footer data-site-footer className="bg-[#121212] text-white">
+      <div className="mx-auto grid max-w-7xl gap-x-10 gap-y-10 px-6 py-12 sm:px-10 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)] lg:px-8">
         {/* Brand */}
         <div>
-          <ProofitLogo className="mb-3 w-[150px]" imageClassName="brightness-0 invert" />
+          <ProofitLogo className="mb-6 w-[230px]" imageClassName="brightness-0 invert" />
           <p className="text-sm leading-relaxed text-white/60">
-            Independent, evidence-backed home inspections. {site.serviceAreaClaim} International standards,
-            thermal imaging, and reports that settle arguments.
+            Proofit is an Independent, evidence-backed home and water inspection company. Serving Mumbai-wide, we also offer services to Mumbai's neighbouring cities on request. We provide evidence backed by International standards, thermal imaging, and reports that settle arguments.
           </p>
           <ul className="mt-5 space-y-2 text-sm text-white/70">
             <li className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -62,7 +68,7 @@ export default function Footer() {
           <ul className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-10">
             {serviceLinks.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="font-display text-lg font-semibold leading-snug transition-colors hover:text-brand sm:text-xl">
+                <Link href={l.href} className="font-display text-base font-semibold leading-snug transition-colors hover:text-brand">
                   {l.label}
                 </Link>
               </li>
@@ -76,9 +82,10 @@ export default function Footer() {
           <ul className="grid grid-cols-2 gap-x-10 gap-y-5">
             {quickLinks.map((l) => (
               <li key={l.label}>
+                {l.href === "/services" ? <details><summary className="cursor-pointer font-display font-semibold transition-colors hover:text-brand">Services</summary><ul className="mt-3 space-y-3 text-sm text-white/75"><li><Link href="/services/home-inspection">Home Inspection</Link></li><li><Link href="/services/water-inspection">Water Inspection</Link></li><li><Link href="/care-plus">Proofit Care+</Link></li></ul></details> :
                 <Link href={l.href} className="font-display font-semibold transition-colors hover:text-brand">
                   {l.label}
-                </Link>
+                </Link>}
               </li>
             ))}
           </ul>

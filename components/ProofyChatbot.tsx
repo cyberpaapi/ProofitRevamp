@@ -35,6 +35,15 @@ function localDateValue(date: Date) {
 
 export default function ProofyChatbot() {
   const pathname = usePathname();
+  const [footerVisible, setFooterVisible] = useState(false);
+  useEffect(() => {
+    setFooterVisible(false);
+    const footer = document.querySelector('[data-site-footer]');
+    if (!footer) return;
+    const observer = new IntersectionObserver(([entry]) => setFooterVisible(entry.isIntersecting));
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, [pathname]);
   const [open, setOpen] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
   const [screen, setScreen] = useState<Screen>("home");
@@ -197,7 +206,7 @@ export default function ProofyChatbot() {
     }
   };
 
-  if (pathname.startsWith("/admin")) return null;
+  if (pathname.startsWith("/admin") || footerVisible) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[90]" aria-live="polite">

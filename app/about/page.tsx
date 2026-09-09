@@ -1,3 +1,6 @@
+import FaqGrid from "@/components/FaqGrid";
+import CtaBand from "@/components/CtaBand";
+import { getPublicTeam } from "@/lib/admin/public-content";
 import type { Metadata } from "next";
 import Image from "next/image";
 import ArrowBtn from "@/components/ArrowBtn";
@@ -13,28 +16,10 @@ export const metadata: Metadata = {
     "Proofit combines engineering expertise, IR technology, and globally inspired inspection practices adapted for Indian properties.",
 };
 
-const leadership = [
-  {
-    name: "Hardik Sampat",
-    image: "/images/team/hardik-back.webp",
-    role: "Co-Founder · Head of Business Development",
-    bio: "Hardik spent his formative professional years in Canada, where he developed deep expertise in residential construction, building materials, and property systems. After working with Home Depot, he managed end-to-end residential projects as a General Contractor before training with Primary Home Inspection in structured, standards-based inspection methodologies. At Proofit, Hardik leads business development while driving the adoption of globally inspired inspection practices, helping establish new benchmarks for transparency, quality, and preventive property care in India.",
-  },
-  {
-    name: "Nupur Mahipal",
-    image: "/images/team/nupur-back.webp",
-    role: "Partner · Chief Marketing Officer (CMO)",
-    bio: "Nupur brings over seven years of experience in the property inspection industry, with expertise spanning operations, client relationships, marketing, and business development. Her hands-on understanding of the industry has helped shape Proofit’s customer-first approach while strengthening its brand presence and strategic partnerships. She leads marketing and growth initiatives with a focus on building trust, creating meaningful customer experiences, and expanding Proofit’s reach across India’s evolving real estate landscape.",
-  },
-  {
-    name: "Dhyan Parekh",
-    image: "/images/team/dhyan-back.webp",
-    role: "Co-Founder · Operations & Quality Lead",
-    bio: "Having lived and worked in Canada, Dhyan recognised that professional home inspections were a standard part of property ownership - something largely missing in Mumbai despite its demanding climate and ageing infrastructure. Inspired to bridge that gap, he co-founded Proofit to bring globally inspired inspection standards to India. He leads inspection workflows, report structuring, and quality assurance, ensuring every report is evidence-backed, consistent, and easy for clients to understand.",
-  },
-];
 
-export default function AboutPage() {
+
+export default async function AboutPage() {
+  const leadership = await getPublicTeam();
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -217,7 +202,7 @@ export default function AboutPage() {
           />
           <div className="grid items-stretch gap-7 lg:grid-cols-3">
             {leadership.map((leader, index) => (
-              <Reveal key={leader.name} delay={index * 120} className="tile flex h-full flex-col p-7 md:p-8">
+              <Reveal key={leader.name} delay={index * 120} className="tile tile-hover group flex h-full flex-col p-7 md:p-8">
                 <div className="relative mb-6 aspect-square w-full overflow-hidden rounded-xl bg-brand-soft">
                   <Image
                     src={leader.image}
@@ -255,55 +240,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Frequently Asked Questions */}
-      <section className="bg-cream py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            eyebrow="FAQs"
-            title="Straight answers, no jargon."
-            lede="Everything people usually ask us before booking their first inspection."
-            center
-          />
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <Reveal key={faq.q} delay={Math.min(index, 4) * 60}>
-                <details className="group tile open:border-brand/50 open:shadow-md">
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-bold marker:content-none [&::-webkit-details-marker]:hidden">
-                    {faq.q}
-                    <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xl font-bold text-brand transition-transform duration-200 group-open:rotate-45"
-                      aria-hidden
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="px-5 pb-5 leading-relaxed text-ink-soft/85">{faq.a}</p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Page closing section, separate from the footer */}
-      <section className="bg-brand-soft py-20 md:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 px-4 sm:px-6 lg:px-8 lg:flex-row lg:items-end">
-          <Reveal>
-            <h2 className="max-w-3xl font-display text-4xl font-semibold leading-[1.1] md:text-5xl">
-              Know Your Property Before You Commit.
-            </h2>
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft/78 md:mt-6">
-              Whether you’re buying your first home, investing in real estate, or maintaining an existing property,
-              Proofit gives you the confidence to make informed decisions.
-            </p>
-          </Reveal>
-          <Reveal delay={140} className="shrink-0">
-            <ArrowBtn href="/contact" variant="dark">
-              Book a Home Inspection Today
-            </ArrowBtn>
-          </Reveal>
-        </div>
-      </section>
+      <section className="bg-cream py-16 md:py-20"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="FAQs" title="Straight answers, no jargon." lede="Everything people usually ask us before booking their first inspection." />
+        <FaqGrid faqs={faqs} />
+      </div></section>
+      <CtaBand title="Know Your Property Before You Commit." lede="Whether you're buying your first home, investing in real estate, or maintaining an existing property, Proofit gives you the confidence to make informed decisions." />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
     </>
   );

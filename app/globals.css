@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+.works-card { min-height: 540px; height: min(68svh, 620px); }
+.works-image { min-height: 0; }
+.care-path .in-view .care-link { transform: scaleX(1); }
+.map-review-dot { box-shadow: 0 0 18px 6px #f7941d80; animation: review-beacon 1.8s ease-out infinite; }
+@keyframes review-beacon { 0%,100% { opacity:1; box-shadow:0 0 0 0 #f7941d80; } 60% { opacity:.7; box-shadow:0 0 0 18px #f7941d00; } }
+@media(max-width:767px) {
+  .works-card { height:auto; min-height:0; grid-template-rows: min(32svh,250px) auto; }
+  .works-copy { min-height:275px; }
+}
+@media(max-height:650px) and (min-width:768px) { .works-card { height:75svh; min-height:360px; } }
+@media(prefers-reduced-motion:reduce) { .map-review-dot { animation:none; } }
+
 @theme {
   /* Proofit ref theme - charcoal + white + brand orange, gold-orange CTAs */
   --color-brand: #f7941d;
@@ -15,7 +27,7 @@
   --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 
   /* Keep wide desktop layouts proportional instead of capping them at 1280px. */
-  --container-7xl: 108rem;
+  --container-7xl: 88rem;
 }
 
 html {
@@ -88,7 +100,7 @@ h1, h2, h3, h4, .font-display {
   z-index: -1;
   inset: -1.5rem -2.5rem;
   border-radius: 2rem;
-  background: radial-gradient(ellipse at 30% 50%, rgba(17, 17, 18, 0.58), rgba(17, 17, 18, 0.22) 58%, transparent 78%);
+  background: none;
   pointer-events: none;
 }
 

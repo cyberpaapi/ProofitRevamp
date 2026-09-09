@@ -53,7 +53,7 @@ function SampleReportPrompt({ className = "", formHref }: { className?: string; 
       {formHref ? (
         <ArrowBtn
           href={formHref}
-          variant="dark"
+          variant="white"
           className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           Ask for Sample Report
@@ -62,7 +62,7 @@ function SampleReportPrompt({ className = "", formHref }: { className?: string; 
         <ArrowBtn
           href={site.whatsappSampleReport}
           external
-          variant="dark"
+          variant="white"
           className="mt-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           Ask for Sample Report
@@ -111,8 +111,8 @@ export default function ModelsReveal({ b2b, b2c, formHref }: { b2b: InspectionMo
   }, []);
 
   return (
-    <section ref={stageRef} className="relative mb-12 hidden h-[125vh] lg:block">
-      <div className="sticky top-[72px] mx-auto grid h-[calc(100vh-72px)] max-w-7xl grid-cols-[minmax(260px,340px)_1fr] gap-16 px-8 py-8">
+    <section ref={stageRef} className="relative mb-8 hidden h-[100vh] lg:block">
+      <div className="sticky top-[72px] mx-auto grid h-[min(720px,calc(100vh-72px))] max-w-[1280px] grid-cols-[minmax(260px,340px)_1fr] gap-8 px-8 py-6">
         <div className="flex min-h-0 flex-col">
           <h2 className="font-display text-[2.6rem] font-semibold leading-tight">
             One Platform.

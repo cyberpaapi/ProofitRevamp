@@ -12,8 +12,8 @@ export default function CtaBand({
   lede = "Because ownership should begin with certainty, not surprises. An inspection today can prevent repair bills worth lakhs tomorrow.",
 }: Props) {
   return (
-    <section className="bg-ink text-white">
-      <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center md:justify-between md:py-20 lg:px-8">
+    <section className="px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 rounded-2xl border border-brand/40 bg-ink p-8 text-white sm:p-12 md:flex-row md:items-center md:justify-between">
         <Reveal>
           <h2 className="max-w-xl font-display text-3xl font-semibold leading-[1.12] md:text-4xl">{title}</h2>
           <p className="mt-4 max-w-xl text-white/75">{lede}</p>
