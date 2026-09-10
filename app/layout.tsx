@@ -5,7 +5,8 @@ import { ConditionalFooter, ConditionalHeader } from "@/components/ConditionalSi
 import ProofyChatbot from "@/components/ProofyChatbot";
 import SiteCopyRuntime from "@/components/SiteCopyRuntime";
 import SiteSettingsProvider from "@/components/SiteSettingsProvider";
-import { getPublicSite } from "@/lib/admin/public-content";
+import { getPublicCaseStudies, getPublicSite } from "@/lib/admin/public-content";
+import { buildNavigation } from "@/lib/navigation";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -71,7 +72,8 @@ const jsonLd = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const managedSite = await getPublicSite();
+  const [managedSite, studies] = await Promise.all([getPublicSite(), getPublicCaseStudies()]);
+  const navigation = buildNavigation(studies);
   return (
     <html lang="en" className={montserrat.variable}>
       <head>
@@ -111,11 +113,11 @@ gtag('config', '${googleAnalyticsId}');`}
           Skip to content
         </a>
         <SiteSettingsProvider value={managedSite}>
-        <ConditionalHeader />
+        <ConditionalHeader navigation={navigation} />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <ConditionalFooter />
+        <ConditionalFooter navigation={navigation} />
         <ProofyChatbot />
         <SiteCopyRuntime />
         </SiteSettingsProvider>

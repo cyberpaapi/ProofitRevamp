@@ -1,11 +1,9 @@
-import CareProcess from "@/components/CareProcess";
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import { getPublicCareers, getPublicSite } from "@/lib/admin/public-content";
-import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Careers - Join the Proofit Team",
@@ -24,9 +22,10 @@ export default async function CareersPage() {
         title="Learn a profession"
         accent="India is just discovering."
         lede="Home inspection is a decades-old discipline in North America and a brand-new industry here. Join early, learn deeply, grow with it."
-        image="/images/bathroom-moisture-check.webp"
-        imagePosition="center"
-        imageAlt="Proofit inspector performing a moisture check"
+        image="/images/careers-mentoring-banner.webp"
+        imageMobile="/images/careers-mentoring-banner-mobile.webp"
+        imageBelowHeader
+        imageAlt="A senior Proofit inspector teaching a trainee to use a moisture meter in an apartment"
       />
 
       {/* Why join */}
@@ -70,7 +69,6 @@ export default async function CareersPage() {
         </div>
       </section>
 
-      <section className="site-section site-container"><CareProcess steps={["Learn international methodology", "Practise with inspection instruments", "Apply your skills on site", "Document clear, evidence-backed reports"]} /></section>
       {/* Openings */}
       <section className="site-section">
         <div className="site-container ">

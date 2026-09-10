@@ -10,6 +10,7 @@ type Props = {
   imageMobile?: string;
   imageAlt?: string;
   imagePosition?: "top" | "center";
+  imageBelowHeader?: boolean;
   breadcrumbLabel?: string;
   breadcrumbParent?: { label: string; href: string };
 };
@@ -24,6 +25,7 @@ export default function PageHero({
   imageMobile,
   imageAlt = "",
   imagePosition = "top",
+  imageBelowHeader = false,
   breadcrumbLabel,
   breadcrumbParent,
 }: Props) {
@@ -40,13 +42,13 @@ export default function PageHero({
       className="site-banner relative flex items-end overflow-hidden bg-ink text-white"
     >
       {image && (
-        <>
+        <div className={`absolute inset-0 ${imageBelowHeader ? "md:top-20" : ""}`}>
           {imageMobile && (
             <Image src={imageMobile} alt={imageAlt} fill priority sizes="100vw" className="object-cover md:hidden" />
           )}
           <Image src={image} alt={imageMobile ? "" : imageAlt} fill priority quality={85} sizes="100vw" className={`${imageMobile ? "hidden md:block" : ""} ${imagePosition === "center" ? "origin-bottom scale-125 md:scale-100" : ""} object-cover`} style={{objectPosition:imagePosition}} />
           <div className="absolute inset-y-0 left-0 w-[min(92%,58rem)] bg-gradient-to-r from-ink/68 via-ink/35 to-transparent" aria-hidden />
-        </>
+        </div>
       )}
       <div className="site-container relative">
         <Breadcrumbs items={breadcrumbItems} className="hero-rise mb-5" />

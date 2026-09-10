@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useSiteSettings } from "./SiteSettingsProvider";
 import ProofitLogo from "@/components/ProofitLogo";
-import { site } from "@/lib/site";
+import type { NavigationItem } from "@/lib/navigation";
 
 const serviceLinks = [
   { href: "/services/home-inspection#service-pre-possession", label: "Pre Possession Inspection" },
@@ -11,18 +11,6 @@ const serviceLinks = [
   { href: "/services/home-inspection#service-renovation", label: "Pre-Renovation / Post-Renovation Inspection" },
   { href: "/services/water-inspection#service-thermal", label: "Thermal Inspection" },
   { href: "/services/home-inspection#service-builder-audit", label: "Builder Quality Audit" },
-];
-
-const quickLinks = [
-  {href:"/", label:"Home"},
-  {href:"/case-studies",label:"Case Studies"},
-  {href:"/blog",label:"Blogs"},
-  { href: "/about", label: "About" },
-  { href: "/careers", label: "Career" },
-  { href: "/contact", label: "Contact Us" },
-  { href: "/process", label: "Methodology" },
-  { href: "/care-plus", label: "Proofit Care+" },
-  { href: "/services", label: "Services" },
 ];
 
 const socials = [
@@ -34,7 +22,7 @@ const socials = [
   { label: "X", href: "https://x.com/proofitcompany?s=11", d: "M9.5 6.8 15.3 0h-1.4L8.9 5.9 4.9 0H.3l6.1 8.9L.3 16h1.4l5.3-6.2 4.3 6.2h4.6L9.5 6.8zm-1.9 2.2-.6-.9L2.2 1h2.1l4 5.7.6.9 5.1 7.4h-2.1L7.6 9z" },
 ];
 
-export default function Footer() {
+export default function Footer({ navigation }: { navigation: NavigationItem[] }) {
   const site = useSiteSettings();
   return (
     <footer data-site-footer className="bg-[#121212] text-white">
@@ -79,16 +67,29 @@ export default function Footer() {
         {/* Links */}
         <div>
           <h3 className="mb-6 text-sm font-medium text-white/45">Links</h3>
-          <ul className="grid grid-cols-2 gap-x-10 gap-y-5">
-            {quickLinks.map((l) => (
-              <li key={l.label}>
-                {l.href === "/services" ? <details><summary className="cursor-pointer font-display font-semibold transition-colors hover:text-brand">Services</summary><ul className="mt-3 space-y-3 text-sm text-white/75"><li><Link href="/services/home-inspection">Home Inspection</Link></li><li><Link href="/services/water-inspection">Water Inspection</Link></li><li><Link href="/care-plus">Proofit Care+</Link></li></ul></details> :
-                <Link href={l.href} className="font-display font-semibold transition-colors hover:text-brand">
-                  {l.label}
-                </Link>}
-              </li>
-            ))}
-          </ul>
+          <nav aria-label="Footer pages">
+            <ul className="space-y-1">
+              {navigation.map((item, index) => (
+                <li key={item.href}>
+                  {item.children ? <details className="group/footer">
+                    <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-display font-semibold transition-colors hover:text-brand [&::-webkit-details-marker]:hidden">
+                      {item.label}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0 transition-transform group-open/footer:rotate-180"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </summary>
+                    <ul className="mb-3 ml-1 border-l border-white/20 pl-3 text-sm text-white/80">
+                      <li><Link href={item.href} className="flex min-h-11 items-center py-2 font-semibold hover:text-brand">{item.overviewLabel}</Link></li>
+                      {item.children.map((child, childIndex) => <li key={child.href}>
+                        <Link href={child.href} className="flex min-h-11 items-start gap-2 py-2.5 leading-relaxed hover:text-brand">
+                          <span className="shrink-0 text-brand">{index + 1}.{childIndex + 1}</span>
+                          <span>{child.label}</span>
+                        </Link>
+                      </li>)}
+                    </ul>
+                  </details> : <Link href={item.href} className="flex min-h-11 items-center font-display font-semibold transition-colors hover:text-brand">{item.label}</Link>}
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
 

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
-import { site } from "@/lib/site";
 import { getPublicSite } from "@/lib/admin/public-content";
 
 export const metadata: Metadata = {
@@ -59,8 +58,8 @@ export default async function ContactPage() {
       />
 
       <section className="site-section">
-        <div className="site-container grid gap-x-10 gap-y-8 lg:grid-cols-2">
-          <div className="lg:col-start-1">
+        <div className="site-container contact-grid grid items-stretch gap-x-10 gap-y-8 lg:grid-cols-2">
+          <div className="contact-direct flex min-w-0 flex-col">
             <Reveal>
               <h2 className="mb-6 text-2xl font-bold md:text-3xl">Reach us directly</h2>
             </Reveal>
@@ -85,7 +84,7 @@ export default async function ContactPage() {
                   ) : (
                     <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener" } : {})} className="tile tile-hover flex items-center gap-4 p-5">
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand-deep">{c.icon}</span>
-                      <span>
+                      <span className="min-w-0 break-words">
                         <span className="block text-sm text-ink-soft/60">{c.label}</span>
                         <span className="font-bold">{c.value}</span>
                       </span>
@@ -94,31 +93,28 @@ export default async function ContactPage() {
                 </Reveal>
               ))}
             </div>
-
-
-          </div>
-
-          <div className="flex flex-col lg:col-start-2 lg:row-span-2">
-            <Reveal>
-              <h2 className="mb-6 text-2xl font-bold md:text-3xl">Send an enquiry</h2>
-            </Reveal>
-            <Reveal delay={100} className="flex-1 [&>form]:h-full">
-              <EnquiryForm />
-            </Reveal>
-          </div>
-            <Reveal delay={360} className="lg:col-start-1 lg:row-start-2">
-              <a href="https://maps.app.goo.gl/xS3WCeqHxkms1j8q8?g_st=ic" target="_blank" rel="noopener" aria-label="Open Proofit in Google Maps for navigation" className="group relative block h-64 overflow-hidden rounded-2xl border border-line bg-cream shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+            <Reveal delay={270} className="mt-8 flex min-h-80 flex-1">
+              <a href="https://maps.app.goo.gl/xS3WCeqHxkms1j8q8?g_st=ic" target="_blank" rel="noopener" aria-label="Open Proofit in Google Maps for navigation" className="contact-map group relative block min-h-80 w-full flex-1 overflow-hidden rounded-2xl border border-line bg-cream shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
                 <iframe
                   title="Proofit office location on Google Maps"
                   src="https://www.google.com/maps?q=Proofit,+Auto+Commerce+House+building,+Kennedy+Bridge,+Jyoti+Studio+Compound,+Grant+Road+(W),+Gamdevi,+Mumbai,+Maharashtra+400007&output=embed"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="pointer-events-none h-full w-full border-0"
+                  className="pointer-events-none absolute inset-0 h-full w-full border-0"
                 />
                 <span className="absolute bottom-3 left-3 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white shadow-lg transition-colors group-hover:bg-brand-deep">Open in Google Maps</span>
               </a>
             </Reveal>
-            <Reveal delay={300} className="tile-black flex flex-col justify-center p-7 lg:col-span-2 lg:col-start-1 lg:row-start-3">
+          </div>
+          <div className="contact-enquiry flex min-w-0 flex-col">
+            <Reveal>
+              <h2 className="mb-6 text-2xl font-bold md:text-3xl">Send an enquiry</h2>
+            </Reveal>
+            <Reveal delay={100} className="flex-1 [&>*]:h-full">
+              <EnquiryForm />
+            </Reveal>
+          </div>
+            <Reveal delay={300} className="tile-black flex flex-col justify-center p-7 lg:col-span-2">
               <h3 className="mb-2 font-bold text-brand">Hours</h3>
               <p className="text-white/80">Monday - Saturday, 9:00 - 19:00 IST. Emergency leak calls answered on Sundays too.</p>
             </Reveal>

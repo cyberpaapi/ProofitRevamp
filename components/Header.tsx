@@ -2,33 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProofitLogo from "@/components/ProofitLogo";
-import { caseStudies } from "@/lib/content";
+import { serviceNavigation as serviceLinks, type NavigationItem } from "@/lib/navigation";
 
-const menuLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/process", label: "Our Process" },
-  { href: "/services", label: "Services" },
-  { href: "/care-plus", label: "Proofit Care+" },
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/blog", label: "Blog" },
-  { href: "/careers", label: "Careers" },
-  { href: "/contact", label: "Contact Us" },
-];
-
-const serviceLinks = [
-  { href: "/services/water-inspection", label: "Water Inspection" },
-  { href: "/services/home-inspection", label: "Home Inspection" },
-];
-
-export default function Header() {
+export default function Header({ navigation: menuLinks }: { navigation: NavigationItem[] }) {
   const pathname = usePathname();
   const [heroMode, setHeroMode] = useState(pathname === "/");
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [caseStudiesOpen, setCaseStudiesOpen] = useState(pathname.startsWith("/case-studies"));
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,13 +32,27 @@ export default function Header() {
   useEffect(() => {
     setOpen(false);
     setServicesOpen(false);
-    setCaseStudiesOpen(pathname.startsWith("/case-studies"));
+    setExpanded({ "/case-studies": pathname.startsWith("/case-studies"), "/services": pathname.startsWith("/services") });
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.querySelector<HTMLButtonElement>('button[aria-label="Close menu"]')?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const elements = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>('a[href], button, [tabindex="0"]') || []).filter(el => el.getClientRects().length && !el.closest("[inert]"));
+      const first = elements[0], last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKey);
+      menuButtonRef.current?.focus();
     };
   }, [open]);
 
@@ -66,8 +65,8 @@ export default function Header() {
             : "bg-white/75 text-ink shadow-[0_1px_0_rgba(17,17,18,0.08)] backdrop-blur-xl"
         }`}
       >
-        <div className="site-container site-header-inner flex items-center justify-between gap-2 py-3 sm:gap-4">
-          <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
+        <div className="site-container site-header-inner flex flex-wrap items-center justify-between gap-2 py-3 sm:gap-4">
+          <div className="flex shrink-0 items-center gap-2 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit - home" className="shrink-0">
               <ProofitLogo
                 priority
@@ -78,12 +77,12 @@ export default function Header() {
               />
             </Link>
 
-            <nav aria-label="Primary" className="hidden items-center gap-6 md:flex lg:gap-8">
+            <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex lg:gap-8">
               <Link
                 href="/about"
                 className="font-display text-sm font-semibold transition-colors hover:text-brand"
               >
-                About
+                About Us
               </Link>
 
               <div className="group relative">
@@ -149,6 +148,7 @@ export default function Header() {
             type="button"
             onClick={() => setOpen(true)}
             className="flex h-11 shrink-0 cursor-pointer items-center justify-center gap-1 rounded-full border border-current/20 px-2 transition-colors hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand sm:gap-2 sm:px-4"
+            ref={menuButtonRef}
             aria-label="Open menu"
             aria-expanded={open}
           >
@@ -183,6 +183,8 @@ export default function Header() {
         className={`fixed inset-0 z-[60] bg-ink text-white transition-all duration-300 ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
+        ref={dialogRef}
+        inert={!open}
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
@@ -203,21 +205,23 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <nav aria-label="Site" className="site-container grid h-[calc(100dvh-80px)] content-start gap-1 overflow-y-auto py-5 md:content-center md:py-0 lg:grid-cols-2 lg:gap-x-16">
+        <nav aria-label="Site" className="site-container grid h-[calc(100dvh-80px)] content-start gap-1 overflow-y-auto py-5 md:py-5 lg:grid-cols-2 lg:gap-x-16">
           {menuLinks.map((l, i) => {
             const index = i + 1;
-            const isCaseStudies = l.href === "/case-studies";
-            const isActive = pathname === l.href || (isCaseStudies && pathname.startsWith(`${l.href}/`));
+            const isGroup = !!l.children;
+            const isExpanded = !!expanded[l.href];
+            const submenuId = `site-menu-${l.href.slice(1)}`;
+            const isActive = pathname === l.href || (isGroup && pathname.startsWith(`${l.href}/`));
 
-            if (isCaseStudies) {
+            if (isGroup) {
               return (
                 <div key={l.href} className="border-b border-white/10 py-1">
                   <button
                     type="button"
-                    onClick={() => setCaseStudiesOpen((value) => !value)}
+                    onClick={() => setExpanded(value => ({ ...value, [l.href]: !value[l.href] }))}
                     className={`group flex min-h-14 w-full cursor-pointer items-center gap-4 py-2.5 text-left ${isActive ? "text-brand" : "text-white"}`}
-                    aria-expanded={caseStudiesOpen}
-                    aria-controls="case-studies-menu"
+                    aria-expanded={isExpanded}
+                    aria-controls={submenuId}
                   >
                     <span className="font-display text-sm text-brand/70">{String(index).padStart(2, "0")}</span>
                     <span className="font-display text-2xl font-semibold transition-all group-hover:translate-x-2 group-hover:text-brand md:text-3xl">
@@ -229,35 +233,38 @@ export default function Header() {
                       viewBox="0 0 24 24"
                       fill="none"
                       aria-hidden
-                      className={`ml-auto shrink-0 transition-transform duration-200 ${caseStudiesOpen ? "rotate-180" : ""}`}
+                      className={`ml-auto shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
                     >
                       <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                   <div
-                    id="case-studies-menu"
+                    id={submenuId}
+                    inert={!isExpanded}
                     className={`grid transition-[grid-template-rows,opacity] duration-200 ${
-                      caseStudiesOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     }`}
                   >
                     <div className="overflow-hidden">
                       <div className="pb-3 pl-8 sm:pl-12">
                         <Link
-                          href="/case-studies"
+                          href={l.href}
+                          onClick={() => setOpen(false)}
                           className="mb-1 flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
                         >
-                          View all case studies
+                          {l.overviewLabel}
                         </Link>
-                        {caseStudies.map((study, studyIndex) => (
+                        {l.children!.map((child, childIndex) => (
                           <Link
-                            key={study.slug}
-                            href={`/case-studies/${study.slug}`}
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setOpen(false)}
                             className={`group/sub flex min-h-11 items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/5 hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand ${
-                              pathname === `/case-studies/${study.slug}` ? "text-brand" : "text-white/85"
+                              pathname === child.href ? "text-brand" : "text-white/85"
                             }`}
                           >
-                            <span className="shrink-0 font-display text-xs text-brand/80">{index}.{studyIndex + 1}</span>
-                            <span className="max-w-md text-sm font-medium leading-snug">{study.title}</span>
+                            <span className="shrink-0 font-display text-xs text-brand/80">{index}.{childIndex + 1}</span>
+                            <span className="max-w-md text-sm font-medium leading-snug">{child.label}</span>
                           </Link>
                         ))}
                       </div>
@@ -271,6 +278,7 @@ export default function Header() {
               <Link
                 key={l.href}
                 href={l.href}
+                onClick={() => setOpen(false)}
                 className={`group flex items-baseline gap-4 border-b border-white/10 py-3.5 md:py-4 ${
                   isActive ? "text-brand" : "text-white"
                 }`}
