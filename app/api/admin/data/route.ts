@@ -34,7 +34,7 @@ export async function PUT(request: Request) {
       try { const url = new URL(value); return url.protocol === "https:" && url.hostname.endsWith(".public.blob.vercel-storage.com"); } catch { return false; }
     };
     if (body.store.team?.some(item=> !item.name.trim() || !Number.isFinite(item.order) || (item.visible && !allowedImage(item.image)))) {
-      return NextResponse.json({error:"Each team member needs a name, display order and a valid /images/ path or public Vercel Blob image URL."},{status:400});
+      return NextResponse.json({error:"Each team member needs a name and display order. Upload a team photo before making them visible."},{status:400});
     }
     if (body.store.offerings) {
       const slugs = new Set<string>();
@@ -44,8 +44,14 @@ export async function PUT(request: Request) {
         }
         if (slugs.has(item.slug)) return NextResponse.json({error:`Duplicate service anchor: ${item.slug}. Choose a unique anchor.`},{status:400});
         slugs.add(item.slug);
-        if (item.visible && item.homepage && !allowedImage(item.image)) return NextResponse.json({error:`Choose a valid website image or public Vercel Blob URL for ${item.title}.`},{status:400});
+        if (item.visible && item.homepage && !allowedImage(item.image)) return NextResponse.json({error:`Upload a service image for ${item.title} before making it visible on the homepage.`},{status:400});
       }
+    }
+    for (const item of [...(body.store.posts || []).filter(item => item.published), ...(body.store.caseStudies || []).filter(item => item.published)]) {
+      if (!allowedImage(item.image)) return NextResponse.json({ error: `Upload an image for "${item.title}" before publishing it.` }, { status: 400 });
+    }
+    for (const item of (body.store.testimonials || []).filter(item => item.visible)) {
+      if (!allowedImage(item.image)) return NextResponse.json({ error: `Upload a customer portrait for "${item.name}" before making it visible.` }, { status: 400 });
     }
     if (body.store.contact) {
       body.store.contact.phones = body.store.contact.phones.map(item=>item.trim()).filter(Boolean);

@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, ReactNode, useMemo, useState } from "react";
+import { FormEvent, ReactNode, useContext, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TeamPanel, OfferingsPanel, ContactSettingsPanel } from "./ContentManagementPanels";
 import EnquiryImport from "./EnquiryImport";
+import AdminImageField, { AdminUploadContext } from "./AdminImageField";
 import type {
   AdminAppointment,
   AdminCaseStudy,
@@ -23,7 +24,7 @@ type SectionId = "overview" | "content" | "images" | "posts" | "careers" | "test
 type Field = {
   key: string;
   label: string;
-  type?: "text" | "textarea" | "date" | "number" | "checkbox";
+  type?: "text" | "textarea" | "date" | "number" | "checkbox" | "image";
   placeholder?: string;
   rows?: number;
   read?: (item: any) => string | number | boolean;
@@ -64,6 +65,7 @@ export default function AdminDashboard({
   const [enquiries, setEnquiries] = useState(initialEnquiries);
   const [images, setImages] = useState(initialImages);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
 
@@ -104,13 +106,14 @@ export default function AdminDashboard({
   const title = navigation.find((item) => item.id === active)?.label || "Admin";
 
   return (
+    <AdminUploadContext.Provider value={{ busy: uploading || saving, setUploading, resolveImage: value => images.find(image => image.path === value)?.url || value }}>
     <div className="min-h-dvh bg-[#f4f1ec] text-ink">
       <aside className={`fixed inset-y-0 left-0 z-[120] flex w-[278px] flex-col bg-[#111214] text-white transition-transform duration-200 lg:translate-x-0 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-[76px] items-center border-b border-white/10 px-6">
           <Image src="/images/logo.svg" alt="Proofit" width={647} height={218} className="h-auto w-36 brightness-0 invert" priority />
           <span className="ml-3 rounded-full bg-brand px-2 py-1 text-[10px] font-bold uppercase tracking-wider">Admin</span>
         </div>
-        <nav className="proofy-scrollbar flex-1 space-y-1 overflow-y-auto p-3" aria-label="Admin sections">
+        <fieldset disabled={uploading || saving} className="contents"><nav className="proofy-scrollbar flex-1 space-y-1 overflow-y-auto p-3" aria-label="Admin sections">
           {navigation.map((item) => (
             <button key={item.id} type="button" onClick={() => selectSection(item.id)} className={`flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-xl px-3.5 text-left text-sm font-semibold transition ${active === item.id ? "bg-brand text-white" : "text-white/65 hover:bg-white/10 hover:text-white"}`}>
               <AdminIcon name={item.icon} />
@@ -123,6 +126,7 @@ export default function AdminDashboard({
           <a href="/" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-white/65 hover:bg-white/10 hover:text-white"><AdminIcon name="external" />View website</a>
           <button type="button" onClick={logout} className="mt-1 flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-xl px-3 text-sm font-semibold text-white/65 hover:bg-white/10 hover:text-white"><AdminIcon name="logout" />Sign out</button>
         </div>
+        </fieldset>
       </aside>
       {menuOpen && <button className="fixed inset-0 z-[110] cursor-default bg-black/50 lg:hidden" onClick={() => setMenuOpen(false)} aria-label="Close navigation" />}
 
@@ -134,14 +138,15 @@ export default function AdminDashboard({
             <h1 className="truncate font-display text-xl font-semibold sm:text-2xl">{title}</h1>
           </div>
           <div aria-live="polite" className="hidden text-sm font-semibold sm:block">{notice && <span className="text-green-700">{notice}</span>}{error && <span className="text-red-700">{error}</span>}</div>
-          <button type="button" onClick={() => void save()} disabled={saving} className="flex min-h-11 cursor-pointer items-center gap-2 rounded-xl bg-ink px-4 font-display text-sm font-semibold text-white transition hover:bg-brand disabled:cursor-wait disabled:opacity-60"><AdminIcon name="save" />{saving ? "Saving..." : "Save changes"}</button>
+          <button type="button" onClick={() => void save()} disabled={saving || uploading} className="flex min-h-11 cursor-pointer items-center gap-2 rounded-xl bg-ink px-4 font-display text-sm font-semibold text-white transition hover:bg-brand disabled:cursor-wait disabled:opacity-60"><AdminIcon name="save" />{uploading ? "Uploading..." : saving ? "Saving..." : "Save changes"}</button>
         </header>
 
         <main className="mx-auto max-w-[1500px] p-4 sm:p-6 lg:p-8">
+          <fieldset disabled={uploading || saving} className="min-w-0">
           {(notice || error) && <div aria-live="polite" className={`mb-4 rounded-xl p-3 text-sm font-semibold sm:hidden ${error ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}>{error || notice}</div>}
           {active === "overview" && <Overview store={store} enquiries={enquiries} upcoming={upcoming} unreadProofy={unreadProofy} onNavigate={selectSection} />}
           {active === "content" && <SiteContentPanel items={store.siteCopy} onChange={(siteCopy) => setStore({ ...store, siteCopy })} />}
-          {active === "images" && <ImagesPanel images={images} setImages={setImages} />}
+          {active === "images" && <ImagesPanel images={images} setImages={setImages} updatedAt={store.updatedAt} onReplaced={(path, override, updatedAt) => setStore(previous => ({ ...previous, ...(updatedAt ? { updatedAt } : {}), imageOverrides: { ...previous.imageOverrides, [path]: override } }))} />}
           {active === "team" && <TeamPanel items={store.team} onChange={team => setStore({...store,team})} />}
           {active === "services" && <OfferingsPanel items={store.offerings} onChange={offerings => setStore({...store,offerings})} />}
           {active === "contact" && <ContactSettingsPanel value={store.contact} onChange={contact => setStore({...store,contact})} />}
@@ -153,9 +158,11 @@ export default function AdminDashboard({
           {active === "enquiries" && <EnquiriesPanel enquiries={enquiries} setEnquiries={setEnquiries} />}
           {active === "proofy" && <ProofyPanel store={store} onChange={setStore} />}
           {active === "appointments" && <AppointmentsPanel items={store.appointments} onChange={(appointments) => setStore({ ...store, appointments })} />}
+          </fieldset>
         </main>
       </div>
     </div>
+    </AdminUploadContext.Provider>
   );
 }
 
@@ -207,7 +214,8 @@ function SiteContentPanel({ items, onChange }: { items: SiteCopyOverride[]; onCh
   return <SplitPanel title="Site-wide content" subtitle="Replace visible wording without changing layout. Use * for every page, or enter a path such as /about." action={<PrimaryButton onClick={add}>Add override</PrimaryButton>} list={<>{items.length === 0 && <EmptyState title="No content overrides" text="Add an override using the exact wording currently visible on the website." />}{items.map((item) => <ListButton key={item.id} active={item.id === selected} onClick={() => setSelected(item.id)} title={item.replacement || item.original || "Untitled override"} subtitle={item.page === "*" ? "All pages" : item.page} />)}</>} editor={current ? <div className="space-y-4"><FieldLabel label="Page path"><input className={fieldClass} value={current.page} onChange={(e) => update({ page: e.target.value })} placeholder="* or /about" /></FieldLabel><FieldLabel label="Current visible text"><textarea className={fieldClass} rows={5} value={current.original} onChange={(e) => update({ original: e.target.value })} placeholder="Paste the exact current text" /></FieldLabel><FieldLabel label="Replacement text"><textarea className={fieldClass} rows={5} value={current.replacement} onChange={(e) => update({ replacement: e.target.value })} placeholder="Enter the new wording" /></FieldLabel><label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-black/10 px-4"><input type="checkbox" checked={current.enabled} onChange={(e) => update({ enabled: e.target.checked })} className="h-5 w-5 accent-brand" /><span className="text-sm font-semibold">Enabled</span></label><DangerButton onClick={remove}>Delete override</DangerButton></div> : <EmptyState title="Select an override" text="Choose an item or create a new content override." />} />;
 }
 
-function ImagesPanel({ images, setImages }: { images: AdminImage[]; setImages: (items: AdminImage[]) => void }) {
+function ImagesPanel({ images, setImages, onReplaced, updatedAt }: { updatedAt: string; images: AdminImage[]; setImages: (items: AdminImage[]) => void; onReplaced: (path: string, override: AdminStore["imageOverrides"][string], updatedAt?: string) => void }) {
+  const uploadContext = useContext(AdminUploadContext);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(images[0]?.path || "");
   const [file, setFile] = useState<File>();
@@ -217,27 +225,33 @@ function ImagesPanel({ images, setImages }: { images: AdminImage[]; setImages: (
   const current = images.find((item) => item.path === selected);
   async function upload(event: FormEvent) {
     event.preventDefault(); if (!file || !current) return;
-    setUploading(true); setMessage("");
-    const form = new FormData(); form.set("file", file); form.set("target", current.path);
+    setUploading(true); uploadContext.setUploading(true); setMessage("");
+    try {
+    const form = new FormData(); form.set("file", file); form.set("target", current.path); form.set("updatedAt", updatedAt);
     const response = await fetch("/api/admin/upload", { method: "POST", body: form });
     const result = await response.json().catch(() => ({}));
-    setUploading(false);
-    if (!response.ok) { setMessage(result.error || "Upload failed."); return; }
+    if (!response.ok) throw new Error(result.error || "Upload failed. Please try again.");
     setImages(images.map((item) => item.path === result.image.path ? result.image : item));
-    setFile(undefined); setMessage("Image replaced and optimized.");
+    if (result.override) onReplaced(result.image.path, result.override, result.updatedAt);
+    setFile(undefined); setMessage("Image replaced and optimized. This change is already live wherever this image is used.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Upload failed. Please try again.");
+    } finally {
+      setUploading(false); uploadContext.setUploading(false);
+    }
   }
-  return <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]"><Panel title="Website images" subtitle={`${images.length} image assets`} action={<input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search images" className={`${fieldClass} max-w-64`} />}><div className="grid max-h-[72dvh] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-3 lg:grid-cols-4">{filtered.map((item) => <button type="button" key={item.path} onClick={() => { setSelected(item.path); setMessage(""); }} className={`group cursor-pointer overflow-hidden rounded-xl border bg-[#eeeae4] text-left ${selected === item.path ? "border-brand ring-2 ring-brand/20" : "border-black/10 hover:border-brand/50"}`}><div className="relative aspect-square"><Image src={item.url || `${item.path}?v=${encodeURIComponent(item.modifiedAt)}`} alt="" fill sizes="180px" className="object-contain p-2" unoptimized /></div><p className="truncate border-t border-black/10 bg-white px-2 py-2 text-[11px] font-semibold" title={item.path}>{item.path.split("/").pop()}{item.overridden ? " · replaced" : ""}</p></button>)}</div></Panel><Panel title="Replace image" subtitle="The uploaded file replaces this exact website asset.">{current ? <form onSubmit={upload} className="space-y-4"><div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#eeeae4]"><Image src={current.url || `${current.path}?v=${encodeURIComponent(current.modifiedAt)}`} alt="Selected website asset" fill sizes="380px" className="object-contain p-3" unoptimized /></div><p className="break-all rounded-xl bg-[#f5f2ed] p-3 text-xs font-semibold">{current.path}</p><p className="text-xs text-ink/55">Current size: {formatBytes(current.size)}{current.overridden ? " · Stored in Vercel Blob" : ""}</p><FieldLabel label="Replacement file"><input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0])} className="block w-full cursor-pointer rounded-xl border border-black/15 bg-white p-2 text-sm file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-ink file:px-3 file:py-2 file:font-semibold file:text-white" /></FieldLabel><p className="text-xs leading-relaxed text-ink/50">Uploads are optimized and must be under 4 MB.</p>{message && <p className="rounded-xl bg-brand/[.08] p-3 text-sm font-semibold">{message}</p>}<button disabled={!file || uploading} className="min-h-11 w-full cursor-pointer rounded-xl bg-ink px-4 text-sm font-semibold text-white hover:bg-brand disabled:cursor-not-allowed disabled:opacity-40">{uploading ? "Optimizing..." : "Replace image"}</button></form> : <EmptyState title="Select an image" text="Choose an asset from the library." />}</Panel></div>;
+  return <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]"><Panel title="Website images" subtitle={`${images.length} image assets`} action={<input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search images" className={`${fieldClass} max-w-64`} />}><div className="grid max-h-[72dvh] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-3 lg:grid-cols-4">{filtered.map((item) => <button type="button" key={item.path} onClick={() => { setSelected(item.path); setMessage(""); }} className={`group cursor-pointer overflow-hidden rounded-xl border bg-[#eeeae4] text-left ${selected === item.path ? "border-brand ring-2 ring-brand/20" : "border-black/10 hover:border-brand/50"}`}><div className="relative aspect-square"><Image src={item.url || `${item.path}?v=${encodeURIComponent(item.modifiedAt)}`} alt="" fill sizes="180px" className="object-contain p-2" unoptimized /></div><p className="truncate border-t border-black/10 bg-white px-2 py-2 text-[11px] font-semibold" title={item.path}>{item.path.split("/").pop()}{item.overridden ? " · replaced" : ""}</p></button>)}</div></Panel><Panel title="Replace image" subtitle="Select a thumbnail, then choose a replacement from your device. This updates every page using that image immediately. For a new blog, service or review, upload inside its editor instead.">{current ? <form onSubmit={upload} className="space-y-4"><div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#eeeae4]"><Image src={current.url || `${current.path}?v=${encodeURIComponent(current.modifiedAt)}`} alt="Selected website asset" fill sizes="380px" className="object-contain p-3" unoptimized /></div><p className="break-all rounded-xl bg-[#f5f2ed] p-3 text-xs font-semibold">{current.path}</p><p className="text-xs text-ink/55">Current size: {formatBytes(current.size)}{current.overridden ? " · Stored in Vercel Blob" : ""}</p><FieldLabel label="Replacement file"><input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0])} className="block w-full cursor-pointer rounded-xl border border-black/15 bg-white p-2 text-sm file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-ink file:px-3 file:py-2 file:font-semibold file:text-white" /></FieldLabel><p className="text-xs leading-relaxed text-ink/50">Uploads are optimized and must be under 4 MB.</p>{message && <p className="rounded-xl bg-brand/[.08] p-3 text-sm font-semibold">{message}</p>}<button disabled={!file || uploading} className="min-h-11 w-full cursor-pointer rounded-xl bg-ink px-4 text-sm font-semibold text-white hover:bg-brand disabled:cursor-not-allowed disabled:opacity-40">{uploading ? "Optimizing..." : "Replace image"}</button></form> : <EmptyState title="Select an image" text="Choose an asset from the library." />}</Panel></div>;
 }
 
 function PostsPanel({ items, onChange }: { items: AdminPost[]; onChange: (items: AdminPost[]) => void }) {
   const fields: Field[] = [
     { key: "title", label: "Title" }, { key: "slug", label: "URL slug" }, { key: "excerpt", label: "Excerpt", type: "textarea", rows: 3 },
     { key: "date", label: "Publication date", type: "date" }, { key: "readMins", label: "Read time (minutes)", type: "number" }, { key: "tag", label: "Category" },
-    { key: "image", label: "Featured image path" },
+    { key: "image", label: "Featured image", type: "image" },
     { key: "bodyText", label: "Article body", type: "textarea", rows: 14, read: (item) => blocksToText(item.body), write: (item, value) => ({ ...item, body: textToBlocks(String(value)) }) },
     { key: "published", label: "Published", type: "checkbox" },
   ];
-  const create = (): AdminPost => ({ id: crypto.randomUUID(), slug: "new-article", title: "New article", excerpt: "", date: localDate(new Date()), readMins: 5, image: "/images/blog-monsoon.webp", tag: "Insights", body: [{ p: "Start writing here." }], published: false });
+  const create = (): AdminPost => ({ id: crypto.randomUUID(), slug: "new-article", title: "New article", excerpt: "", date: localDate(new Date()), readMins: 5, image: "", tag: "Insights", body: [{ p: "Start writing here." }], published: false });
   return <CollectionPanel title="Blogs" subtitle="Create, edit, publish or remove articles." items={items} onChange={onChange} createItem={create} titleKey="title" subtitleKey="tag" fields={fields} />;
 }
 
@@ -248,14 +262,14 @@ function CareersPanel({ items, onChange }: { items: AdminCareer[]; onChange: (it
 }
 
 function TestimonialsPanel({ items, onChange }: { items: AdminTestimonial[]; onChange: (items: AdminTestimonial[]) => void }) {
-  const fields: Field[] = [{ key: "name", label: "Name" }, { key: "author", label: "Designation" }, { key: "organisation", label: "Organisation / context" }, { key: "image", label: "Portrait image path" }, { key: "quote", label: "Testimonial", type: "textarea", rows: 10 }, { key: "order", label: "Display order", type: "number" }, { key: "visible", label: "Visible on website", type: "checkbox" }];
-  const create = (): AdminTestimonial => ({ id: crypto.randomUUID(), name: "New customer", image: "/images/testimonials/rahul-mehta.webp", quote: "", author: "", organisation: "", visible: false, order: items.length });
+  const fields: Field[] = [{ key: "name", label: "Name" }, { key: "author", label: "Designation" }, { key: "organisation", label: "Organisation / context" }, { key: "image", label: "Customer portrait", type: "image" }, { key: "quote", label: "Testimonial", type: "textarea", rows: 10 }, { key: "order", label: "Display order", type: "number" }, { key: "visible", label: "Visible on website", type: "checkbox" }];
+  const create = (): AdminTestimonial => ({ id: crypto.randomUUID(), name: "New customer", image: "", quote: "", author: "", organisation: "", visible: false, order: items.length });
   return <CollectionPanel title="Testimonials" subtitle="Manage reviews and customer portraits." items={items} onChange={onChange} createItem={create} titleKey="name" subtitleKey="author" fields={fields} />;
 }
 
 function CaseStudiesPanel({ items, onChange }: { items: AdminCaseStudy[]; onChange: (items: AdminCaseStudy[]) => void }) {
-  const fields: Field[] = [{ key: "title", label: "Title" }, { key: "slug", label: "URL slug" }, { key: "location", label: "Location" }, { key: "service", label: "Service" }, { key: "image", label: "Cover image path" }, { key: "problem", label: "The problem", type: "textarea", rows: 5 }, { key: "approach", label: "What we did", type: "textarea", rows: 5 }, { key: "outcome", label: "The outcome", type: "textarea", rows: 5 }, { key: "statsText", label: "Statistics (one Label :: Value per line)", type: "textarea", rows: 5, read: (item) => item.stats.map((stat: any) => `${stat.label} :: ${stat.value}`).join("\n"), write: (item, value) => ({ ...item, stats: String(value).split("\n").filter(Boolean).map((line) => { const [label, ...valueParts] = line.split("::"); return { label: label.trim(), value: valueParts.join("::").trim() }; }) }) }, { key: "order", label: "Display order", type: "number" }, { key: "published", label: "Published", type: "checkbox" }];
-  const create = (): AdminCaseStudy => ({ id: crypto.randomUUID(), slug: "new-case-study", title: "New case study", location: "Mumbai", service: "Home Inspection", image: "/images/inspector-snagging.webp", problem: "", approach: "", outcome: "", stats: [], published: false, order: items.length });
+  const fields: Field[] = [{ key: "title", label: "Title" }, { key: "slug", label: "URL slug" }, { key: "location", label: "Location" }, { key: "service", label: "Service" }, { key: "image", label: "Cover image", type: "image" }, { key: "problem", label: "The problem", type: "textarea", rows: 5 }, { key: "approach", label: "What we did", type: "textarea", rows: 5 }, { key: "outcome", label: "The outcome", type: "textarea", rows: 5 }, { key: "statsText", label: "Statistics (one Label :: Value per line)", type: "textarea", rows: 5, read: (item) => item.stats.map((stat: any) => `${stat.label} :: ${stat.value}`).join("\n"), write: (item, value) => ({ ...item, stats: String(value).split("\n").filter(Boolean).map((line) => { const [label, ...valueParts] = line.split("::"); return { label: label.trim(), value: valueParts.join("::").trim() }; }) }) }, { key: "order", label: "Display order", type: "number" }, { key: "published", label: "Published", type: "checkbox" }];
+  const create = (): AdminCaseStudy => ({ id: crypto.randomUUID(), slug: "new-case-study", title: "New case study", location: "Mumbai", service: "Home Inspection", image: "", problem: "", approach: "", outcome: "", stats: [], published: false, order: items.length });
   return <CollectionPanel title="Case studies" subtitle="Create and publish inspection outcomes." items={items} onChange={onChange} createItem={create} titleKey="title" subtitleKey="location" fields={fields} />;
 }
 
@@ -265,7 +279,7 @@ function CollectionPanel<T extends { id: string }>({ title, subtitle, items, onC
   function add() { const item = createItem(); onChange([...items, item]); setSelected(item.id); }
   function update(field: Field, value: string | number | boolean) { onChange(items.map((item) => item.id === selected ? (field.write ? field.write(item, value) : { ...item, [field.key]: value }) : item)); }
   function remove() { if (!current || !window.confirm(`Delete ${String(current[titleKey])}?`)) return; onChange(items.filter((item) => item.id !== selected)); setSelected(""); }
-  return <SplitPanel title={title} subtitle={`${subtitle} Changes publish when you click Save changes.`} action={<PrimaryButton onClick={add}>Add new</PrimaryButton>} list={<>{items.length === 0 && <EmptyState title={`No ${title.toLowerCase()}`} text="Create the first item." />}{[...items].sort((a: any, b: any) => Number(a.order || 0) - Number(b.order || 0)).map((item: any) => <ListButton key={item.id} active={item.id === selected} onClick={() => setSelected(item.id)} title={String(item[titleKey] || "Untitled")} subtitle={String(item[subtitleKey] || "")} badge={("published" in item ? item.published : "active" in item ? item.active : "visible" in item ? item.visible : true) ? "Live" : "Hidden"} />)}</>} editor={current ? <div className="space-y-4">{fields.map((field) => { const value = field.read ? field.read(current) : current[field.key]; if (field.type === "checkbox") return <label key={field.key} className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-black/10 px-4"><input type="checkbox" checked={Boolean(value)} onChange={(e) => update(field, e.target.checked)} className="h-5 w-5 accent-brand" /><span className="text-sm font-semibold">{field.label}</span></label>; if (field.type === "textarea") return <FieldLabel key={field.key} label={field.label}><textarea rows={field.rows || 5} className={fieldClass} value={String(value ?? "")} onChange={(e) => update(field, e.target.value)} placeholder={field.placeholder} /></FieldLabel>; return <FieldLabel key={field.key} label={field.label}><input type={field.type || "text"} className={fieldClass} value={String(value ?? "")} onChange={(e) => update(field, field.type === "number" ? Number(e.target.value) : e.target.value)} placeholder={field.placeholder} /></FieldLabel>; })}<DangerButton onClick={remove}>Delete permanently</DangerButton></div> : <EmptyState title="Select an item" text="Choose an item from the list or create a new one." />} />;
+  return <SplitPanel title={title} subtitle={`${subtitle} Changes publish when you click Save changes.`} action={<PrimaryButton onClick={add}>Add new</PrimaryButton>} list={<>{items.length === 0 && <EmptyState title={`No ${title.toLowerCase()}`} text="Create the first item." />}{[...items].sort((a: any, b: any) => Number(a.order || 0) - Number(b.order || 0)).map((item: any) => <ListButton key={item.id} active={item.id === selected} onClick={() => setSelected(item.id)} title={String(item[titleKey] || "Untitled")} subtitle={String(item[subtitleKey] || "")} badge={("published" in item ? item.published : "active" in item ? item.active : "visible" in item ? item.visible : true) ? "Live" : "Hidden"} />)}</>} editor={current ? <div className="space-y-4">{fields.map((field) => { const value = field.read ? field.read(current) : current[field.key]; if (field.type === "image") return <AdminImageField key={`${current.id}-${field.key}`} label={field.label} value={String(value || "")} onChange={value => update(field, value)} />; if (field.type === "checkbox") return <label key={field.key} className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-black/10 px-4"><input type="checkbox" checked={Boolean(value)} onChange={(e) => update(field, e.target.checked)} className="h-5 w-5 accent-brand" /><span className="text-sm font-semibold">{field.label}</span></label>; if (field.type === "textarea") return <FieldLabel key={field.key} label={field.label}><textarea rows={field.rows || 5} className={fieldClass} value={String(value ?? "")} onChange={(e) => update(field, e.target.value)} placeholder={field.placeholder} /></FieldLabel>; return <FieldLabel key={field.key} label={field.label}><input type={field.type || "text"} className={fieldClass} value={String(value ?? "")} onChange={(e) => update(field, field.type === "number" ? Number(e.target.value) : e.target.value)} placeholder={field.placeholder} /></FieldLabel>; })}<DangerButton onClick={remove}>Delete permanently</DangerButton></div> : <EmptyState title="Select an item" text="Choose an item from the list or create a new one." />} />;
 }
 
 function EnquiriesPanel({ enquiries, setEnquiries }: { enquiries: StoredEnquiryRecord[]; setEnquiries: (items: StoredEnquiryRecord[]) => void }) {

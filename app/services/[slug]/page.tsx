@@ -123,7 +123,7 @@ export default async function ServicePage({ params }: Params) {
 
     <section className="site-section"><div className="site-container grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div><SectionHeading eyebrow="What you receive" title={copy.report.title} lede={copy.report.body} /><ArrowBtn href={site.whatsappSampleReport} external variant="dark">Ask for Sample Report</ArrowBtn></div>
-      <Reveal><Image src="/images/inspection-report-sample.webp" alt="Sample home inspection report showing issue locations, observations and Critical, Medium or Low severity ratings" width={722} height={505} sizes="(min-width:1024px) 50vw, 100vw" quality={90} className="h-auto w-full rounded-2xl" /></Reveal>
+      <Reveal><Image src="/images/inspection-ledger-sample.webp" alt="Sample Proofit inspection ledger showing 52 observations, an overall property score of 88 out of 100, and a room-by-room table of contents" width={1134} height={1631} sizes="(min-width:1024px) 50vw, 100vw" quality={90} className="h-auto w-full rounded-2xl" /></Reveal>
     </div></section>
 
     <section className="site-section bg-cream"><div className="site-container"><SectionHeading eyebrow="Before you enquire" title="Questions we get a lot" /><FaqGrid faqs={copy.faqs} /></div></section>

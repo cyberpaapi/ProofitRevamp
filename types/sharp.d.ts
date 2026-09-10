@@ -1,5 +1,6 @@
 declare module "sharp" {
   type SharpInstance = {
+    resize(options: { width: number; height: number; fit: "inside"; withoutEnlargement: boolean }): SharpInstance;
     rotate(): SharpInstance;
     webp(options?: Record<string, unknown>): SharpInstance;
     avif(options?: Record<string, unknown>): SharpInstance;
@@ -9,5 +10,5 @@ declare module "sharp" {
     toBuffer(): Promise<Buffer>;
   };
 
-  export default function sharp(input?: Uint8Array | ArrayBuffer): SharpInstance;
+  export default function sharp(input?: Uint8Array | ArrayBuffer, options?: { limitInputPixels?: number }): SharpInstance;
 }
