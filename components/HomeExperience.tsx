@@ -109,16 +109,17 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
             </div>
           </div>
           <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12 lg:pb-32">
-            <div className="site-container flex flex-col items-start gap-6 md:items-end">
+            <div className="site-container">
+            <div className="home-hero-summary relative ml-auto flex w-full max-w-[500px] flex-col gap-6 md:text-right">
               <p
-                className="banner-copy-scrim hero-rise max-w-[500px] font-display text-sm font-normal leading-[1.55] text-white sm:text-base md:text-left"
+                className="hero-rise font-display text-sm font-normal leading-[1.55] text-white sm:text-base"
                 style={{ ["--rise-delay" as string]: "220ms" }}
               >
                 For homeowners who value informed long-term decisions, PROOFIT delivers structured,
                 technology-backed inspections. We uncover hidden issues before they become costly repairs. Protect
                 your home with clarity, not assumptions.
               </p>
-              <div className="hero-actions hero-rise flex w-full max-w-[500px] flex-wrap items-center justify-start gap-3 sm:gap-5" style={{ ["--rise-delay" as string]: "340ms" }}>
+              <div className="hero-actions hero-rise flex w-full flex-wrap items-center justify-start gap-3 sm:gap-5 md:justify-end" style={{ ["--rise-delay" as string]: "340ms" }}>
                 {campaignMode ? (
                   <ScrollToEnquiryButton targetId="landing2-enquiry" variant="orange" className="hero-action-primary">
                     Book an Inspection
@@ -134,6 +135,7 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
                   </>
                 )}
               </div>
+            </div>
             </div>
           </div>
         </ThermalHero>
@@ -179,25 +181,7 @@ export default async function HomeExperience({ campaignMode = false }: { campaig
       {/* ----------------------------- HOW IT WORKS --------------------------- */}
       <section className="site-section about-texture">
         <div className="site-container ">
-          <div className="section-heading grid gap-4 md:grid-cols-2 md:items-end md:gap-6">
-            <Reveal>
-              <h2 className="font-display text-4xl font-semibold md:text-5xl">
-                How PROOFIT
-                <br />
-                Works?
-              </h2>
-            </Reveal>
-            <Reveal delay={120}>
-              <p className="max-w-md text-ink-soft/75 md:ml-auto">
-                If it&apos;s worth living In, it&apos;s worth verifying. Our inspection journey includes: A structured,
-                technology-backed inspection designed to identify performance risks in your home before they become
-                repair costs.
-              </p>
-            </Reveal>
-          </div>
-          <Reveal delay={150}>
-            <HowItWorks steps={howSteps} />
-          </Reveal>
+          <HowItWorks steps={howSteps} />
         </div>
       </section>
 

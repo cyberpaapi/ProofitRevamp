@@ -8,15 +8,47 @@
 }
 .physics-pills[data-physics-ready="true"] > button:active { cursor: grabbing; }
 
-.works-card { min-height: 540px; height: min(68svh, 620px); }
+.works-stage {
+  position: sticky;
+  top: 80px;
+  height: calc(100svh - 80px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) 44px;
+  justify-items: center;
+  gap: 24px;
+  padding: 12px 8px;
+}
+.works-heading { display: grid; gap: 12px; align-items: center; }
+.works-heading h2 { font-size: clamp(1.5rem, 2.8vw, 2.5rem); }
+.works-stage .works-heading p { margin: 0; font-size: .8125rem; line-height: 1.45; }
+.works-deck { height: 100%; max-height: 620px; align-self: center; min-height: 0; }
+.works-card { height: 100%; min-height: 0; }
 .works-image { min-height: 0; }
+@media(min-width:768px) {
+  .works-heading { grid-template-columns: .9fr 1.1fr; gap: 32px; }
+  .works-stage .works-heading p { font-size: .875rem; line-height: 1.5; }
+}
 .map-review-pulse { transform-box: fill-box; transform-origin: center; animation: review-beacon 1.8s ease-out infinite; }
 @keyframes review-beacon { 0% { opacity:.45; transform:scale(1); } 100% { opacity:0; transform:scale(2); } }
 @media(max-width:767px) {
-  .works-card { height:auto; min-height:0; grid-template-rows: min(32svh,250px) auto; }
+  .works-stage { gap: 20px; }
+  .works-card { grid-template-rows: minmax(100px, 1fr) auto; }
   .works-copy { min-height:275px; }
 }
-@media(max-height:650px) and (min-width:768px) { .works-card { height:75svh; min-height:360px; } }
+/* Short/landscape screens use the same cards as a natural-height carousel,
+   so the pinned title never forces copy into a clipped viewport. */
+.works-scroll[data-unpinned] { height: auto !important; }
+.works-scroll[data-unpinned] .works-stage { position: relative; top: 0; height: auto; grid-template-rows: auto auto 44px; }
+.works-scroll[data-unpinned] .works-deck { height: auto; max-height: none; }
+.works-scroll[data-unpinned] .works-card { height: auto; min-height: 0; }
+.works-scroll[data-unpinned] .works-image { min-height: 220px; }
+@media(max-height:699px), (max-width:767px) and (max-height:739px), (max-width:359px) {
+  .works-scroll { height: auto !important; }
+  .works-stage { position: relative; top: 0; height: auto; grid-template-rows: auto auto 44px; }
+  .works-deck { height: auto; max-height: none; }
+  .works-card { height: auto; min-height: 0; }
+  .works-image { min-height: 220px; }
+}
 @media(prefers-reduced-motion:reduce) { .map-review-pulse { animation:none; opacity:.2; } }
 
 @theme {
@@ -41,11 +73,18 @@
    Full-bleed media and readable article measures
    are intentional exceptions; admin screens keep their own layout. */
 :root {
+  --contact-float-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   --site-gutter: 1.25rem;
   --site-section-space: 4rem;
   --site-heading-gap: 2rem;
   --site-copy-gap: 1rem;
   --site-banner-height: clamp(700px, 215.957447vw, 900px);
+}
+/* Keep both contact launchers on one safe-area-aware baseline. */
+.contact-float { bottom: var(--contact-float-bottom); }
+.contact-float-above { bottom: calc(var(--contact-float-bottom) + 3.5rem + .75rem); }
+@media (min-width: 640px) {
+  :root { --contact-float-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
 }
 .site-container {
   width: 100%;
@@ -54,6 +93,7 @@
   padding-inline: var(--site-gutter);
   min-width: 0;
 }
+@media(max-width:359px) { .site-header-inner { padding-inline: 10px; } }
 .site-section { padding-block: var(--site-section-space); }
 .section-heading { margin-bottom: var(--site-heading-gap); }
 .section-content { margin-top: var(--site-heading-gap); }
@@ -160,6 +200,16 @@ h1, h2, h3, h4, .font-display {
   inset: -1.5rem -2.5rem;
   border-radius: 2rem;
   background: none;
+  pointer-events: none;
+}
+.home-hero-summary { isolation: isolate; }
+.home-hero-summary::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -2rem -2rem;
+  border-radius: 2rem;
+  background: radial-gradient(ellipse at center, rgb(0 0 0 / .65) 20%, rgb(0 0 0 / .4) 60%, transparent 75%);
   pointer-events: none;
 }
 

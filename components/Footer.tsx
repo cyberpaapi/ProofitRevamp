@@ -8,8 +8,8 @@ const serviceLinks = [
   { href: "/services/home-inspection#service-pre-possession", label: "Pre Possession Inspection" },
   { href: "/services/home-inspection#service-resale", label: "Resale Property Inspection" },
   { href: "/services/home-inspection#service-rental", label: "Rental Move-In / Move-Out Inspection" },
-  { href: "/services/water-inspection#service-thermal", label: "Thermal Inspection" },
   { href: "/services/home-inspection#service-renovation", label: "Pre-Renovation / Post-Renovation Inspection" },
+  { href: "/services/water-inspection#service-thermal", label: "Thermal Inspection" },
   { href: "/services/home-inspection#service-builder-audit", label: "Builder Quality Audit" },
 ];
 

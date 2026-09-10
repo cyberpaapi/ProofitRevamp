@@ -1,5 +1,6 @@
 import "server-only";
 import { seedTeam, seedOfferings } from "./offering-seeds";
+import { migrateOfferingOrder, offeringOrderVersion } from "./offering-order";
 import { site } from "@/lib/site";
 import { proofyWelcomeMessage } from "@/lib/proofy-copy";
 
@@ -106,7 +107,7 @@ const seededTestimonials: AdminTestimonial[] = [
 function createSeedStore(): AdminStore {
   const now = new Date().toISOString();
   return {
-    version: 2,
+    version: offeringOrderVersion,
     team: seedTeam,
     offerings: seedOfferings,
     contact: { phones: site.phones.map(item => item.label), email: site.email },
@@ -147,7 +148,8 @@ function normaliseStore(value: Partial<AdminStore>): AdminStore {
     ...seed,
     ...value,
     team: Array.isArray(value.team) ? value.team : seed.team,
-    offerings: Array.isArray(value.offerings) ? value.offerings : seed.offerings,
+    version: Math.max(value.version ?? 0, offeringOrderVersion),
+    offerings: Array.isArray(value.offerings) ? migrateOfferingOrder(value.offerings, value.version ?? 0) : seed.offerings,
     contact: value.contact || seed.contact,
     siteCopy: Array.isArray(value.siteCopy) ? value.siteCopy : seed.siteCopy,
     posts: Array.isArray(value.posts) ? value.posts : seed.posts,

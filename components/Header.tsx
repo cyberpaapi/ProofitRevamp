@@ -66,30 +66,17 @@ export default function Header() {
             : "bg-white/75 text-ink shadow-[0_1px_0_rgba(17,17,18,0.08)] backdrop-blur-xl"
         }`}
       >
-        <div className="site-container flex items-center justify-between gap-2 py-3 sm:gap-4">
+        <div className="site-container site-header-inner flex items-center justify-between gap-2 py-3 sm:gap-4">
           <div className="flex min-w-0 items-center gap-2 md:gap-6 lg:gap-8">
             <Link href="/" aria-label="Proofit - home" className="shrink-0">
               <ProofitLogo
                 priority
-                className="w-[88px] sm:w-[108px] md:w-[128px]"
+                className="w-[114.4px] sm:w-[140.4px] md:w-[166.4px]"
                 imageClassName={`transition-[filter] duration-300 ${
                   heroMode ? "brightness-0 invert" : ""
                 }`}
               />
             </Link>
-
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="flex h-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-current/20 px-3.5 transition-colors hover:border-brand hover:text-brand md:order-last sm:px-4"
-              aria-label="Open menu"
-              aria-expanded={open}
-            >
-              <svg width="20" height="16" viewBox="0 0 18 14" fill="none" aria-hidden>
-                <path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              <span className="font-display text-xs font-semibold sm:text-sm">Menu</span>
-            </button>
 
             <nav aria-label="Primary" className="hidden items-center gap-6 md:flex lg:gap-8">
               <Link
@@ -157,13 +144,26 @@ export default function Header() {
             </nav>
           </div>
 
+          <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="flex h-11 shrink-0 cursor-pointer items-center justify-center gap-1 rounded-full border border-current/20 px-2 transition-colors hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand sm:gap-2 sm:px-4"
+            aria-label="Open menu"
+            aria-expanded={open}
+          >
+            <svg width="20" height="16" viewBox="0 0 18 14" fill="none" aria-hidden>
+              <path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <span className="font-display text-xs font-semibold sm:text-sm">Menu</span>
+          </button>
           <Link
             href="/contact"
-            className={`group inline-flex h-10 shrink-0 touch-manipulation items-center rounded-full shadow-[0_4px_18px_rgba(17,17,18,0.18)] transition-[transform,background-color,color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
+            className={`group inline-flex h-11 shrink-0 touch-manipulation items-center rounded-full shadow-[0_4px_18px_rgba(17,17,18,0.18)] transition-[transform,background-color,color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
               heroMode ? "bg-white text-ink hover:bg-brand hover:text-white" : "bg-ink text-white hover:bg-white hover:text-ink"
             }`}
           >
-            <span className="whitespace-nowrap pl-3 font-display text-sm font-semibold sm:pl-4">
+            <span className="whitespace-nowrap pl-3 font-display text-xs font-semibold sm:pl-4 sm:text-sm">
               Enquire<span className="hidden sm:inline"> Now</span>
             </span>
             <span className={`mx-1 flex h-7 w-7 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:translate-x-0.5 ${
@@ -174,6 +174,7 @@ export default function Header() {
               </svg>
             </span>
           </Link>
+          </div>
         </div>
       </header>
 
@@ -188,7 +189,7 @@ export default function Header() {
       >
         <div className="site-container flex items-center justify-between py-2">
           <ProofitLogo
-            className="w-[110px] md:w-[128px]"
+            className="w-[143px] md:w-[166.4px]"
             imageClassName="brightness-0 invert"
           />
           <button

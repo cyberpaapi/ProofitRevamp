@@ -216,7 +216,7 @@ export default function ProofyChatbot() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="proofy-title"
-          className="proofy-panel pointer-events-auto absolute bottom-[calc(4.75rem+env(safe-area-inset-bottom))] left-3 right-3 flex max-h-[min(690px,calc(100dvh-6rem))] flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#f4f1ec] shadow-[0_24px_80px_rgba(0,0,0,0.32)] sm:left-auto sm:right-6 sm:w-[390px]"
+          className="proofy-panel contact-float-above pointer-events-auto absolute left-3 right-3 flex max-h-[min(690px,calc(100dvh-7rem-env(safe-area-inset-bottom,0px)))] flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#f4f1ec] shadow-[0_24px_80px_rgba(0,0,0,0.32)] sm:left-auto sm:right-6 sm:w-[390px]"
         >
           <header className="relative flex shrink-0 items-center gap-3 overflow-hidden bg-ink px-4 py-3.5 text-white">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-brand" aria-hidden="true" />
@@ -327,11 +327,11 @@ export default function ProofyChatbot() {
       )}
 
       {!open && showNudge && (
-        <button type="button" onClick={openProofy} className="proofy-nudge pointer-events-auto fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need help navigating? Ask Proofy!</button>
+        <button type="button" onClick={openProofy} className="proofy-nudge contact-float-above pointer-events-auto fixed right-20 max-w-[230px] cursor-pointer rounded-2xl rounded-br-md border border-black/10 bg-white px-4 py-3 text-left text-sm font-semibold leading-snug text-ink shadow-xl sm:right-24">Need help navigating? Ask Proofy!</button>
       )}
 
       {!open && (
-        <button type="button" onClick={openProofy} className="proofy-launcher group pointer-events-auto fixed bottom-4 right-20 flex min-h-14 w-[7.5rem] max-w-[calc(100vw-6rem)] touch-manipulation cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-ink px-2 py-1.5 text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:bottom-6 sm:right-24 sm:w-[15.875rem]" aria-expanded="false" aria-label="Open Proofy AI assistant">
+        <button type="button" onClick={openProofy} className="proofy-launcher contact-float group pointer-events-auto fixed right-20 flex h-14 w-[7.5rem] max-w-[calc(100vw-6rem)] origin-bottom touch-manipulation cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-ink px-2 py-1 text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:right-24 sm:w-[15.875rem]" aria-expanded="false" aria-label="Open Proofy AI assistant">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-black"><ProofyMascot state="happy" size={44} priority className="scale-[1.25] transition duration-200 group-hover:-rotate-3 group-hover:scale-[1.35]" /></span>
           <span className="min-w-0 flex-1 self-center text-left font-display text-sm font-bold">Proofy</span>
         </button>

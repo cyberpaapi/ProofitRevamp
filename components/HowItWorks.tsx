@@ -4,18 +4,46 @@ import { useEffect, useRef, useState } from "react";
 type Step={title:string;image:string;intro?:string;body?:string[];points?:string[];outro?:string};
 export default function HowItWorks({steps}:{steps:Step[]}) {
   const [index,setIndex]=useState(0);
+  const [unpinned,setUnpinned]=useState(false);
   const root=useRef<HTMLElement>(null);
+  const stage=useRef<HTMLDivElement>(null);
+  useEffect(()=>{
+    const el=stage.current;if(!el)return;
+    const heading=el.querySelector<HTMLElement>('.works-heading');
+    const copy=el.querySelector<HTMLElement>('.works-copy');
+    if(!heading||!copy)return;
+    const measure=()=>{
+      const children=Array.from(copy.children);
+      if(!children.length)return;
+      const textHeight=children.at(-1)!.getBoundingClientRect().bottom-children[0].getBoundingClientRect().top;
+      const copyStyle=getComputedStyle(copy);
+      const stageStyle=getComputedStyle(el);
+      const copyHeight=Math.max(parseFloat(copyStyle.minHeight)||0,textHeight+parseFloat(copyStyle.paddingTop)+parseFloat(copyStyle.paddingBottom));
+      const cardHeight=innerWidth<768?copyHeight+100:Math.max(copyHeight,220);
+      const required=heading.offsetHeight+cardHeight+44+2*parseFloat(stageStyle.rowGap)+parseFloat(stageStyle.paddingTop)+parseFloat(stageStyle.paddingBottom);
+      setUnpinned(required>innerHeight-80);
+    };
+    const observer=new ResizeObserver(measure);
+    observer.observe(heading);
+    Array.from(copy.children).forEach(child=>observer.observe(child));
+    window.addEventListener('resize',measure);measure();
+    return()=>{observer.disconnect();window.removeEventListener('resize',measure);};
+  },[index]);
   useEffect(()=>{
     let raf=0;
-    const render=()=>{raf=0;const el=root.current;if(!el)return;const travel=Math.max(1,el.offsetHeight-innerHeight);setIndex(Math.min(steps.length-1,Math.max(0,Math.floor((-el.getBoundingClientRect().top/travel)*steps.length))));};
+    const render=()=>{raf=0;const el=root.current;if(!el||!stage.current||getComputedStyle(stage.current).position!=='sticky')return;const travel=Math.max(1,el.offsetHeight-innerHeight);setIndex(Math.min(steps.length-1,Math.max(0,Math.floor((-el.getBoundingClientRect().top/travel)*steps.length))));};
     const schedule=()=>{if(!raf)raf=requestAnimationFrame(render);};
     render();window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
     return()=>{cancelAnimationFrame(raf);window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);};
   },[steps.length]);
-  function go(next:number) { const el=root.current;if(!el)return;const target=Math.max(0,Math.min(steps.length-1,next));setIndex(target);window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top+(target+.15)/steps.length*(el.offsetHeight-innerHeight),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}); }
+  function go(next:number) { const el=root.current;if(!el)return;const target=Math.max(0,Math.min(steps.length-1,next));setIndex(target);if(!stage.current||getComputedStyle(stage.current).position!=='sticky')return;window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top+(target+.15)/steps.length*(el.offsetHeight-innerHeight),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}); }
   const step=steps[index];if(!step)return null;
-  return <section ref={root} className="relative" style={{height:`${100+Math.max(0,steps.length-1)*60}svh`}}>
-    <div className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col items-center justify-center gap-2 px-2 py-4 lg:top-[72px] lg:h-[calc(100svh-72px)]">
+  return <section ref={root} className="works-scroll relative" data-unpinned={unpinned || undefined} aria-labelledby="how-proofit-works-heading" style={{height:`${100+Math.max(0,steps.length-1)*60}svh`}}>
+    <div ref={stage} className="works-stage">
+      <div className="works-heading w-full max-w-[1050px]">
+        <h2 id="how-proofit-works-heading" className="font-display font-semibold">How PROOFIT Works?</h2>
+        <p className="text-ink-soft/75">If it&apos;s worth living in, it&apos;s worth verifying. Our inspection journey includes: A structured, technology-backed inspection designed to identify performance risks in your home before they become repair costs.</p>
+      </div>
       <div className="works-deck relative w-full max-w-[1050px]">
         {Array.from({length:index},(_,i)=><div key={i} aria-hidden className="absolute inset-0 rounded-2xl border border-brand bg-white" style={{transform:`translate(${(index-i)*7}px,-${(index-i)*7}px)`,zIndex:i}} />)}
         <article key={step.title} className="works-card relative z-10 grid overflow-hidden rounded-2xl bg-white shadow-lg md:grid-cols-[1.1fr_1fr]" aria-live="polite">
@@ -28,7 +56,7 @@ export default function HowItWorks({steps}:{steps:Step[]}) {
           </div>
         </article>
       </div>
-      <div className="flex gap-2" aria-label="Inspection steps">{steps.map((step,i)=><button type="button" key={step.title} onClick={()=>go(i)} aria-label={`View step ${i+1}: ${step.title}`} aria-current={i===index?'step':undefined} className="flex h-11 w-11 items-center justify-center"><span className={`h-1.5 rounded-full ${i===index?'w-8 bg-brand':'w-4 bg-brand/30'}`} /></button>)}</div>
+      <div className="flex shrink-0 gap-2" aria-label="Inspection steps">{steps.map((step,i)=><button type="button" key={step.title} onClick={()=>go(i)} aria-label={`View step ${i+1}: ${step.title}`} aria-current={i===index?'step':undefined} className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"><span className={`h-1.5 rounded-full ${i===index?'w-8 bg-brand':'w-4 bg-brand/30'}`} /></button>)}</div>
     </div>
   </section>;
 }
