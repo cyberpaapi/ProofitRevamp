@@ -44,9 +44,9 @@ export default function PageHero({
       {image && (
         <div className={`absolute inset-0 ${imageBelowHeader ? "md:top-20" : ""}`}>
           {imageMobile && (
-            <Image src={imageMobile} alt={imageAlt} fill priority sizes="100vw" className="object-cover md:hidden" />
+            <Image src={imageMobile} alt={imageAlt} fill priority sizes="100vw" className="page-hero-portrait object-cover" />
           )}
-          <Image src={image} alt={imageMobile ? "" : imageAlt} fill priority quality={85} sizes="100vw" className={`${imageMobile ? "hidden md:block" : ""} ${imagePosition === "center" ? "origin-bottom scale-125 md:scale-100" : ""} object-cover`} style={{objectPosition:imagePosition}} />
+          <Image src={image} alt={imageAlt} fill priority quality={85} sizes="100vw" className={`${imageMobile ? "page-hero-landscape" : ""} ${imagePosition === "center" ? "origin-bottom scale-125 md:scale-100" : ""} object-cover`} style={{objectPosition:imagePosition}} />
           <div className="absolute inset-y-0 left-0 w-[min(92%,58rem)] bg-gradient-to-r from-ink/68 via-ink/35 to-transparent" aria-hidden />
         </div>
       )}
@@ -55,7 +55,7 @@ export default function PageHero({
         <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand" style={{ ["--rise-delay" as string]: "0ms" }}>
           {eyebrow}
         </p>
-        <h1 className="hero-rise mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.12] md:text-6xl" style={{ ["--rise-delay" as string]: "120ms" }}>
+        <h1 className="hero-rise mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.12] md:text-5xl xl:text-6xl" style={{ ["--rise-delay" as string]: "120ms" }}>
           {title} {accent && <span className="text-brand">{accent}</span>}
         </h1>
         {punctuatedBodyCopy && (

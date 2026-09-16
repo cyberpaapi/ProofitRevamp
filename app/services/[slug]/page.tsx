@@ -123,7 +123,7 @@ export default async function ServicePage({ params }: Params) {
 
     <section className="site-section"><div className="site-container grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div><SectionHeading eyebrow="What you receive" title={copy.report.title} lede={copy.report.body} /><ArrowBtn href={site.whatsappSampleReport} external variant="dark">Ask for Sample Report</ArrowBtn></div>
-      <Reveal><Image src="/images/inspection-ledger-sample.webp" alt="Sample Proofit inspection ledger showing 52 observations, an overall property score of 88 out of 100, and a room-by-room table of contents" width={1134} height={1631} sizes="(min-width:1024px) 50vw, 100vw" quality={90} className="h-auto w-full rounded-2xl" /></Reveal>
+      <Reveal className="min-w-0"><Image src="/images/inspection-ledger-sample.webp" alt="Sample Proofit inspection ledger showing 52 observations, an overall property score of 88 out of 100, and a room-by-room table of contents" width={1134} height={1631} sizes="(min-width:1024px) 50vw, 100vw" quality={90} className="mx-auto h-auto max-h-[calc(100svh-12rem)] w-auto max-w-full rounded-2xl border-2 border-[#c9a24b] object-contain" /></Reveal>
     </div></section>
 
     <section className="site-section bg-cream"><div className="site-container"><SectionHeading eyebrow="Before you enquire" title="Questions we get a lot" /><FaqGrid faqs={copy.faqs} /></div></section>

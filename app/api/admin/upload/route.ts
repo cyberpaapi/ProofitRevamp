@@ -6,6 +6,7 @@ import sharp from "sharp";
 import { isAdminAuthenticated } from "@/lib/admin/auth";
 import { deletePublicMedia, mediaBlobToken, uploadPublicMedia } from "@/lib/admin/blob";
 import { getAdminStore, StaleAdminStoreError, updateAdminStore } from "@/lib/admin/store";
+import { AdminEditConflict, sameValue } from "@/lib/admin/merge-store";
 
 export const runtime = "nodejs";
 
@@ -18,6 +19,8 @@ export async function POST(request: Request) {
     const file = form.get("file");
     const isNew = form.get("mode") === "new";
     const expectedUpdatedAt = String(form.get("updatedAt") || "");
+    const hasImageBaseline = form.has("expectedImage");
+    const expectedImage = hasImageBaseline ? JSON.parse(String(form.get("expectedImage"))) : undefined;
     const target = isNew ? `/images/uploads/${randomUUID()}.webp` : String(form.get("target") || "");
     if (!(file instanceof File) || !file.type.startsWith("image/")) {
       return NextResponse.json({ error: "Choose an image file." }, { status: 400 });
@@ -63,7 +66,10 @@ export async function POST(request: Request) {
       let updatedAt: string;
       try {
         const saved = await updateAdminStore((store) => {
-          if (expectedUpdatedAt && store.updatedAt !== expectedUpdatedAt) {
+          if (hasImageBaseline && !sameValue(store.imageOverrides[target] || null, expectedImage)) {
+            throw new AdminEditConflict(`the image ${target}`);
+          }
+          if (!hasImageBaseline && expectedUpdatedAt && store.updatedAt !== expectedUpdatedAt) {
             throw new StaleAdminStoreError();
           }
           return {
@@ -98,7 +104,7 @@ export async function POST(request: Request) {
     const stat = await fs.stat(absolute);
     return NextResponse.json({ ok: true, image: { path: target, size: stat.size, modifiedAt: stat.mtime.toISOString() } });
   } catch (error) {
-    if (error instanceof StaleAdminStoreError) return NextResponse.json({ error: error.message }, { status: 409 });
+    if (error instanceof StaleAdminStoreError || error instanceof AdminEditConflict) return NextResponse.json({ error: error.message }, { status: 409 });
     console.error("[admin-upload] Image upload failed", error);
     return NextResponse.json({ error: "We could not process or store this image. Try a valid image under 4 MB. If it keeps failing, check media storage settings." }, { status: 400 });
   }

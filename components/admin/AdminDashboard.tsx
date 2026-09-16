@@ -62,6 +62,7 @@ export default function AdminDashboard({
   const [active, setActive] = useState<SectionId>("overview");
   const [menuOpen, setMenuOpen] = useState(false);
   const [store, setStore] = useState(initialStore);
+  const [baseline, setBaseline] = useState(initialStore);
   const [enquiries, setEnquiries] = useState(initialEnquiries);
   const [images, setImages] = useState(initialImages);
   const [saving, setSaving] = useState(false);
@@ -76,11 +77,18 @@ export default function AdminDashboard({
       const response = await fetch("/api/admin/data", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ store: nextStore }),
+        body: JSON.stringify({ store: nextStore, baseline }),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Could not save changes.");
       setStore(result.store);
+      setBaseline(result.store);
+      // The merge may accept another editor's newer image replacement too.
+      // Refresh previews together with their per-image conflict baseline.
+      setImages(previous => previous.map(image => {
+        const override = result.store.imageOverrides[image.path];
+        return override ? { ...image, url: override.url, size: override.size, modifiedAt: override.modifiedAt, overridden: true } : image;
+      }));
       setNotice("Changes saved.");
       window.setTimeout(() => setNotice(""), 3000);
     } catch (saveError) {
@@ -108,7 +116,7 @@ export default function AdminDashboard({
   return (
     <AdminUploadContext.Provider value={{ busy: uploading || saving, setUploading, resolveImage: value => images.find(image => image.path === value)?.url || value }}>
     <div className="min-h-dvh bg-[#f4f1ec] text-ink">
-      <aside className={`fixed inset-y-0 left-0 z-[120] flex w-[278px] flex-col bg-[#111214] text-white transition-transform duration-200 lg:translate-x-0 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-[120] flex w-[278px] flex-col bg-[#111214] text-white transition-transform duration-200 xl:translate-x-0 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-[76px] items-center border-b border-white/10 px-6">
           <Image src="/images/logo.svg" alt="Proofit" width={647} height={218} className="h-auto w-36 brightness-0 invert" priority />
           <span className="ml-3 rounded-full bg-brand px-2 py-1 text-[10px] font-bold uppercase tracking-wider">Admin</span>
@@ -128,25 +136,27 @@ export default function AdminDashboard({
         </div>
         </fieldset>
       </aside>
-      {menuOpen && <button className="fixed inset-0 z-[110] cursor-default bg-black/50 lg:hidden" onClick={() => setMenuOpen(false)} aria-label="Close navigation" />}
+      {menuOpen && <button className="fixed inset-0 z-[110] cursor-default bg-black/50 xl:hidden" onClick={() => setMenuOpen(false)} aria-label="Close navigation" />}
 
-      <div className="lg:pl-[278px]">
+      <div className="xl:pl-[278px]">
         <header className="sticky top-0 z-[90] flex h-[76px] items-center gap-3 border-b border-black/10 bg-[#f4f1ec]/95 px-4 backdrop-blur sm:px-6 lg:px-8">
-          <button type="button" onClick={() => setMenuOpen(true)} className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-black/10 bg-white lg:hidden" aria-label="Open navigation"><AdminIcon name="menu" /></button>
+          <button type="button" onClick={() => setMenuOpen(true)} className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-black/10 bg-white xl:hidden" aria-label="Open navigation"><AdminIcon name="menu" /></button>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold uppercase tracking-[.16em] text-brand">Proofit workspace</p>
             <h1 className="truncate font-display text-xl font-semibold sm:text-2xl">{title}</h1>
           </div>
-          <div aria-live="polite" className="hidden text-sm font-semibold sm:block">{notice && <span className="text-green-700">{notice}</span>}{error && <span className="text-red-700">{error}</span>}</div>
           <button type="button" onClick={() => void save()} disabled={saving || uploading} className="flex min-h-11 cursor-pointer items-center gap-2 rounded-xl bg-ink px-4 font-display text-sm font-semibold text-white transition hover:bg-brand disabled:cursor-wait disabled:opacity-60"><AdminIcon name="save" />{uploading ? "Uploading..." : saving ? "Saving..." : "Save changes"}</button>
         </header>
 
         <main className="mx-auto max-w-[1500px] p-4 sm:p-6 lg:p-8">
           <fieldset disabled={uploading || saving} className="min-w-0">
-          {(notice || error) && <div aria-live="polite" className={`mb-4 rounded-xl p-3 text-sm font-semibold sm:hidden ${error ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}>{error || notice}</div>}
+          {(notice || error) && <div aria-live="polite" className={`mb-4 break-words rounded-xl p-3 text-sm font-semibold ${error ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}>{error || notice}</div>}
           {active === "overview" && <Overview store={store} enquiries={enquiries} upcoming={upcoming} unreadProofy={unreadProofy} onNavigate={selectSection} />}
           {active === "content" && <SiteContentPanel items={store.siteCopy} onChange={(siteCopy) => setStore({ ...store, siteCopy })} />}
-          {active === "images" && <ImagesPanel images={images} setImages={setImages} updatedAt={store.updatedAt} onReplaced={(path, override, updatedAt) => setStore(previous => ({ ...previous, ...(updatedAt ? { updatedAt } : {}), imageOverrides: { ...previous.imageOverrides, [path]: override } }))} />}
+          {active === "images" && <ImagesPanel images={images} setImages={setImages} imageOverrides={store.imageOverrides} onReplaced={(path, override, updatedAt) => {
+            const applyImage = (previous: AdminStore) => ({ ...previous, ...(updatedAt ? { updatedAt } : {}), imageOverrides: { ...previous.imageOverrides, [path]: override } });
+            setStore(applyImage); setBaseline(applyImage);
+          }} />}
           {active === "team" && <TeamPanel items={store.team} onChange={team => setStore({...store,team})} />}
           {active === "services" && <OfferingsPanel items={store.offerings} onChange={offerings => setStore({...store,offerings})} />}
           {active === "contact" && <ContactSettingsPanel value={store.contact} onChange={contact => setStore({...store,contact})} />}
@@ -214,7 +224,7 @@ function SiteContentPanel({ items, onChange }: { items: SiteCopyOverride[]; onCh
   return <SplitPanel title="Site-wide content" subtitle="Replace visible wording without changing layout. Use * for every page, or enter a path such as /about." action={<PrimaryButton onClick={add}>Add override</PrimaryButton>} list={<>{items.length === 0 && <EmptyState title="No content overrides" text="Add an override using the exact wording currently visible on the website." />}{items.map((item) => <ListButton key={item.id} active={item.id === selected} onClick={() => setSelected(item.id)} title={item.replacement || item.original || "Untitled override"} subtitle={item.page === "*" ? "All pages" : item.page} />)}</>} editor={current ? <div className="space-y-4"><FieldLabel label="Page path"><input className={fieldClass} value={current.page} onChange={(e) => update({ page: e.target.value })} placeholder="* or /about" /></FieldLabel><FieldLabel label="Current visible text"><textarea className={fieldClass} rows={5} value={current.original} onChange={(e) => update({ original: e.target.value })} placeholder="Paste the exact current text" /></FieldLabel><FieldLabel label="Replacement text"><textarea className={fieldClass} rows={5} value={current.replacement} onChange={(e) => update({ replacement: e.target.value })} placeholder="Enter the new wording" /></FieldLabel><label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-black/10 px-4"><input type="checkbox" checked={current.enabled} onChange={(e) => update({ enabled: e.target.checked })} className="h-5 w-5 accent-brand" /><span className="text-sm font-semibold">Enabled</span></label><DangerButton onClick={remove}>Delete override</DangerButton></div> : <EmptyState title="Select an override" text="Choose an item or create a new content override." />} />;
 }
 
-function ImagesPanel({ images, setImages, onReplaced, updatedAt }: { updatedAt: string; images: AdminImage[]; setImages: (items: AdminImage[]) => void; onReplaced: (path: string, override: AdminStore["imageOverrides"][string], updatedAt?: string) => void }) {
+function ImagesPanel({ images, setImages, onReplaced, imageOverrides }: { imageOverrides: AdminStore["imageOverrides"]; images: AdminImage[]; setImages: (items: AdminImage[]) => void; onReplaced: (path: string, override: AdminStore["imageOverrides"][string], updatedAt?: string) => void }) {
   const uploadContext = useContext(AdminUploadContext);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(images[0]?.path || "");
@@ -227,7 +237,7 @@ function ImagesPanel({ images, setImages, onReplaced, updatedAt }: { updatedAt: 
     event.preventDefault(); if (!file || !current) return;
     setUploading(true); uploadContext.setUploading(true); setMessage("");
     try {
-    const form = new FormData(); form.set("file", file); form.set("target", current.path); form.set("updatedAt", updatedAt);
+    const form = new FormData(); form.set("file", file); form.set("target", current.path); form.set("expectedImage", JSON.stringify(imageOverrides[current.path] || null));
     const response = await fetch("/api/admin/upload", { method: "POST", body: form });
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || "Upload failed. Please try again.");

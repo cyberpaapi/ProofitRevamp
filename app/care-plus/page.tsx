@@ -73,15 +73,16 @@ export default async function CarePlusPage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover md:hidden"
+          className="page-hero-portrait object-cover"
+          style={{ objectPosition: "center 85%" }}
         />
         <Image
           src="/images/careplus-hero-desktop.webp"
-          alt=""
+          alt="Technician executing waterproofing repair on a rooftop terrace"
           fill
           priority
           sizes="100vw"
-          className="hidden object-cover md:block"
+          className="page-hero-landscape object-cover"
         />
         <div className="absolute inset-y-0 left-0 w-[min(94%,62rem)] bg-gradient-to-r from-ink/65 via-ink/30 to-transparent" aria-hidden />
         <div className="site-container relative">
@@ -89,7 +90,7 @@ export default async function CarePlusPage() {
           <p className="hero-rise font-display text-sm font-semibold uppercase tracking-[0.18em] text-brand">
             Proofit Care+
           </p>
-          <h1 className="hero-rise mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl">
+          <h1 className="hero-rise mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.08] sm:text-5xl xl:text-6xl">
             From Inspection to Execution
           </h1>
           <p

@@ -3,6 +3,7 @@ import { seedTeam, seedOfferings } from "./offering-seeds";
 import { migrateOfferingOrder, offeringOrderVersion } from "./offering-order";
 import { site } from "@/lib/site";
 import { proofyWelcomeMessage } from "@/lib/proofy-copy";
+import { mergeAdminEdits } from "./merge-store";
 
 import { promises as fs } from "fs";
 import path from "path";
@@ -183,19 +184,17 @@ export async function getAdminStore(): Promise<AdminStore> {
   }
 }
 
-export async function writeAdminStore(store: AdminStore): Promise<AdminStore> {
-  const next = normaliseStore({ ...store, updatedAt: new Date().toISOString() });
-  if (adminBlobToken()) {
-    const current = await readPrivateJsonRecord<Partial<AdminStore>>(storeBlob);
-    if (current?.value.updatedAt && current.value.updatedAt !== store.updatedAt) throw new StaleAdminStoreError();
-    try {
-      await writePrivateJson(storeBlob, next, current?.etag);
-    } catch (error) {
-      if (isBlobConflict(error)) throw new StaleAdminStoreError();
-      throw error;
-    }
+export async function writeAdminStore(store: AdminStore, baseline?: AdminStore, validate?: (candidate: AdminStore) => void): Promise<AdminStore> {
+  return updateAdminStore(current => {
+    // Old dashboard tabs must refresh once rather than overwrite data they never saw.
+    if (!baseline && current.updatedAt !== store.updatedAt) throw new StaleAdminStoreError();
+    const next = baseline ? mergeAdminEdits(normaliseStore(baseline), normaliseStore(store), current) : store;
+    validate?.(next);
     return next;
-  }
+  });
+}
+
+async function writeLocalStore(next: AdminStore): Promise<AdminStore> {
   requireDurableStorage("admin");
   await fs.mkdir(dataDirectory, { recursive: true });
   const temporaryFile = `${storeFile}.${crypto.randomUUID()}.tmp`;
@@ -203,6 +202,8 @@ export async function writeAdminStore(store: AdminStore): Promise<AdminStore> {
   await fs.rename(temporaryFile, storeFile);
   return next;
 }
+
+let localUpdateQueue: Promise<unknown> = Promise.resolve();
 
 export async function updateAdminStore(
   updater: (store: AdminStore) => AdminStore | Promise<AdminStore>,
@@ -222,8 +223,14 @@ export async function updateAdminStore(
     }
     throw new Error("Could not save admin data after several concurrent updates.");
   }
-  const current = await getAdminStore();
-  return writeAdminStore(await updater(current));
+  // Serialize the local read/modify/write cycle too; atomic rename alone cannot prevent lost updates.
+  const pending = localUpdateQueue.then(async () => {
+    const current = await getAdminStore();
+    const next = normaliseStore({ ...(await updater(current)), updatedAt: new Date().toISOString() });
+    return writeLocalStore(next);
+  });
+  localUpdateQueue = pending.catch(() => undefined);
+  return pending;
 }
 
 export async function getEnquiries(): Promise<StoredEnquiryRecord[]> {

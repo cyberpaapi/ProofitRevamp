@@ -24,13 +24,15 @@ const socials = [
 
 export default function Footer({ navigation }: { navigation: NavigationItem[] }) {
   const site = useSiteSettings();
+  const splitAt = Math.ceil(navigation.length / 2);
+  const pageColumns = [navigation.slice(0, splitAt), navigation.slice(splitAt)];
   return (
     <footer data-site-footer className="bg-[#121212] text-white">
-      <div className="site-container grid gap-x-10 gap-y-10 py-12 lg:grid-cols-[minmax(220px,300px)_1fr_minmax(220px,300px)]">
+      <div className="site-container grid gap-x-8 gap-y-8 py-10 md:grid-cols-2 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1fr)_minmax(0,1.3fr)]">
         {/* Brand */}
-        <div>
+        <div className="min-w-0 md:col-span-2 xl:col-span-1">
           <ProofitLogo className="mb-6 w-[230px]" imageClassName="brightness-0 invert" />
-          <p className="text-sm leading-relaxed text-white/60">
+          <p className="max-w-2xl text-sm leading-relaxed text-white/60">
             Proofit is an Independent, evidence-backed home and water inspection company. Serving Mumbai-wide, we also offer services to Mumbai's neighbouring cities on request. We provide evidence backed by International standards, thermal imaging, and reports that settle arguments.
           </p>
           <ul className="mt-5 space-y-2 text-sm text-white/70">
@@ -51,12 +53,12 @@ export default function Footer({ navigation }: { navigation: NavigationItem[] })
         </div>
 
         {/* Services */}
-        <div>
+        <div className="min-w-0">
           <h3 className="mb-5 text-base font-medium text-white/45">Services</h3>
-          <ul className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-10">
+          <ul className="space-y-1">
             {serviceLinks.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="font-display text-base font-semibold leading-snug transition-colors hover:text-brand">
+                <Link href={l.href} className="flex min-h-11 items-center py-2 font-display text-base font-semibold leading-snug transition-colors hover:text-brand">
                   {l.label}
                 </Link>
               </li>
@@ -65,11 +67,11 @@ export default function Footer({ navigation }: { navigation: NavigationItem[] })
         </div>
 
         {/* Links */}
-        <div>
+        <div className="min-w-0">
           <h3 className="mb-6 text-sm font-medium text-white/45">Links</h3>
-          <nav aria-label="Footer pages">
-            <ul className="space-y-1">
-              {navigation.map((item, index) => (
+          <nav aria-label="Footer pages" className="grid grid-cols-2 items-start gap-x-6">
+            {pageColumns.map((column, columnIndex) => <ul key={columnIndex} className="min-w-0 space-y-1">
+              {column.map((item, index) => (
                 <li key={item.href}>
                   {item.children ? <details className="group/footer">
                     <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-display font-semibold transition-colors hover:text-brand [&::-webkit-details-marker]:hidden">
@@ -80,7 +82,7 @@ export default function Footer({ navigation }: { navigation: NavigationItem[] })
                       <li><Link href={item.href} className="flex min-h-11 items-center py-2 font-semibold hover:text-brand">{item.overviewLabel}</Link></li>
                       {item.children.map((child, childIndex) => <li key={child.href}>
                         <Link href={child.href} className="flex min-h-11 items-start gap-2 py-2.5 leading-relaxed hover:text-brand">
-                          <span className="shrink-0 text-brand">{index + 1}.{childIndex + 1}</span>
+                          <span className="shrink-0 text-brand">{columnIndex * splitAt + index + 1}.{childIndex + 1}</span>
                           <span>{child.label}</span>
                         </Link>
                       </li>)}
@@ -88,7 +90,7 @@ export default function Footer({ navigation }: { navigation: NavigationItem[] })
                   </details> : <Link href={item.href} className="flex min-h-11 items-center font-display font-semibold transition-colors hover:text-brand">{item.label}</Link>}
                 </li>
               ))}
-            </ul>
+            </ul>)}
           </nav>
         </div>
       </div>

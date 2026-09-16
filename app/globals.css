@@ -652,6 +652,20 @@ h1, h2, h3, h4, .font-display {
   scrollbar-color: rgba(247, 148, 29, 0.8) transparent;
 }
 
+.page-hero-portrait { display: none; }
+.page-hero-landscape { display: block; }
+@media (max-width: 767px), (min-width: 768px) and (max-width: 1100px) and (orientation: portrait) {
+  .page-hero-portrait { display: block; }
+  .page-hero-landscape { display: none; }
+}
+@media (min-width: 768px) and (max-width: 1100px) and (orientation: portrait) {
+  /* Keep faces in the upper crop when a tall source fills a tablet banner. */
+  .page-hero-portrait { object-position: center 15%; }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .thermal-pointer-hint { display: none !important; }
+}
+
 .proofy-scrollbar::-webkit-scrollbar { width: 6px; }
 .proofy-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .proofy-scrollbar::-webkit-scrollbar-thumb {

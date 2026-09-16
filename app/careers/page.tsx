@@ -22,8 +22,8 @@ export default async function CareersPage() {
         title="Learn a profession"
         accent="India is just discovering."
         lede="Home inspection is a decades-old discipline in North America and a brand-new industry here. Join early, learn deeply, grow with it."
-        image="/images/careers-mentoring-banner.webp"
-        imageMobile="/images/careers-mentoring-banner-mobile.webp"
+        image="/images/careers-mentoring-banner-v2.webp"
+        imageMobile="/images/careers-mentoring-banner-mobile-v2.webp"
         imageBelowHeader
         imageAlt="A senior Proofit inspector teaching a trainee to use a moisture meter in an apartment"
       />

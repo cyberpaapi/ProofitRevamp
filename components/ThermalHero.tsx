@@ -159,7 +159,7 @@ export default function ThermalHero({ children }: { children: React.ReactNode })
       </div>
       {/* Keep the photograph clear; local copy scrims provide targeted legibility. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-28 bg-gradient-to-b from-ink/35 to-transparent" aria-hidden />
-      <div className="pointer-events-none absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 font-display text-xs font-medium text-white backdrop-blur-md lg:flex">
+      <div className="thermal-pointer-hint pointer-events-none absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 font-display text-xs font-medium text-white backdrop-blur-md lg:flex">
         <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />
         Move your cursor across the image to explore the thermal scan
       </div>
