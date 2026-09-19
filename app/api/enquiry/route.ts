@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { appendAppointment, appendEnquiry, setEnquiryMeta } from "@/lib/admin/store";
+import { isSundayAppointmentDate, sundayAppointmentError } from "@/lib/appointment-date";
 
 export const runtime = "nodejs";
 
@@ -67,6 +68,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please enter a valid phone number." }, { status: 400 });
   }
 
+  const appointment = body.appointment;
+  const preferredDate = (appointment?.preferredDate || "").trim().slice(0, 10);
+  if (preferredDate && isSundayAppointmentDate(preferredDate)) {
+    return NextResponse.json({ error: sundayAppointmentError }, { status: 400 });
+  }
+
   const enquiry = {
     id: crypto.randomUUID(),
     receivedAt: new Date().toISOString(),
@@ -88,7 +95,7 @@ export async function POST(req: Request) {
       notes: "",
       source: formSource.slice(0, 200),
     });
-    if (body.appointment?.preferredDate) {
+    if (appointment && preferredDate) {
       await appendAppointment({
         id: crypto.randomUUID(),
         enquiryId: enquiry.id,
@@ -98,10 +105,10 @@ export async function POST(req: Request) {
         phone: enquiry.phone,
         service: enquiry.service,
         property: enquiry.property,
-        area: (body.appointment.area || "").slice(0, 300),
-        concern: (body.appointment.concern || "").slice(0, 3000),
-        date: body.appointment.preferredDate.slice(0, 10),
-        time: (body.appointment.preferredTime || "10:00").slice(0, 20),
+        area: (appointment.area || "").slice(0, 300),
+        concern: (appointment.concern || "").slice(0, 3000),
+        date: preferredDate,
+        time: (appointment.preferredTime || "10:00").slice(0, 20),
         inspector: "",
         notes: "Requested through Proofy",
         status: "scheduled",
@@ -159,7 +166,7 @@ async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
     from,
     to: enquiry.email,
     subject: "We've received your enquiry - Proofit",
-    text: `Thank you, ${enquiry.name}. We have received your enquiry${enquiry.service ? ` about ${enquiry.service}` : ""} and a Proofit team member will contact you shortly. For urgent assistance, call or WhatsApp +91 98337 79955.`,
+    text: `Thank you, ${enquiry.name}. We have received your enquiry${enquiry.service ? ` about ${enquiry.service}` : ""} and a Proofit team member will contact you shortly. For urgent assistance, call or WhatsApp +91 98202 68840.`,
     attachments: [logoAttachment],
     html: `
       <!doctype html>
@@ -184,11 +191,11 @@ async function sendEmails(enquiry: StoredEnquiry): Promise<boolean> {
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 22px">
                         <tr>
                           <td style="border-radius:999px;background:#17181a">
-                            <a href="https://wa.me/919833779955" style="display:inline-block;padding:13px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">Message us on WhatsApp</a>
+                            <a href="https://wa.me/919820268840" style="display:inline-block;padding:13px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">Message us on WhatsApp</a>
                           </td>
                         </tr>
                       </table>
-                      <p style="margin:0;font-size:14px;line-height:1.7;color:#666">For urgent assistance, call <a href="tel:+919833779955" style="color:#f07f00;font-weight:700;text-decoration:none">+91 98337 79955</a>.</p>
+                      <p style="margin:0;font-size:14px;line-height:1.7;color:#666">For urgent assistance, call <a href="tel:+919820268840" style="color:#f07f00;font-weight:700;text-decoration:none">+91 98202 68840</a>.</p>
                     </td>
                   </tr>
                   <tr>

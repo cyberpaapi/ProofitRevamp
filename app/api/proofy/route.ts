@@ -38,7 +38,7 @@ Proofit facts:
 - Reports are generally delivered within 2-5 business working days after inspection.
 - Coverage: Mumbai-wide, with Mumbai's neighbouring cities available on request.
 - Pricing depends on service, property size, scope and location. Never invent a number.
-- Phone and WhatsApp: +91 98337 79955.
+- Phone and WhatsApp: +91 98202 68840.
 - Email: info@proofitcompany.com.
 
 Booking behavior:

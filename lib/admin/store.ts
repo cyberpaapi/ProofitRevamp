@@ -145,13 +145,17 @@ function createSeedStore(): AdminStore {
 
 function normaliseStore(value: Partial<AdminStore>): AdminStore {
   const seed = createSeedStore();
+  const storedContact = value.contact || seed.contact;
+  const phones = storedContact.phones
+    .map((phone) => phone.replace("9833779955", "9820268840").replace("+91 98337 79955", "+91 98202 68840"))
+    .filter((phone, index, items) => items.findIndex((item) => item.replace(/\D/g, "") === phone.replace(/\D/g, "")) === index);
   return {
     ...seed,
     ...value,
     team: Array.isArray(value.team) ? value.team : seed.team,
     version: Math.max(value.version ?? 0, offeringOrderVersion),
     offerings: Array.isArray(value.offerings) ? migrateOfferingOrder(value.offerings, value.version ?? 0) : seed.offerings,
-    contact: value.contact || seed.contact,
+    contact: { ...storedContact, phones: phones.length ? phones : seed.contact.phones },
     siteCopy: Array.isArray(value.siteCopy) ? value.siteCopy : seed.siteCopy,
     posts: Array.isArray(value.posts) ? value.posts : seed.posts,
     careers: Array.isArray(value.careers) ? value.careers : seed.careers,

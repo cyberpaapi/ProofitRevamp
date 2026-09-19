@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { isSundayAppointmentDate, sundayAppointmentError } from "@/lib/appointment-date";
 import { enquiryServiceOptions, propertyTypeOptions } from "@/lib/form-options";
 import { proofyWelcomeMessage, publicProofyWelcome } from "@/lib/proofy-copy";
 
@@ -162,14 +163,19 @@ export default function ProofyChatbot() {
 
   const submitAppointment = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitting(true);
-    setError("");
-
     const form = event.currentTarget;
     const data = new FormData(form);
+    const preferredDate = String(data.get("preferredDate") || "");
+    if (isSundayAppointmentDate(preferredDate)) {
+      setError(sundayAppointmentError);
+      return;
+    }
+
+    setSubmitting(true);
+    setError("");
     const appointmentDetails = [
       "Appointment request submitted through Proofy",
-      `Preferred date: ${data.get("preferredDate")}`,
+      `Preferred date: ${preferredDate}`,
       `Preferred time: ${data.get("preferredTime")}`,
       `Area / locality: ${data.get("area")}`,
       `Property concern: ${data.get("concern") || "Not provided"}`,
@@ -189,7 +195,7 @@ export default function ProofyChatbot() {
           source: "Proofy appointment form",
           conversationId: conversationIdRef.current,
           appointment: {
-            preferredDate: data.get("preferredDate"),
+            preferredDate,
             preferredTime: data.get("preferredTime"),
             area: data.get("area"),
             concern: data.get("concern"),
@@ -290,7 +296,10 @@ export default function ProofyChatbot() {
                   <Field label="Inspection needed"><select className={fieldClass} name="service" required defaultValue={enquiryServiceOptions[0]}>{enquiryServiceOptions.map((option) => <option key={option}>{option}</option>)}</select></Field>
                   <Field label="Property type"><select className={fieldClass} name="property" required defaultValue={propertyTypeOptions[0]}>{propertyTypeOptions.map((option) => <option key={option}>{option}</option>)}</select></Field>
                   <div className="grid grid-cols-2 gap-2.5">
-                    <Field label="Preferred date"><input className={fieldClass} name="preferredDate" type="date" min={minimumDate} required /></Field>
+                    <Field label="Preferred date">
+                      <input className={fieldClass} name="preferredDate" type="date" min={minimumDate} required onChange={(event) => setError(isSundayAppointmentDate(event.target.value) ? sundayAppointmentError : "")} />
+                      <span className="mt-1.5 block text-[11px] text-ink-soft/65">Appointments are available Monday to Saturday.</span>
+                    </Field>
                     <Field label="Preferred time"><select className={fieldClass} name="preferredTime" required defaultValue="Morning"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></Field>
                   </div>
                   <Field label="Area / locality"><input className={fieldClass} name="area" required placeholder="e.g. Andheri West" maxLength={160} /></Field>
@@ -370,7 +379,7 @@ function QuickReply({ children, onClick, primary = false }: { children: ReactNod
 }
 
 function WhatsAppLink() {
-  return <a href="https://wa.me/919833779955" target="_blank" rel="noreferrer" className="flex min-h-11 items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:border-brand hover:text-brand-deep focus:outline-none focus:ring-2 focus:ring-brand/40">Talk to the team on WhatsApp<ArrowIcon /></a>;
+  return <a href="https://wa.me/919820268840" target="_blank" rel="noreferrer" className="flex min-h-11 items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:border-brand hover:text-brand-deep focus:outline-none focus:ring-2 focus:ring-brand/40">Talk to the team on WhatsApp<ArrowIcon /></a>;
 }
 
 function Field({ label, children, className = "" }: { label: string; children: ReactNode; className?: string }) {
