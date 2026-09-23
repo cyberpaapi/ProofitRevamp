@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { appendAppointment, appendEnquiry, setEnquiryMeta } from "@/lib/admin/store";
+import { appendAppointment, appendEnquiry } from "@/lib/admin/store";
 import { isSundayAppointmentDate, sundayAppointmentError } from "@/lib/appointment-date";
 
 export const runtime = "nodejs";
@@ -83,18 +83,22 @@ export async function POST(req: Request) {
     phone,
     service: (body.service || "").slice(0, 200),
     property: (body.property || "").slice(0, 500),
-    message: (body.message || "").slice(0, 5000),
+    message: [
+      (body.message || "").slice(0, 5000),
+      preferredDate ? `Requested appointment: ${preferredDate} at ${(appointment?.preferredTime || "10:00").slice(0, 20)}. Area: ${(appointment?.area || "Not specified").slice(0, 300)}. Concern: ${(appointment?.concern || "Not specified").slice(0, 3000)}` : "",
+    ].filter(Boolean).join("\n\n"),
   };
 
   let stored = false;
   try {
     await saveEnquiry(enquiry);
-    await setEnquiryMeta(enquiry.id, {
-      status: "new",
-      assignee: "",
-      notes: "",
-      source: formSource.slice(0, 200),
-    });
+    // New/blank metadata is already the getEnquiries() default and source is
+    // saved with the lead. Do not contend with CMS/chat writes unnecessarily.
+    stored = true;
+  } catch (err) {
+    console.error("Could not persist enquiry:", err);
+  }
+  try {
     if (appointment && preferredDate) {
       await appendAppointment({
         id: crypto.randomUUID(),
@@ -115,9 +119,9 @@ export async function POST(req: Request) {
         createdAt: new Date().toISOString(),
       });
     }
-    stored = true;
   } catch (err) {
-    console.error("Could not persist enquiry:", err);
+    // The lead remains available even when appointment scheduling fails.
+    console.error("Could not persist requested appointment:", err);
   }
 
   let emailed = false;

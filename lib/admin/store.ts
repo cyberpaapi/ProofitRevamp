@@ -173,9 +173,8 @@ export async function getAdminStore(): Promise<AdminStore> {
   if (adminBlobToken()) {
     const stored = await readPrivateJson<Partial<AdminStore>>(storeBlob);
     if (stored) return normaliseStore(stored);
-    const seed = createSeedStore();
-    await writePrivateJson(storeBlob, seed);
-    return seed;
+    // A public read must not overwrite a concurrent first admin save.
+    return createSeedStore();
   }
   requireDurableStorage("admin");
   try {
@@ -209,19 +208,32 @@ async function writeLocalStore(next: AdminStore): Promise<AdminStore> {
 
 let localUpdateQueue: Promise<unknown> = Promise.resolve();
 
+export class AdminStorageBusyError extends Error {
+  constructor() {
+    super("Storage is busy. Your changes have not been saved. Keep this page open and try Save again shortly.");
+  }
+}
+
 export async function updateAdminStore(
   updater: (store: AdminStore) => AdminStore | Promise<AdminStore>,
 ): Promise<AdminStore> {
   if (adminBlobToken()) {
-    for (let attempt = 0; attempt < 4; attempt += 1) {
-      const record = await readPrivateJsonRecord<Partial<AdminStore>>(storeBlob);
-      const current = normaliseStore(record?.value || createSeedStore());
-      const next = normaliseStore({ ...(await updater(current)), updatedAt: new Date().toISOString() });
+    for (let attempt = 0; attempt < 6; attempt += 1) {
       try {
-        await writePrivateJson(storeBlob, next, record?.etag);
+        const record = await readPrivateJsonRecord<Partial<AdminStore>>(storeBlob);
+        const current = normaliseStore(record?.value || createSeedStore());
+        const next = normaliseStore({ ...(await updater(current)), updatedAt: new Date().toISOString() });
+        await writePrivateJson(storeBlob, next, record?.etag ?? null);
         return next;
       } catch (error) {
-        if (isBlobConflict(error) && attempt < 3) continue;
+        if (isBlobConflict(error)) {
+          if (attempt === 5) {
+            console.error("[admin-store] Conditional save exhausted retries", { reason: error instanceof Error ? error.message : "conflict" });
+            throw new AdminStorageBusyError();
+          }
+          await new Promise(resolve => setTimeout(resolve, 80 * 2 ** attempt + Math.random() * 100));
+          continue;
+        }
         throw error;
       }
     }

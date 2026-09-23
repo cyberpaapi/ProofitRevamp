@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin/auth";
-import { getAdminStore, getEnquiries, listPublicImages, setEnquiryMeta, StaleAdminStoreError, writeAdminStore } from "@/lib/admin/store";
+import { AdminStorageBusyError, getAdminStore, getEnquiries, listPublicImages, setEnquiryMeta, StaleAdminStoreError, writeAdminStore } from "@/lib/admin/store";
 import type { AdminEnquiryMeta, AdminStore } from "@/lib/admin/types";
 import { AdminEditConflict } from "@/lib/admin/merge-store";
 
@@ -23,18 +23,19 @@ export async function PUT(request: Request) {
   } catch {
     return NextResponse.json({ error: "Invalid JSON." }, { status: 400 });
   }
-  if (body.enquiry?.id && body.enquiry.meta) {
-    await setEnquiryMeta(body.enquiry.id, body.enquiry.meta);
-    return NextResponse.json({ ok: true, enquiries: await getEnquiries() });
-  }
-  if (!body.store || typeof body.store !== "object") {
-    return NextResponse.json({ error: "Missing store data." }, { status: 400 });
-  }
   try {
+    if (body.enquiry?.id && body.enquiry.meta) {
+      await setEnquiryMeta(body.enquiry.id, body.enquiry.meta);
+      return NextResponse.json({ ok: true, enquiries: await getEnquiries() });
+    }
+    if (!body.store || typeof body.store !== "object") {
+      return NextResponse.json({ error: "Missing store data." }, { status: 400 });
+    }
     validateAdminStore(body.store);
     const saved = await writeAdminStore(body.store, body.baseline, validateAdminStore);
     return NextResponse.json({ ok: true, store: saved });
   } catch (error) {
+    if (error instanceof AdminStorageBusyError) return NextResponse.json({ error: error.message }, { status: 503, headers: { "Retry-After": "3" } });
     if (error instanceof InvalidAdminStoreError) return NextResponse.json({ error: error.message }, { status: 400 });
     if (error instanceof StaleAdminStoreError || error instanceof AdminEditConflict) {
       return NextResponse.json({ error: error.message }, { status: 409 });

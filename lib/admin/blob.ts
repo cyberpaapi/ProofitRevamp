@@ -1,6 +1,6 @@
 import "server-only";
 
-import { BlobPreconditionFailedError, del, get, list, put } from "@vercel/blob";
+import { BlobError, BlobNotFoundError, BlobPreconditionFailedError, del, get, head, list, put } from "@vercel/blob";
 
 const privatePrefix = "proofit-admin/";
 
@@ -32,16 +32,19 @@ export function privatePath(pathname: string) {
 }
 
 export async function readPrivateJson<T>(pathname: string): Promise<T | null> {
-  return (await readPrivateJsonRecord<T>(pathname))?.value || null;
+  const result = await downloadPrivateJson<T>(pathname);
+  return result?.value ?? null;
 }
 
-export async function readPrivateJsonRecord<T>(pathname: string): Promise<{ value: T; etag: string } | null> {
+async function downloadPrivateJson<T>(pathname: string): Promise<{ value: T; etag: string } | null> {
   const token = adminBlobToken();
   if (!token) return null;
   const result = await get(privatePath(pathname), {
     access: "private",
     token,
     useCache: false,
+    // Compressed delivery responses can have a weak/representation-specific ETag.
+    headers: { "Accept-Encoding": "identity" },
   });
   if (!result || result.statusCode !== 200 || !result.stream) return null;
   return {
@@ -50,22 +53,59 @@ export async function readPrivateJsonRecord<T>(pathname: string): Promise<{ valu
   };
 }
 
-export async function writePrivateJson(pathname: string, value: unknown, ifMatch?: string) {
+export class BlobSnapshotConflict extends Error {
+  constructor() {
+    super("Blob content and storage metadata changed during the read.");
+  }
+}
+
+export async function readPrivateJsonRecord<T>(pathname: string): Promise<{ value: T; etag: string } | null> {
+  const token = adminBlobToken();
+  if (!token) return null;
+  let metadata;
+  try {
+    // head() uses the storage API, not the download CDN. Pass its canonical
+    // ETag back to that same API for conditional writes.
+    metadata = await head(privatePath(pathname), { token });
+  } catch (error) {
+    if (error instanceof BlobNotFoundError) return null;
+    throw error;
+  }
+  const downloaded = await downloadPrivateJson<T>(pathname);
+  const version = (etag: string) => etag.trim().replace(/^W\//, "");
+  // Never attach a newer metadata version to stale content. Weak delivery
+  // validators are used only for comparison, never sent as write validators.
+  if (!downloaded || !metadata.etag || !downloaded.etag ||
+      version(metadata.etag) !== version(downloaded.etag)) {
+    throw new BlobSnapshotConflict();
+  }
+  return { value: downloaded.value, etag: metadata.etag };
+}
+
+export async function writePrivateJson(pathname: string, value: unknown, ifMatch?: string | null) {
   const token = requireDurableStorage("admin");
   if (!token) return null;
-  return put(privatePath(pathname), JSON.stringify(value), {
-    access: "private",
-    token,
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    ...(ifMatch ? { ifMatch } : {}),
-    cacheControlMaxAge: 60,
-    contentType: "application/json; charset=utf-8",
-  });
+  try {
+    return await put(privatePath(pathname), JSON.stringify(value), {
+      access: "private",
+      token,
+      addRandomSuffix: false,
+      // null means create-only; undefined is reserved for independent records.
+      allowOverwrite: ifMatch !== null,
+      ...(ifMatch ? { ifMatch } : {}),
+      cacheControlMaxAge: 60,
+      contentType: "application/json; charset=utf-8",
+    });
+  } catch (error) {
+    if (ifMatch === null && error instanceof BlobError && /already exists/i.test(error.message)) {
+      throw new BlobSnapshotConflict();
+    }
+    throw error;
+  }
 }
 
 export function isBlobConflict(error: unknown) {
-  return error instanceof BlobPreconditionFailedError;
+  return error instanceof BlobPreconditionFailedError || error instanceof BlobSnapshotConflict;
 }
 
 export async function listPrivateJson<T>(prefix: string): Promise<T[]> {
